@@ -8,7 +8,6 @@ public class Curso {
     private String idCurso;
     private String nivel;
     private int capacidad;
-
     private List<Clase> listClases;
     private List<Estudiante> listEstudiantes;
     private Profesor profesor;
@@ -21,7 +20,6 @@ public class Curso {
         this.instrumento = instrumento;
         this.nivel = nivel;
         this.capacidad = capacidad;
-
         this.listClases = new ArrayList<>();
         this.listEstudiantes = new ArrayList<>();
         this.profesor = profesor;

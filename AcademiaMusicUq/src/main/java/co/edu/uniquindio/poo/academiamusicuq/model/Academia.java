@@ -78,4 +78,223 @@ public class Academia {
     public void setAdministrador(AdministradorAcademico administrador) {
         this.administrador = administrador;
     }
+
+
+    //Crud del Estudiante
+
+    public boolean  registrarEstudiante(Estudiante estudianteNuevo){
+        for(Estudiante estudiante: listEstudiantes){
+            if(estudiante.getId().equals(estudianteNuevo.getId())){
+                return false;
+            }
+        }
+        listEstudiantes.add(estudianteNuevo);
+        return true;
+    }
+
+
+    public List<Estudiante> listarEstudiantes(){
+        return listEstudiantes;
+    }
+
+
+    public boolean actualizarEstudiante(String id,Estudiante estudianteActualizado){
+
+        for(Estudiante estudiante:listEstudiantes){
+            if(estudiante.getId().equals(id)){
+
+                estudiante.setNombre(estudianteActualizado.getNombre());
+                estudiante.setEmail(estudianteActualizado.getEmail());
+                estudiante.setTelefono(estudianteActualizado.getTelefono());
+                estudiante.setNivel(estudianteActualizado.getNivel());
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean eliminarEstudiante(String id){
+
+        for(Estudiante estudiante: listEstudiantes){
+            if(estudiante.getId().equals(id)){
+                listEstudiantes.remove(estudiante);
+
+                return true;
+
+            }
+        }
+        return false;
+    }
+
+
+
+    // Crud del Profesor
+
+
+    public boolean registrarProfesor(Profesor profesorNuevo){
+
+        for(Profesor profesor: listProfesores){
+            if(profesor.getId().equals(profesorNuevo.getId())){
+                return false;
+            }
+        }
+        listProfesores.add(profesorNuevo);
+        return true;
+    }
+
+
+    public List<Profesor> listarProfesores(){
+        return listProfesores;
+    }
+
+
+    public boolean actualizarProfesor(String id, Profesor profesorActualizado){
+
+        for(Profesor profesor: listProfesores){
+            if(profesor.getId().equals(id)){
+
+                profesor.setNombre(profesorActualizado.getNombre());
+                profesor.setEmail(profesorActualizado.getEmail());
+                profesor.setTelefono(profesorActualizado.getTelefono());
+                profesor.setEspecialidad(profesorActualizado.getEspecialidad());
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean eliminarProfesor(String id){
+
+        for(Profesor profesor: listProfesores){
+            if(profesor.getId().equals(id)){
+
+                listProfesores.remove(profesor);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    // Crud del Curso
+
+
+    public boolean registrarCurso(Curso cursoNuevo){
+
+        for(Curso curso: listCursos){
+            if(curso.getIdCurso().equals(cursoNuevo.getIdCurso())){
+                return false;
+            }
+        }
+        listCursos.add(cursoNuevo);
+        return true;
+    }
+
+
+    public List<Curso> listarCursos(){
+        return listCursos;
+    }
+
+
+    public boolean actualizarCuros(String idCurso,Curso cursoActualizado){
+
+        for(Curso curso: listCursos){
+            if(curso.getIdCurso().equals(idCurso)){
+
+                curso.setInstrumento(cursoActualizado.getInstrumento());
+                curso.setNivel(cursoActualizado.getNivel());
+                curso.setCapacidad(cursoActualizado.getCapacidad());
+                curso.setProfesor(cursoActualizado.getProfesor());
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean eliminarCurso(String idCurso){
+
+        for(Curso curso: listCursos){
+            if(curso.getIdCurso().equals(idCurso)){
+                listCursos.remove(curso);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    // Metodo crear y agregar curso
+
+    public boolean crearCurso(String idCurso, Instrumento instrumento, String nivel, int capacidad, Profesor profesor) {
+
+        if (idCurso == null || idCurso.trim().isEmpty() ||
+                instrumento == null ||
+                nivel == null || nivel.trim().isEmpty() ||
+                capacidad <= 0 ||
+                profesor == null) {
+            return false;
+        }
+
+        for (Curso curso : listCursos) {
+            if (curso.getIdCurso().equals(idCurso)) {
+                return false;
+            }
+        }
+
+        Curso nuevoCurso = new Curso(idCurso, instrumento, nivel, capacidad, profesor);
+        listCursos.add(nuevoCurso);
+        return true;
+    }
+
+
+    
+    // Metodo asignar clase a el profesor
+
+    public boolean asignarClaseAProfesor(String id, Clase clase) {
+
+        if (id == null || id.trim().isEmpty() || clase == null) {
+            return false;
+        }
+
+
+        for (Profesor profesor : listProfesores) {
+            if (profesor.getId().equals(id)) {
+
+                profesor.getListClases().add(clase);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
