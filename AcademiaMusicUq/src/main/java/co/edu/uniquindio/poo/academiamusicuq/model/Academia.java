@@ -253,7 +253,7 @@ public class Academia {
     }
 
 
-    
+
     // Metodo asignar clase a el profesor
 
     public boolean asignarClaseAProfesor(String id, Clase clase) {
