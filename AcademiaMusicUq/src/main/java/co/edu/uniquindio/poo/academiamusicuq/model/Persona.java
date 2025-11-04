@@ -1,18 +1,16 @@
 package co.edu.uniquindio.poo.academiamusicuq.model;
 
 public abstract class  Persona {
-    protected String id;
+    protected String  id;
     protected String nombre;
     protected String apellido;
-    protected String documento;
     protected String email;
     protected String telefono;
 
-    public Persona(String id,String nombre, String apellido,String documento, String email, String telefono ){
+    public Persona(String id,String nombre, String apellido, String email, String telefono ){
         this.id=id;
         this.nombre = nombre;
         this.apellido=apellido;
-        this.documento=documento;
         this.email=email;
         this.telefono=telefono;
 
@@ -35,12 +33,6 @@ public abstract class  Persona {
     }
     public void setApellido(String Apellido){
         this.apellido=apellido;
-    }
-    public String getDocumento(){
-        return documento;
-    }
-    public void setDocumento(String documento){
-        this.documento=documento;
     }
     public String getEmail(){
         return email;

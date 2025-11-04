@@ -3,16 +3,24 @@ package co.edu.uniquindio.poo.academiamusicuq.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Profesor extends Persona implements IAgendable{
+public class Profesor extends Persona implements IAgendable,IEvaluable{
 
     private String especialidad;
+    private Instrumento instrumento;
+    private boolean activo;
     private List<Clase> listClases;
+    private List<ComentarioFormativo> listComentariosFormativos;
+    private  List<BloqueHorario> listBloqueHorarios;
 
-    public Profesor(String id,String nombre,String apellido,String documento,String email,String telefono,String especialidad){
-        super(id,nombre,apellido,documento,email,telefono);
+    public Profesor(String id,String nombre,String apellido,String email,String telefono,String especialidad,Instrumento instrumento,boolean activo){
+        super(id,nombre,apellido,email,telefono);
 
         this.especialidad = especialidad;
+        this.instrumento = instrumento;
+        this.activo = activo;
         this.listClases = new ArrayList<>();
+        this.listComentariosFormativos = new ArrayList<>();
+        this.listBloqueHorarios = new ArrayList<>();
 
     }
 
@@ -29,6 +37,37 @@ public class Profesor extends Persona implements IAgendable{
 
     public void setListClases(List<Clase> listClases) {
         this.listClases = listClases;
+    }
+
+    public Instrumento getInstrumento(){
+        return instrumento;
+    }
+    public void setInstrumento(Instrumento instrumento){
+        this.instrumento = instrumento;
+    }
+
+    public List<ComentarioFormativo> getListComentariosFormativos() {
+        return listComentariosFormativos;
+    }
+
+    public void setListComentariosFormativos(List<ComentarioFormativo> listComentariosFormativos) {
+        this.listComentariosFormativos = listComentariosFormativos;
+    }
+
+    public List<BloqueHorario> getListBloqueHorarios() {
+        return listBloqueHorarios;
+    }
+
+    public void setListBloqueHorarios(List<BloqueHorario> listBloqueHorarios) {
+        this.listBloqueHorarios = listBloqueHorarios;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }
 

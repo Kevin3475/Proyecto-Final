@@ -228,6 +228,50 @@ public class Academia {
         return false;
     }
 
+    // crud del aula
+
+    public boolean registrarAula(Aula aulaNueva){
+        for(Aula aula: listAulas){
+            if(aula.getIdAula().equals(aulaNueva.getIdAula())){
+                return false;
+            }
+        }
+        listAulas.add(aulaNueva);
+        return true;
+    }
+
+
+    public List<Aula> listarAulas(){
+        return listAulas;
+    }
+
+
+    public boolean actualizarAula(String idAula,Aula aulaActualizada){
+
+        for(Aula aula: listAulas){
+            if(aula.getIdAula().equals(idAula)){
+                aula.setNombre(aulaActualizada.getNombre());
+                aula.setCapacidad(aulaActualizada.getCapacidad());
+                aula.setDisponible(aulaActualizada.getDisponible());
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public boolean eliminarAula(String idAula){
+
+        for(Aula aula: listAulas){
+            if(aula.getIdAula().equals(idAula)){
+
+                listAulas.remove(aula);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     // Metodo crear y agregar curso
 

@@ -6,18 +6,20 @@ import java.util.List;
 public class Aula {
 
     private String idAula;
+    private String nombre;
     private int capacidad;
-    private String tipo;
+    private boolean disponible;
     private List<Clase> listClases;
-    private List<Horario> listHorarios;
 
-    public Aula(String idAula,int capacidad,String tipo){
+
+    public Aula(String idAula,String nombre,int capacidad,boolean disponible){
 
         this.idAula = idAula;
+        this.nombre = nombre;
         this.capacidad = capacidad;
-        this.tipo = tipo;
+        this.disponible = disponible;
         this.listClases = new ArrayList<>();
-        this.listHorarios = new ArrayList<>();
+
     }
 
     public String getIdAula() {
@@ -28,6 +30,14 @@ public class Aula {
         this.idAula = idAula;
     }
 
+    public String getNombre(){
+        return nombre;
+    }
+
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
+
     public int getCapacidad() {
         return capacidad;
     }
@@ -36,12 +46,12 @@ public class Aula {
         this.capacidad = capacidad;
     }
 
-    public String getTipo() {
-        return tipo;
+    public boolean getDisponible(){
+        return disponible;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setDisponible(boolean disponible){
+        this.disponible = disponible;
     }
 
     public List<Clase> getListClases() {
@@ -52,13 +62,7 @@ public class Aula {
         this.listClases = listClases;
     }
 
-    public List<Horario> getListHorarios(){
-        return listHorarios;
-    }
 
-    public void setListHorarios(List<Horario> listHorarios){
-        this.listHorarios = listHorarios;
-    }
 }
 
 
