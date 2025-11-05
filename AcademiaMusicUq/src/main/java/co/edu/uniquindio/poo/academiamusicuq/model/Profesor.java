@@ -69,6 +69,23 @@ public class Profesor extends Persona implements IAgendable,IEvaluable{
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+    public boolean asignarHorario(BloqueHorario nuevoBloque){
+        for(BloqueHorario existente: listBloqueHorarios){
+            if(existente.conflictoCon(nuevoBloque)){
+                return false;
+            }
+        }
+        listBloqueHorarios.add(nuevoBloque);
+        return true;
+    }
+    public boolean agregarClase(Clase clase){
+        return listClases.add(clase);
+    }
+    public ComentarioFormativo generarComentario(Estudiante estudiante, Curso curso, String contenido){
+        ComentarioFormativo comentario = new ComentarioFormativo(listComentariosFormativos.size()+1,contenido,java.time.LocalDate.now(),estudiante,curso);
+        listComentariosFormativos.add(comentario);
+        return comentario;
+    }
 }
 
 
