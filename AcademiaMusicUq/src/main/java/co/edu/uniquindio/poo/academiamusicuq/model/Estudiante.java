@@ -81,4 +81,22 @@ public class Estudiante extends Persona implements IReportable{
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
+
+    public boolean inscribirMatricula(Matricula matricula){
+        return listMatriculas.add(matricula);
+    }
+    public boolean inscribirClaseGrupal(ClaseGrupal clase){
+        return listClasesGrupales.add(clase);
+    }
+    public boolean agregarClaseIndividual(ClaseIndividual clase){
+        return listClasesIndividuales.add(clase);
+    }
+    public void registrarAsistencia(Asistencia asistencia){
+        listAsistencias.add(asistencia);
+    }
+    @Override
+    public ReporteProgreso generarReporteProgreso(){
+        return new ReporteProgreso();
+    }
+
 }
