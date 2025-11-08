@@ -92,6 +92,49 @@ public class Curso {
     public void setNombreCurso(String nombreCurso) {
         this.nombreCurso = nombreCurso;
     }
+
+
+
+
+    // metodo para agregar una clase al curso
+
+    public boolean agregarClase(Clase clase) {
+        if (clase == null) {
+            return false;
+        }
+
+
+        if (listClases == null) {
+            listClases = new ArrayList<>();
+        }
+
+
+        if (listClases.contains(clase)) {
+            return false;
+        }
+
+        listClases.add(clase);
+        return true;
+    }
+
+
+    // metodo para verificar si el estudiante tiene el nivel para entrar a el curso
+
+
+    public boolean verificarNivelEstudiante(Estudiante estudiante) {
+        if (estudiante == null || estudiante.getNivel() == null || this.nivel == null) {
+            return false;
+        }
+
+        int nivelEstudiante = estudiante.getNivel().ordinal();
+        int nivelCurso = this.nivel.ordinal();
+
+        return nivelEstudiante >= nivelCurso;
+    }
+
+
+
+
 }
 
 

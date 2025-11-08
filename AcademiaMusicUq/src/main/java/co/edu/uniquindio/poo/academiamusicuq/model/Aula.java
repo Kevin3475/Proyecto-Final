@@ -10,6 +10,7 @@ public class Aula {
     private int capacidad;
     private boolean disponible;
     private List<Clase> listClases;
+    private List<BloqueHorario> listHorarios;
 
 
     public Aula(String idAula,String nombre,int capacidad,boolean disponible){
@@ -19,6 +20,7 @@ public class Aula {
         this.capacidad = capacidad;
         this.disponible = disponible;
         this.listClases = new ArrayList<>();
+        this.listHorarios = new ArrayList<>();
 
     }
 
@@ -60,6 +62,31 @@ public class Aula {
 
     public void setListClases(List<Clase> listClases) {
         this.listClases = listClases;
+    }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public List<BloqueHorario> getListHorarios() {
+        return listHorarios;
+    }
+
+    public void setListHorarios(List<BloqueHorario> listHorarios) {
+        this.listHorarios = listHorarios;
+    }
+
+
+
+    // Metodo para saber si esta disponible el aula
+
+    public boolean estaDisponible(BloqueHorario nuevoBloque) {
+        for (BloqueHorario existente : listHorarios) {
+            if (existente.conflictoCon(nuevoBloque)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

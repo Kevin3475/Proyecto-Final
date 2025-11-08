@@ -125,6 +125,43 @@ public class AdministradorAcademico extends Persona{
 
 
 
+    // metodos de el comentarioFormativos
+
+    public boolean agregarComentarioFormativo(ComentarioFormativo comentario) {
+        if (comentario == null || listComentariosFormativos.contains(comentario)) {
+            return false;
+        }
+        listComentariosFormativos.add(comentario);
+        return true;
+    }
+
+    public List<ComentarioFormativo> listarComentarioEstudiante(Estudiante estudiante) {
+        List<ComentarioFormativo> resultado = new ArrayList<>();
+
+        if (estudiante == null) {
+            return resultado;
+        }
+
+        for (ComentarioFormativo comentario : listComentariosFormativos) {
+            if (comentario.getEstudiante().equals(estudiante)) {
+                resultado.add(comentario);
+            }
+        }
+
+        return resultado;
+    }
+
+
+    public List<ComentarioFormativo> getListaComentarios() {
+        return listComentariosFormativos;
+    }
+
+
+
+
+
+
+
 
 
 

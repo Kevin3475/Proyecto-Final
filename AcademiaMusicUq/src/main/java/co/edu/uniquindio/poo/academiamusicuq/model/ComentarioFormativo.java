@@ -61,6 +61,15 @@ public class ComentarioFormativo {
     public void setEstudiante(Estudiante estudiante) {
         this.estudiante = estudiante;
     }
+
+
+
+
+    // los metodos los puse en AdministradorAcademico
+
+
+
+
 }
 
 

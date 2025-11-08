@@ -98,4 +98,26 @@ public class Matricula {
     public void setCertificadoEmitido(boolean certificadoEmitido) {
         this.certificadoEmitido = certificadoEmitido;
     }
+
+
+
+    // metodo para emitir certificado de el curso debe de estar la matricula finalizada para poder sacar el certificado
+
+    public boolean puedeEmitirCertificado() {
+
+        if (estudiante == null || curso == null) {
+            return false;
+        }
+
+        if (estadoMatricula != EstadoMatricula.FINALIZADA) {
+            return false;
+        }
+
+
+        if (certificadoEmitido) {
+            return false;
+        }
+
+        return true;
+    }
 }

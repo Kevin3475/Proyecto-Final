@@ -275,11 +275,13 @@ public class Academia {
 
     // Metodo crear y agregar curso
 
-    public boolean crearCurso(String idCurso, Instrumento instrumento, String nivel, int capacidad, Profesor profesor) {
+    public boolean crearCurso(String idCurso, String nombreCurso, Instrumento instrumento, Nivel nivel, int capacidad, Profesor profesor) {
+
 
         if (idCurso == null || idCurso.trim().isEmpty() ||
+                nombreCurso == null || nombreCurso.trim().isEmpty() ||
                 instrumento == null ||
-                nivel == null || nivel.trim().isEmpty() ||
+                nivel == null ||
                 capacidad <= 0 ||
                 profesor == null) {
             return false;
@@ -291,8 +293,9 @@ public class Academia {
             }
         }
 
-        Curso nuevoCurso = new Curso(idCurso, instrumento, nivel, capacidad, profesor);
+        Curso nuevoCurso = new Curso(idCurso, nombreCurso, instrumento, nivel, capacidad, profesor);
         listCursos.add(nuevoCurso);
+
         return true;
     }
 
