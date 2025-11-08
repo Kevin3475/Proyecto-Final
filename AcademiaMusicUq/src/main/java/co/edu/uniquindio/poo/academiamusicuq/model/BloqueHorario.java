@@ -39,4 +39,38 @@ public class BloqueHorario {
     public void setHoraFin(LocalTime horaFin) {
         this.horaFin = horaFin;
     }
+
+
+    // Meetodo conflictoCon
+
+
+    public boolean conflictoCon(BloqueHorario otro) {
+
+        if (!this.dia.equals(otro.dia)) {
+            return false;
+        }
+
+        return this.horaInicio.isBefore(otro.horaFin) && otro.horaInicio.isBefore(this.horaFin);
+    }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

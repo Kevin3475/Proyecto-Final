@@ -5,21 +5,22 @@ import java.util.List;
 
 public abstract class Clase {
 
-    private int id;
-    private Aula aula;
-    private Profesor profesor;
-    private BloqueHorario horario;
-    private TipoClase tipoClase;
+    protected int id;
+    protected Aula aula;
+    protected Profesor profesor;
+    protected BloqueHorario horario;
+    protected TipoClase tipoClase;
+    protected Curso curso;
 
 
-
-    public Clase(int id,Aula aula,TipoClase tipoClase,Profesor profesor,BloqueHorario horario){
+    public Clase(int id, Aula aula, TipoClase tipoClase, Profesor profesor, BloqueHorario horario, Curso curso) {
 
         this.id = id;
         this.aula = aula;
         this.tipoClase = tipoClase;
         this.profesor = profesor;
         this.horario = horario;
+        this.curso = curso;
 
 
     }
@@ -63,4 +64,22 @@ public abstract class Clase {
     public void setTipoClase(TipoClase tipoClase) {
         this.tipoClase = tipoClase;
     }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
+
+    // Metodos abstractos para las hijas
+
+    public abstract boolean registrarAsistencia(Profesor profesor,Asistencia asistencia);
+
+    public abstract ReporteProgreso evaluarProgreso(Estudiante estudiante, float calificacion, String observaciones);
+
+
+
 }

@@ -83,4 +83,49 @@ public class AdministradorAcademico extends Persona{
     public void setListComentariosFormativos(List<ComentarioFormativo> listComentariosFormativos) {
         this.listComentariosFormativos = listComentariosFormativos;
     }
+
+
+
+    // Metodo crear Curso
+
+    public boolean crearCurso(Curso nuevoCurso) {
+        if (nuevoCurso == null) {
+            return false;
+        }
+
+
+        for (Curso curso : listCursos) {
+            if (curso.getIdCurso().equals(nuevoCurso.getIdCurso()) ||
+                    curso.getNombreCurso().equalsIgnoreCase(nuevoCurso.getNombreCurso())) {
+                return false;
+            }
+        }
+
+        listCursos.add(nuevoCurso);
+        return true;
+    }
+
+
+    // meetodo generarReporte
+
+    public List<ReporteProgreso> generarReporte(List<Estudiante> listaEstudiantes) {
+        List<ReporteProgreso> reportes = new ArrayList<>();
+
+        if (listaEstudiantes == null || listaEstudiantes.isEmpty()) {
+            return reportes;
+        }
+
+        for (Estudiante estudiante : listaEstudiantes) {
+            ReporteProgreso reporte = estudiante.generarReporteProgreso();
+            reportes.add(reporte);
+        }
+
+        return reportes;
+    }
+
+
+
+
+
+
 }

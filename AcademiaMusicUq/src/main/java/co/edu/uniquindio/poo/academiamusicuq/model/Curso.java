@@ -6,7 +6,8 @@ import java.util.List;
 public class Curso {
 
     private String idCurso;
-    private String nivel;
+    private String nombreCurso;
+    private Nivel nivel;
     private int capacidad;
     private List<Clase> listClases;
     private List<Estudiante> listEstudiantes;
@@ -14,9 +15,10 @@ public class Curso {
     private Instrumento instrumento;
 
 
-    public Curso(String idCurso,Instrumento instrumento,String nivel,int capacidad,Profesor profesor){
+    public Curso(String idCurso,String nombreCurso,Instrumento instrumento,Nivel nivel,int capacidad,Profesor profesor){
 
         this.idCurso = idCurso;
+        this.nombreCurso = nombreCurso;
         this.instrumento = instrumento;
         this.nivel = nivel;
         this.capacidad = capacidad;
@@ -59,11 +61,11 @@ public class Curso {
         this.instrumento = instrumento;
     }
 
-    public String getNivel() {
+    public Nivel getNivel() {
         return nivel;
     }
 
-    public void setNivel(String nivel) {
+    public void setNivel(Nivel nivel) {
         this.nivel = nivel;
     }
 
@@ -82,4 +84,15 @@ public class Curso {
     public void setListClases(List<Clase> listClases) {
         this.listClases = listClases;
     }
+
+    public String getNombreCurso() {
+        return nombreCurso;
+    }
+
+    public void setNombreCurso(String nombreCurso) {
+        this.nombreCurso = nombreCurso;
+    }
 }
+
+
+
