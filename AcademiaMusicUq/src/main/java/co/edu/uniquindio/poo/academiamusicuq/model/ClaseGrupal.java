@@ -34,19 +34,7 @@ public class ClaseGrupal extends Clase{
 
     // metodos abstractos de el padre
 
-    @Override
-    public boolean registrarAsistencia(Profesor profesor, Asistencia asistencia) {
-        if (asistencia == null || profesor == null) {
-            return false;
-        }
 
-        if (!this.profesor.equals(profesor)) {
-            return false;
-        }
-
-        profesor.getListAsistencias().add(asistencia);
-        return true;
-    }
 
     @Override
     public ReporteProgreso evaluarProgreso(Estudiante estudiante, float calificacion, String observaciones) {
@@ -69,14 +57,9 @@ public class ClaseGrupal extends Clase{
     // metodo para agregar un estudiante a la clase grupal
 
     public boolean agregarEstudiante(Estudiante estudiante) {
-        if (estudiante == null) {
-            return false;
-        }
-
-        if (listEstudiantes.contains(estudiante)) {
-            return false;
-        }
-
+        if (estudiante == null) return false;
+        if (listEstudiantes.contains(estudiante)) return false;
+        if (!verificarCupo()) return false;
         listEstudiantes.add(estudiante);
         return true;
     }
@@ -91,10 +74,27 @@ public class ClaseGrupal extends Clase{
 
 
 
+    @Override
+    public boolean registrarAsistencia(Profesor profesor, Asistencia asistencia) {
+        if (asistencia == null || profesor == null) {
+            return false;
+        }
+
+        if (!this.profesor.equals(profesor)) {
+            return false;
+        }
+
+        profesor.getListAsistencias().add(asistencia);
+
+        asistencia.getEstudiante().registrarAsistencia(asistencia);
+
+        return true;
 
 
 
 
+
+    }
 
 
 

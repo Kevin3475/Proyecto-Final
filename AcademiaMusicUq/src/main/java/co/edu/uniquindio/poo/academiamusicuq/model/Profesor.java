@@ -22,9 +22,12 @@ public class Profesor extends Persona implements IAgendable,IEvaluable{
         this.instrumento = instrumento;
         this.activo = activo;
         this.listClases = new ArrayList<>();
+        this.listClasesGrupales = new ArrayList<>();
+        this.listClasesIndividuales = new ArrayList<>();
         this.listComentariosFormativos = new ArrayList<>();
         this.listBloqueHorarios = new ArrayList<>();
         this.listAsistencias = new ArrayList<>();
+
 
     }
 

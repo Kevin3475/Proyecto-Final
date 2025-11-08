@@ -14,7 +14,7 @@ public class AdministradorAcademico extends Persona{
     private List<ReporteProgreso> listReportesProgresos;
     private List<ComentarioFormativo> listComentariosFormativos;
 
-    public AdministradorAcademico(String id,String nombre,String apellido,String documento,String email,String telefono,boolean activo){
+    public AdministradorAcademico(String id,String nombre,String apellido,String email,String telefono,boolean activo){
         super(id,nombre,apellido,email,telefono);
 
         this.activo = activo;

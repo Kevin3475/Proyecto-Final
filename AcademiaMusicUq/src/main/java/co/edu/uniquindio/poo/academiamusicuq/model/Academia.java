@@ -200,21 +200,20 @@ public class Academia {
     }
 
 
-    public boolean actualizarCuros(String idCurso,Curso cursoActualizado){
-
+    public boolean actualizarCurso(String idCurso, Curso cursoActualizado){
         for(Curso curso: listCursos){
             if(curso.getIdCurso().equals(idCurso)){
-
+                curso.setNombreCurso(cursoActualizado.getNombreCurso()); // <- agregar esto
                 curso.setInstrumento(cursoActualizado.getInstrumento());
                 curso.setNivel(cursoActualizado.getNivel());
                 curso.setCapacidad(cursoActualizado.getCapacidad());
                 curso.setProfesor(cursoActualizado.getProfesor());
-
                 return true;
             }
         }
         return false;
     }
+
 
 
     public boolean eliminarCurso(String idCurso){

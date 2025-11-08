@@ -58,4 +58,20 @@ public class Asistencia {
     }
 
 
+    public boolean registrarAsistencia() {
+        if (estudiante == null || clase == null || clase.getProfesor() == null) {
+            return false;
+        }
+
+        estudiante.getListAsistencias().add(this);
+
+        clase.getProfesor().getListAsistencias().add(this);
+
+        return true;
+    }
+
+
+
+
+
 }
