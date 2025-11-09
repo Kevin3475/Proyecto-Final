@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="dashboard-container" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.poo.academiamusicuq.viewController.MainViewController">
+
+    <children>
+        <HBox prefHeight="700.0" prefWidth="1000.0">
+            <children>
+                <!-- Sidebar Ampliado -->
+                <VBox prefWidth="280.0" styleClass="sidebar">
+                    <children>
+                        <!-- Header del Sidebar -->
+                        <Label styleClass="login-title" text="🎵 Academia UQ">
+                            <VBox.margin>
+                                <Insets bottom="20.0" left="20.0" top="20.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font name="System Bold" size="20.0" />
+                            </font>
+                        </Label>
+
+                        <!-- Sección Gestión Académica -->
+                        <Label styleClass="menu-section-title" text="📚 GESTIÓN ACADÉMICA">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="20.0" top="10.0" />
+                            </VBox.margin>
+                        </Label>
+
+                        <Button mnemonicParsing="false" onAction="#onGestionEstudiantes" styleClass="menu-button" text="👥 Gestión de Estudiantes" />
+                        <Button mnemonicParsing="false" onAction="#onGestionProfesores" styleClass="menu-button" text="🎓 Gestión de Profesores" />
+                        <Button mnemonicParsing="false" onAction="#onGestionCursos" styleClass="menu-button" text="📖 Gestión de Cursos" />
+                        <Button mnemonicParsing="false" onAction="#onGestionAulas" styleClass="menu-button" text="🏫 Gestión de Aulas" />
+
+                        <!-- Sección Operaciones -->
+                        <Label styleClass="menu-section-title" text="🎼 OPERACIONES">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="20.0" top="15.0" />
+                            </VBox.margin>
+                        </Label>
+
+                        <Button mnemonicParsing="false" onAction="#onGestionClases" styleClass="menu-button" text="📅 Gestión de Clases" />
+                        <Button mnemonicParsing="false" onAction="#onGestionMatriculas" styleClass="menu-button" text="📋 Gestión de Matrículas" />
+                        <Button mnemonicParsing="false" onAction="#onGestionAsistencias" styleClass="menu-button" text="✅ Gestión de Asistencias" />
+
+                        <!-- Sección Reportes y Administración -->
+                        <Label styleClass="menu-section-title" text="📊 REPORTES Y ADMIN">
+                            <VBox.margin>
+                                <Insets bottom="5.0" left="20.0" top="15.0" />
+                            </VBox.margin>
+                        </Label>
+
+                        <Button mnemonicParsing="false" onAction="#onModuloReportes" styleClass="menu-button" text="📈 Módulo de Reportes" />
+                        <Button mnemonicParsing="false" onAction="#onGestionAdministracion" styleClass="menu-button" text="⚙️ Panel de Administración" />
+
+                        <Region VBox.vgrow="ALWAYS" />
+
+                        <!-- Footer del Sidebar -->
+                        <VBox alignment="CENTER" spacing="10.0" style="-fx-padding: 15; -fx-background-color: #34495e;">
+                            <children>
+                                <Label style="-fx-text-fill: #ecf0f1; -fx-font-weight: bold;" text="Sistema Integral" />
+                                <Label style="-fx-text-fill: #bdc3c7;" text="Academia de Música" />
+                                <Button mnemonicParsing="false" onAction="#onCerrarSesion" styleClass="secondary-button" text="🚪 Cerrar Sesión">
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </Button>
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+
+                <!-- Contenido principal mejorado -->
+                <VBox styleClass="content-area" HBox.hgrow="ALWAYS">
+                    <children>
+                        <!-- Header del contenido -->
+                        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #ecf0f1; -fx-padding: 20;">
+                            <children>
+                                <VBox>
+                                    <children>
+                                        <Label styleClass="section-title" text="¡Bienvenido al Sistema!" />
+                                        <Label styleClass="section-subtitle" text="Sistema Integral de Gestión - Academia de Música UQ" />
+                                    </children>
+                                </VBox>
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label fx:id="lblFechaHora" style="-fx-text-fill: #7f8c8d; -fx-font-size: 14;" text="Cargando..." />
+                            </children>
+                        </HBox>
+
+                        <!-- Panel de resumen rápido -->
+                        <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="20.0" VBox.vgrow="ALWAYS">
+                            <VBox.margin>
+                                <Insets top="20.0" />
+                            </VBox.margin>
+
+                            <Label styleClass="section-subtitle" text="📊 Resumen Rápido del Sistema">
+                                <VBox.margin>
+                                    <Insets left="20.0" />
+                                </VBox.margin>
+                            </Label>
+
+                                  <!-- Accesos rápidos -->
+                            <Label styleClass="section-subtitle" text="⚡ Accesos Rápidos" />
+
+                            <!-- Tarjetas de estadísticas -->
+                            <GridPane hgap="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="351.0" prefWidth="655.0" vgap="15.0">
+                                <VBox.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                </VBox.margin>
+                                <columnConstraints>
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                <children>
+                                    <!-- Fila 1 -->
+                                    <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #3498db; -fx-background-radius: 15; -fx-padding: 25;">
+                                        <children>
+                                            <Label style="-fx-font-size: 36;" text="👥" />
+                                            <Label fx:id="lblTotalEstudiantes" style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;" text="0" />
+                                            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Estudiantes" />
+                                        </children>
+                                    </VBox>
+
+                                    <VBox alignment="CENTER" prefHeight="138.0" prefWidth="153.0" spacing="10.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 15; -fx-padding: 25;" GridPane.columnIndex="1">
+                                        <children>
+                                            <Label style="-fx-font-size: 36;" text="🎓" />
+                                            <Label fx:id="lblTotalProfesores" style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;" text="0" />
+                                            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Profesores" />
+                                        </children>
+                                    </VBox>
+
+                                    <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #f39c12; -fx-background-radius: 15; -fx-padding: 25;" GridPane.columnIndex="2">
+                                        <children>
+                                            <Label style="-fx-font-size: 36;" text="📚" />
+                                            <Label fx:id="lblTotalCursos" style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;" text="0" />
+                                            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Cursos" />
+                                        </children>
+                                    </VBox>
+
+                                    <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #9b59b6; -fx-background-radius: 15; -fx-padding: 25;" GridPane.columnIndex="3">
+                                        <children>
+                                            <Label style="-fx-font-size: 36;" text="🏫" />
+                                            <Label fx:id="lblTotalAulas" style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;" text="0" />
+                                            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Aulas" />
+                                        </children>
+                                    </VBox>
+      
+                                    <!-- Fila 2 -->
+                                    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="169.0" prefWidth="158.0" spacing="10.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 15; -fx-padding: 25;" GridPane.rowIndex="1">
+                                        <children>
+                                            <Label style="-fx-font-size: 36;" text="📅" />
+                                            <Label fx:id="lblTotalClases" style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;" text="0" />
+                                            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Clases Hoy" />
+                                        </children>
+                                    </VBox>
+      
+                                    <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #e67e22; -fx-background-radius: 15; -fx-padding: 25;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <children>
+                                            <Label style="-fx-font-size: 36;" text="📊" />
+                                            <Label fx:id="lblReportes" style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;" text="0" />
+                                            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Reportes" />
+                                        </children>
+                                    </VBox>
+      
+                                    <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="163.0" spacing="10.0" style="-fx-background-color: #1abc9c; -fx-background-radius: 15; -fx-padding: 25;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                        <children>
+                                            <Label style="-fx-font-size: 36;" text="📋" />
+                                            <Label fx:id="lblTotalMatriculas" style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;" text="0" />
+                                            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Matrículas" />
+                                        </children>
+                                    </VBox>
+      
+                                    <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #34495e; -fx-background-radius: 15; -fx-padding: 25;" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                        <children>
+                                            <Label style="-fx-font-size: 36;" text="✅" />
+                                            <Label fx:id="lblAsistenciasHoy" style="-fx-text-fill: white; -fx-font-size: 24; -fx-font-weight: bold;" text="0" />
+                                            <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="Asistencias" />
+                                        </children>
+                                    </VBox>
+                                </children>
+                            </GridPane>
+
+                            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="679.0" spacing="15.0">
+                                <VBox.margin>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" />
+                                </VBox.margin>
+                                <children>
+                                    <Button mnemonicParsing="false" onAction="#onGestionEstudiantes" styleClass="primary-button" text="➕ Nuevo Estudiante" />
+                                    <Button mnemonicParsing="false" onAction="#onGestionClases" styleClass="primary-button" text="📅 Agendar Clase" />
+                                    <Button mnemonicParsing="false" onAction="#onGestionAsistencias" styleClass="primary-button" text="✅ Tomar Asistencia" />
+                                    <Button mnemonicParsing="false" onAction="#onModuloReportes" styleClass="primary-button" text="📈 Ver Reportes" />
+                                </children>
+                            </HBox>
+                        </VBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

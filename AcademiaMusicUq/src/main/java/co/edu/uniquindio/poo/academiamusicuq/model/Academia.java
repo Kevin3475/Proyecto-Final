@@ -37,15 +37,18 @@ public class Academia {
     public String getDireccion(){
         return direccion;
     }
-    public void setDireccion(){
-        this.direccion = direccion;
-    }
     public String getTelefono(){
         return telefono;
     }
-    public void setTelefono(){
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
     public List<Estudiante> getListEstudiantes(){
         return listEstudiantes;
     }

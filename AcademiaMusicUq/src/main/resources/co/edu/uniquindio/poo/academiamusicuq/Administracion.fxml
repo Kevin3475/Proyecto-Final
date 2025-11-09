@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="dashboard-container"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="co.edu.uniquindio.poo.academiamusicuq.viewController.AdministracionViewController">
+
+    <children>
+        <VBox prefHeight="700.0" prefWidth="1000.0">
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #2c3e50; -fx-padding: 15;">
+                <children>
+                    <Button mnemonicParsing="false" onAction="#onVolver" text="⬅ Volver al Menú" styleClass="secondary-button">
+                        <HBox.margin>
+                            <Insets right="20.0" />
+                        </HBox.margin>
+                    </Button>
+                    <Label text="⚙️ Panel de Administración" style="-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;"/>
+                </children>
+            </HBox>
+
+            <!-- Contenido principal con pestañas -->
+            <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+                <tabs>
+                    <!-- PESTAÑA 1: DATOS ACADEMIA -->
+                    <Tab text="🏢 Datos Academia">
+                        <content>
+                            <VBox styleClass="content-area" spacing="20.0">
+                                <VBox.margin>
+                                    <Insets top="20.0" />
+                                </VBox.margin>
+
+                                <!-- Información de la Academia -->
+                                <VBox styleClass="form-container" spacing="15.0">
+                                    <VBox.margin>
+                                        <Insets left="20.0" right="20.0" />
+                                    </VBox.margin>
+
+                                    <Label text="Información de la Academia" styleClass="section-title"/>
+
+                                    <GridPane hgap="15.0" vgap="15.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        </rowConstraints>
+                                        <children>
+                                            <Label text="Nombre:*" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                            <TextField fx:id="txtNombreAcademia" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                                            <Label text="Dirección:*" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                            <TextField fx:id="txtDireccionAcademia" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                                            <Label text="Teléfono:*" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <TextField fx:id="txtTelefonoAcademia" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                            <Label text="Administrador:" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                            <TextField fx:id="txtAdminNombre" styleClass="form-field" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                                            <Label text="Email Admin:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <TextField fx:id="txtAdminEmail" styleClass="form-field" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                            <Label text="Teléfono Admin:" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                            <TextField fx:id="txtAdminTelefono" styleClass="form-field" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                        </children>
+                                    </GridPane>
+
+                                    <HBox alignment="CENTER" spacing="15.0">
+                                        <children>
+                                            <Button fx:id="btnActualizarAcademia" mnemonicParsing="false" onAction="#onActualizarAcademia" text="💾 Actualizar" styleClass="primary-button"/>
+                                            <Button fx:id="btnLimpiarAcademia" mnemonicParsing="false" onAction="#onLimpiarAcademia" text="🔄 Restaurar" styleClass="secondary-button"/>
+                                        </children>
+                                    </HBox>
+
+                                    <Label text="* Campos obligatorios" style="-fx-text-fill: #7f8c8d; -fx-font-size: 12;"/>
+                                </VBox>
+                            </VBox>
+                        </content>
+                    </Tab>
+
+                    <!-- PESTAÑA 2: REPORTES -->
+                    <Tab text="📊 Reportes">
+                        <content>
+                            <VBox styleClass="content-area" spacing="20.0">
+                                <VBox.margin>
+                                    <Insets top="20.0" />
+                                </VBox.margin>
+
+                                <Label text="Generación de Reportes" styleClass="section-title">
+                                    <VBox.margin>
+                                        <Insets left="20.0" />
+                                    </VBox.margin>
+                                </Label>
+
+                                <!-- Filtros de Reportes -->
+                                <VBox styleClass="form-container" spacing="15.0">
+                                    <VBox.margin>
+                                        <Insets left="20.0" right="20.0" />
+                                    </VBox.margin>
+
+                                    <Label text="🔍 Filtros del Reporte" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
+
+                                    <GridPane hgap="15.0" vgap="15.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        </rowConstraints>
+                                        <children>
+                                            <Label text="Tipo Reporte:" styleClass="form-label" GridPane.columnIndex="0"/>
+                                            <ComboBox fx:id="cbTipoReporte" styleClass="form-field" GridPane.columnIndex="1"/>
+
+                                            <Label text="Fecha Inicio:" styleClass="form-label" GridPane.columnIndex="2"/>
+                                            <DatePicker fx:id="dpFechaInicio" styleClass="form-field" GridPane.columnIndex="3"/>
+
+                                            <Label text="Fecha Fin:" styleClass="form-label" GridPane.columnIndex="4"/>
+                                            <DatePicker fx:id="dpFechaFin" styleClass="form-field" GridPane.columnIndex="5"/>
+
+                                            <Button fx:id="btnGenerarReporte" mnemonicParsing="false" onAction="#onGenerarReporte" text="📈 Generar" styleClass="primary-button" GridPane.columnIndex="6"/>
+                                            <Button fx:id="btnExportarReporte" mnemonicParsing="false" onAction="#onExportarReporte" text="📤 Exportar" styleClass="secondary-button" GridPane.columnIndex="7"/>
+                                        </children>
+                                    </GridPane>
+                                </VBox>
+
+                                <!-- Tabla Reportes -->
+                                <Label text="Resultados del Reporte" styleClass="section-subtitle">
+                                    <VBox.margin>
+                                        <Insets left="20.0" />
+                                    </VBox.margin>
+                                </Label>
+
+                                <TableView fx:id="tblReportes" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                    </VBox.margin>
+                                    <columns>
+                                        <TableColumn fx:id="colIdReporte" prefWidth="80.0" text="ID" />
+                                        <TableColumn fx:id="colEstudianteReporte" prefWidth="150.0" text="Estudiante" />
+                                        <TableColumn fx:id="colCursoReporte" prefWidth="150.0" text="Curso" />
+                                        <TableColumn fx:id="colProfesorReporte" prefWidth="150.0" text="Profesor" />
+                                        <TableColumn fx:id="colCalificacionReporte" prefWidth="100.0" text="Calificación" />
+                                        <TableColumn fx:id="colFechaReporte" prefWidth="120.0" text="Fecha" />
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </content>
+                    </Tab>
+
+                    <!-- PESTAÑA 3: COMENTARIOS FORMATIVOS -->
+                    <Tab text="💬 Comentarios Formativos">
+                        <content>
+                            <VBox styleClass="content-area" spacing="20.0">
+                                <VBox.margin>
+                                    <Insets top="20.0" />
+                                </VBox.margin>
+
+                                <Label text="Gestión de Comentarios Formativos" styleClass="section-title">
+                                    <VBox.margin>
+                                        <Insets left="20.0" />
+                                    </VBox.margin>
+                                </Label>
+
+                                <!-- Sección Agregar Comentario -->
+                                <VBox styleClass="form-container" spacing="15.0">
+                                    <VBox.margin>
+                                        <Insets left="20.0" right="20.0" />
+                                    </VBox.margin>
+
+                                    <Label text="➕ Agregar Comentario Formativo" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
+
+                                    <GridPane hgap="15.0" vgap="15.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                                        </rowConstraints>
+                                        <children>
+                                            <Label text="Estudiante:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                            <ComboBox fx:id="cbEstudianteComentarios" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1" onAction="#onEstudianteComentariosChanged"/>
+
+                                            <Button fx:id="btnAgregarComentario" mnemonicParsing="false" onAction="#onAgregarComentario" text="💬 Agregar" styleClass="primary-button" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                                            <Button fx:id="btnLimpiarComentarios" mnemonicParsing="false" onAction="#onLimpiarComentarios" text="🧹 Limpiar" styleClass="secondary-button" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                                            <Label text="Comentario:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                            <TextArea fx:id="txtNuevoComentario" promptText="Escriba el comentario formativo..." styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
+                                        </children>
+                                    </GridPane>
+                                </VBox>
+
+                                <!-- Tabla Comentarios -->
+                                <Label text="Comentarios Formativos Registrados" styleClass="section-subtitle">
+                                    <VBox.margin>
+                                        <Insets left="20.0" />
+                                    </VBox.margin>
+                                </Label>
+
+                                <TableView fx:id="tblComentarios" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                                    </VBox.margin>
+                                    <columns>
+                                        <TableColumn fx:id="colIdComentario" prefWidth="80.0" text="ID" />
+                                        <TableColumn fx:id="colEstudianteComentario" prefWidth="150.0" text="Estudiante" />
+                                        <TableColumn fx:id="colCursoComentario" prefWidth="150.0" text="Curso" />
+                                        <TableColumn fx:id="colContenidoComentario" prefWidth="300.0" text="Contenido" />
+                                        <TableColumn fx:id="colFechaComentario" prefWidth="120.0" text="Fecha" />
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </content>
+                    </Tab>
+
+                    <!-- PESTAÑA 4: ESTADÍSTICAS -->
+                    <Tab text="📈 Estadísticas">
+                        <content>
+                            <VBox styleClass="content-area" spacing="20.0">
+                                <VBox.margin>
+                                    <Insets top="20.0" />
+                                </VBox.margin>
+
+                                <Label text="Estadísticas Generales del Sistema" styleClass="section-title">
+                                    <VBox.margin>
+                                        <Insets left="20.0" />
+                                    </VBox.margin>
+                                </Label>
+
+                                <!-- Estadísticas Generales -->
+                                <VBox styleClass="form-container" spacing="15.0">
+                                    <VBox.margin>
+                                        <Insets left="20.0" right="20.0" />
+                                    </VBox.margin>
+
+                                    <Label text="📊 Resumen General" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
+
+                                    <GridPane hgap="20.0" vgap="15.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        </rowConstraints>
+                                        <children>
+                                            <!-- Fila 1 -->
+                                            <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #3498db; -fx-background-radius: 10; -fx-padding: 15;">
+                                                <children>
+                                                    <Label text="👥" style="-fx-font-size: 24;"/>
+                                                    <Label text="Total Estudiantes" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                                                    <Label fx:id="lblTotalEstudiantes" text="0" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                                                </children>
+                                            </VBox>
+
+                                            <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 10; -fx-padding: 15;" GridPane.columnIndex="1">
+                                                <children>
+                                                    <Label text="🎓" style="-fx-font-size: 24;"/>
+                                                    <Label text="Total Profesores" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                                                    <Label fx:id="lblTotalProfesores" text="0" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                                                </children>
+                                            </VBox>
+
+                                            <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #f39c12; -fx-background-radius: 10; -fx-padding: 15;" GridPane.columnIndex="2">
+                                                <children>
+                                                    <Label text="📚" style="-fx-font-size: 24;"/>
+                                                    <Label text="Total Cursos" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                                                    <Label fx:id="lblTotalCursos" text="0" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                                                </children>
+                                            </VBox>
+
+                                            <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #9b59b6; -fx-background-radius: 10; -fx-padding: 15;" GridPane.columnIndex="3">
+                                                <children>
+                                                    <Label text="📋" style="-fx-font-size: 24;"/>
+                                                    <Label text="Total Matrículas" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                                                    <Label fx:id="lblTotalMatriculas" text="0" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                                                </children>
+                                            </VBox>
+
+                                            <!-- Fila 2 -->
+                                            <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 10; -fx-padding: 15;" GridPane.rowIndex="1">
+                                                <children>
+                                                    <Label text="✅" style="-fx-font-size: 24;"/>
+                                                    <Label text="Matrículas Activas" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                                                    <Label fx:id="lblMatriculasActivas" text="0" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                                                </children>
+                                            </VBox>
+
+                                            <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #1abc9c; -fx-background-radius: 10; -fx-padding: 15;" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                                                <children>
+                                                    <Label text="🏁" style="-fx-font-size: 24;"/>
+                                                    <Label text="Matrículas Finalizadas" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                                                    <Label fx:id="lblMatriculasFinalizadas" text="0" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                                                </children>
+                                            </VBox>
+
+                                            <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #34495e; -fx-background-radius: 10; -fx-padding: 15;" GridPane.rowIndex="1" GridPane.columnIndex="2">
+                                                <children>
+                                                    <Label text="📜" style="-fx-font-size: 24;"/>
+                                                    <Label text="Certificados Emitidos" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                                                    <Label fx:id="lblCertificadosEmitidos" text="0" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                                                </children>
+                                            </VBox>
+                                        </children>
+                                    </GridPane>
+                                </VBox>
+
+                                <!-- Gráficos -->
+                                <HBox spacing="20.0" VBox.vgrow="ALWAYS">
+                                    <VBox.margin>
+                                        <Insets left="20.0" right="20.0" bottom="20.0" />
+                                    </VBox.margin>
+
+                                    <!-- Gráfico de Torta - Niveles de Estudiantes -->
+                                    <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                        <Label text="📊 Distribución por Nivel" style="-fx-font-weight: bold;"/>
+                                        <PieChart fx:id="pieChartEstudiantes" HBox.hgrow="ALWAYS"/>
+                                    </VBox>
+
+                                    <!-- Gráfico de Barras - Estudiantes por Curso -->
+                                    <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                        <Label text="📈 Estudiantes por Curso" style="-fx-font-weight: bold;"/>
+                                        <BarChart fx:id="barChartCursos" HBox.hgrow="ALWAYS">
+                                            <xAxis>
+                                                <CategoryAxis label="Cursos" />
+                                            </xAxis>
+                                            <yAxis>
+                                                <NumberAxis label="Estudiantes" />
+                                            </yAxis>
+                                        </BarChart>
+                                    </VBox>
+                                </HBox>
+                            </VBox>
+                        </content>
+                    </Tab>
+                </tabs>
+            </TabPane>
+        </VBox>
+    </children>
+</AnchorPane>
