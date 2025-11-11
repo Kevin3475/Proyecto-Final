@@ -19,17 +19,16 @@ public class MatriculaController {
     public MatriculaController(Academia academia) {
         this.academia = academia;
         this.listaMatriculas = new ArrayList<>();
-        // En una implementación real, esto vendría de la academia
         inicializarMatriculasDeEjemplo();
     }
 
     private void inicializarMatriculasDeEjemplo() {
-        // Obtener estudiantes y cursos de ejemplo
+
         List<Estudiante> estudiantes = academia.getListEstudiantes();
         List<Curso> cursos = academia.getListCursos();
 
         if (!estudiantes.isEmpty() && !cursos.isEmpty()) {
-            // Crear algunas matrículas de ejemplo
+
             Matricula matricula1 = new Matricula(1, estudiantes.get(0), cursos.get(0),
                     LocalDate.now().minusMonths(2), EstadoMatricula.FINALIZADA, true);
 
@@ -45,9 +44,9 @@ public class MatriculaController {
         }
     }
 
-    // ===== MÉTODOS CRUD BÁSICOS =====
+    // Metodos del Crud
     public boolean registrarMatricula(Matricula matricula) {
-        // Verificar si ya existe una matrícula con el mismo ID
+
         for (Matricula m : listaMatriculas) {
             if (m.getIdMatricula() == matricula.getIdMatricula()) {
                 return false;
@@ -74,7 +73,7 @@ public class MatriculaController {
         return listaMatriculas.removeIf(matricula -> matricula.getIdMatricula() == idMatricula);
     }
 
-    // ===== MÉTODOS DE GESTIÓN DE CERTIFICADOS =====
+    // Metodos de Certificado
     public boolean emitirCertificado(int idMatricula) {
         for (Matricula matricula : listaMatriculas) {
             if (matricula.getIdMatricula() == idMatricula) {
@@ -98,7 +97,7 @@ public class MatriculaController {
         return false;
     }
 
-    // ===== MÉTODOS DE CONSULTA =====
+    // Metodos de Consulta
     public List<Matricula> obtenerMatriculasPorEstudiante(String idEstudiante) {
         return listaMatriculas.stream()
                 .filter(matricula -> matricula.getEstudiante() != null &&
@@ -131,7 +130,7 @@ public class MatriculaController {
                 .collect(Collectors.toList());
     }
 
-    // ===== MÉTODOS DE VERIFICACIÓN =====
+    // Metodos de Verificacion
     public boolean verificarMatriculaActiva(Estudiante estudiante, Curso curso) {
         return listaMatriculas.stream()
                 .anyMatch(matricula ->
@@ -141,12 +140,11 @@ public class MatriculaController {
     }
 
     public boolean puedeMatricularse(Estudiante estudiante, Curso curso) {
-        // Verificar si el estudiante ya tiene una matrícula activa en este curso
+
         if (verificarMatriculaActiva(estudiante, curso)) {
             return false;
         }
 
-        // Verificar nivel del estudiante (si el curso tiene requisitos)
         if (curso != null && estudiante != null) {
             return curso.verificarNivelEstudiante(estudiante);
         }
@@ -154,7 +152,7 @@ public class MatriculaController {
         return true;
     }
 
-    // ===== MÉTODOS DE ESTADÍSTICAS =====
+    // Metodos de Matricula
     public int contarMatriculasActivas() {
         return (int) listaMatriculas.stream()
                 .filter(matricula -> matricula.getEstadoMatricula() == EstadoMatricula.ACTIVA)

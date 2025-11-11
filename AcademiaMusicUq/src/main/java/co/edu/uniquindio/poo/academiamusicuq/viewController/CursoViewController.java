@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CursoViewController {
 
-    // ===== COMPONENTES PESTAÑA DATOS DEL CURSO =====
+    // Pestaña Datos Del Curso
     @FXML private TextField txtIdCurso, txtNombreCurso, txtCapacidad;
     @FXML private ComboBox<Instrumento> cbInstrumento;
     @FXML private ComboBox<Nivel> cbNivel;
@@ -22,14 +22,14 @@ public class CursoViewController {
     @FXML private TableColumn<Curso, String> colIdCurso, colNombreCurso, colInstrumento, colNivel, colCapacidad, colProfesor;
     @FXML private Button btnAgregarCurso, btnActualizarCurso, btnEliminarCurso, btnLimpiarCurso;
 
-    // ===== COMPONENTES PESTAÑA CONFIGURACIÓN =====
+    // Pestaña Configuracion
     @FXML private ComboBox<Curso> cbCursoConfiguracion;
     @FXML private ComboBox<Clase> cbClaseAgregar;
     @FXML private TableView<Clase> tblClasesCurso;
     @FXML private TableColumn<Clase, String> colIdClase, colTipoClase, colAulaClase, colHorarioClase;
     @FXML private Button btnAgregarClaseCurso, btnRemoverClaseCurso;
 
-    // ===== COMPONENTES PESTAÑA ESTUDIANTES =====
+    // Pestaña Estudiante
     @FXML private ComboBox<Curso> cbCursoEstudiantes;
     @FXML private ComboBox<Estudiante> cbEstudianteVerificar;
     @FXML private TableView<Estudiante> tblEstudiantesInscritos;
@@ -37,7 +37,7 @@ public class CursoViewController {
     @FXML private Button btnVerificarNivel, btnAgregarEstudiante, btnRemoverEstudiante;
     @FXML private Label lblResultadoVerificacion;
 
-    // ===== COMPONENTES GENERALES =====
+    // Botones Generales
     @FXML private Button btnVolver;
     @FXML private TabPane tabPane;
 
@@ -64,7 +64,7 @@ public class CursoViewController {
         configurarPestanaEstudiantes();
     }
 
-    // ===== PESTAÑA 1: DATOS DEL CURSO =====
+    // Datos Del Curso
     private void configurarPestanaDatosCurso() {
         // Configurar tabla cursos
         colIdCurso.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getIdCurso()));
@@ -86,7 +86,7 @@ public class CursoViewController {
         cbNivel.setItems(FXCollections.observableArrayList(Nivel.values()));
     }
 
-    // ===== PESTAÑA 2: CONFIGURACIÓN =====
+    // Datos de Configuracion
     private void configurarPestanaConfiguracion() {
         // Configurar tabla clases del curso
         colIdClase.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getId())));
@@ -99,7 +99,7 @@ public class CursoViewController {
                         "N/A"));
     }
 
-    // ===== PESTAÑA 3: ESTUDIANTES =====
+    // Datos Del Estudiante
     private void configurarPestanaEstudiantes() {
         // Configurar tabla estudiantes inscritos
         colIdEstudiante.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getId()));
@@ -236,7 +236,7 @@ public class CursoViewController {
         cursoSeleccionado = null;
     }
 
-    // ===== MÉTODOS PESTAÑA CONFIGURACIÓN =====
+    // Metodos Configuracion
     @FXML
     void onAgregarClaseCurso() {
         if (cbCursoConfiguracion.getValue() != null && cbClaseAgregar.getValue() != null) {
@@ -271,7 +271,7 @@ public class CursoViewController {
         }
     }
 
-    // ===== MÉTODOS PESTAÑA ESTUDIANTES =====
+    // Metodos Estudiante
     @FXML
     void onVerificarNivel() {
         if (cbCursoEstudiantes.getValue() != null && cbEstudianteVerificar.getValue() != null) {
@@ -298,19 +298,16 @@ public class CursoViewController {
             Curso curso = cbCursoEstudiantes.getValue();
             Estudiante estudiante = cbEstudianteVerificar.getValue();
 
-            // Verificar nivel primero
             if (!curso.verificarNivelEstudiante(estudiante)) {
                 mostrarAlerta("Error", "El estudiante no tiene el nivel adecuado para este curso", Alert.AlertType.ERROR);
                 return;
             }
 
-            // Verificar capacidad
             if (curso.getListEstudiantes().size() >= curso.getCapacidad()) {
                 mostrarAlerta("Error", "El curso ha alcanzado su capacidad máxima", Alert.AlertType.ERROR);
                 return;
             }
 
-            // Agregar estudiante al curso
             if (curso.getListEstudiantes().add(estudiante)) {
                 actualizarTablaEstudiantesCurso(curso);
                 mostrarAlerta("Éxito", "Estudiante agregado al curso correctamente", Alert.AlertType.INFORMATION);
@@ -339,7 +336,7 @@ public class CursoViewController {
         }
     }
 
-    // ===== MÉTODOS AUXILIARES =====
+
     private void actualizarTablaClasesCurso(Curso curso) {
         tblClasesCurso.getItems().clear();
         if (curso != null && curso.getListClases() != null) {
@@ -399,7 +396,7 @@ public class CursoViewController {
         alert.showAndWait();
     }
 
-    // Listeners para actualizar tablas cuando cambian los combos
+
     @FXML
     void onCursoConfiguracionChanged() {
         Curso curso = cbCursoConfiguracion.getValue();

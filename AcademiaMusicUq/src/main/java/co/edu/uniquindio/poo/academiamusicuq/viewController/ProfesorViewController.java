@@ -14,17 +14,17 @@ import java.util.List;
 
 public class ProfesorViewController {
 
-    // ===== COMPONENTES PESTAÑA DATOS PERSONALES =====
+
     @FXML private TextField txtId, txtNombre, txtApellido, txtEmail, txtTelefono, txtEspecialidad;
     @FXML private ComboBox<Instrumento> cbInstrumento;
     @FXML private Button btnAgregar, btnActualizar, btnEliminar, btnLimpiar;
     @FXML private TableView<Profesor> tblProfesores;
     @FXML private TableColumn<Profesor, String> colId, colNombre, colApellido, colEmail, colTelefono, colEspecialidad, colInstrumento;
 
-    // ===== COMPONENTES PESTAÑA GESTIÓN DE CLASES =====
+
     @FXML private ComboBox<Profesor> cbProfesorClases;
     @FXML private ComboBox<String> cbDiaHorario;
-    @FXML private TextField txtHoraInicio, txtHoraFin, txtCupoMaximo, txtObjetivoPersonal; // ✅ CORREGIDO
+    @FXML private TextField txtHoraInicio, txtHoraFin, txtCupoMaximo, txtObjetivoPersonal;
     @FXML private ComboBox<Aula> cbAulaClase;
     @FXML private ComboBox<Curso> cbCursoClase;
     @FXML private ComboBox<TipoClase> cbTipoClase;
@@ -32,7 +32,7 @@ public class ProfesorViewController {
     @FXML private TableView<Clase> tblClasesProfesor;
     @FXML private TableColumn<Clase, String> colIdClase, colTipoClase, colCursoClase, colAulaClase, colHorarioClase;
 
-    // ===== COMPONENTES PESTAÑA EVALUACIÓN =====
+
     @FXML private ComboBox<Profesor> cbProfesorEvaluacion;
     @FXML private ComboBox<Estudiante> cbEstudianteProgreso, cbEstudianteComentario;
     @FXML private ComboBox<Curso> cbCursoProgreso, cbCursoComentario;
@@ -42,7 +42,7 @@ public class ProfesorViewController {
     @FXML private TableView<ComentarioFormativo> tblComentarios;
     @FXML private TableColumn<ComentarioFormativo, String> colEstudianteComentario, colCursoComentario, colContenidoComentario, colFechaComentario;
 
-    // ===== COMPONENTES GENERALES =====
+
     @FXML private Button btnVolver;
     @FXML private TabPane tabPane;
 
@@ -66,7 +66,7 @@ public class ProfesorViewController {
         configurarPestanaEvaluacion();
     }
 
-    // ===== PESTAÑA 1: DATOS PERSONALES =====
+
     private void configurarPestanaDatosPersonales() {
         // Configurar tabla profesores
         colId.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getId()));
@@ -78,14 +78,14 @@ public class ProfesorViewController {
         colInstrumento.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getInstrumento() != null ? cell.getValue().getInstrumento().toString() : "N/A"));
 
-        // Configurar combo instrumentos
+
         cbInstrumento.setItems(FXCollections.observableArrayList(Instrumento.values()));
 
-        // Cargar datos
+
         cargarProfesores();
     }
 
-    // ===== PESTAÑA 2: GESTIÓN DE CLASES =====
+
     private void configurarPestanaGestionClases() {
         // Configurar combo días
         cbDiaHorario.setItems(FXCollections.observableArrayList(
@@ -108,13 +108,13 @@ public class ProfesorViewController {
                                 cell.getValue().getHorario().getHoraInicio() + "-" +
                                 cell.getValue().getHorario().getHoraFin() : "N/A"));
 
-        // ✅ INICIALIZAR txtObjetivoPersonal para evitar NullPointerException
+
         if (txtObjetivoPersonal != null) {
-            txtObjetivoPersonal.setDisable(true); // Inicialmente deshabilitado
+            txtObjetivoPersonal.setDisable(true);
         }
     }
 
-    // ===== PESTAÑA 3: EVALUACIÓN =====
+
     private void configurarPestanaEvaluacion() {
         // Configurar tabla comentarios
         colEstudianteComentario.setCellValueFactory(cell -> new SimpleStringProperty(
@@ -139,7 +139,7 @@ public class ProfesorViewController {
     }
 
     private void cargarCombosGestionClases() {
-        // Cargar profesores para selección
+        // Cargar profesores para seleccion
         cbProfesorClases.setItems(FXCollections.observableArrayList(App.academia.getListProfesores()));
 
         // Cargar aulas
@@ -150,7 +150,7 @@ public class ProfesorViewController {
     }
 
     private void cargarCombosEvaluacion() {
-        // Cargar profesores para evaluación
+        // Cargar profesores para evaluacion
         cbProfesorEvaluacion.setItems(FXCollections.observableArrayList(App.academia.getListProfesores()));
 
         // Cargar estudiantes
@@ -162,7 +162,7 @@ public class ProfesorViewController {
         cbCursoComentario.setItems(FXCollections.observableArrayList(App.academia.getListCursos()));
     }
 
-    // ===== MÉTODOS PESTAÑA DATOS PERSONALES =====
+
     @FXML
     void onAgregarProfesor() {
         if (validarCamposProfesor()) {
@@ -189,13 +189,11 @@ public class ProfesorViewController {
 
     @FXML
     void onActualizarProfesor() {
-        // Implementar lógica de actualización
         mostrarAlerta("Info", "Funcionalidad en desarrollo", Alert.AlertType.INFORMATION);
     }
 
     @FXML
     void onEliminarProfesor() {
-        // Implementar lógica de eliminación
         mostrarAlerta("Info", "Funcionalidad en desarrollo", Alert.AlertType.INFORMATION);
     }
 
@@ -204,7 +202,7 @@ public class ProfesorViewController {
         limpiarCamposProfesor();
     }
 
-    // ===== MÉTODOS PESTAÑA GESTIÓN DE CLASES =====
+
     @FXML
     void onAsignarHorario() {
         Profesor profesor = cbProfesorClases.getValue();
@@ -234,30 +232,26 @@ public class ProfesorViewController {
 
     @FXML
     void onCrearClaseGrupal() {
-        // Implementar lógica de creación de clase grupal
         mostrarAlerta("Info", "Funcionalidad en desarrollo", Alert.AlertType.INFORMATION);
     }
 
     @FXML
     void onAgregarClase() {
-        // Implementar lógica de agregar clase
         mostrarAlerta("Info", "Funcionalidad en desarrollo", Alert.AlertType.INFORMATION);
     }
 
-    // ===== MÉTODOS PESTAÑA EVALUACIÓN =====
+
     @FXML
     void onValorarProgreso() {
-        // Implementar lógica de valoración de progreso
         mostrarAlerta("Info", "Funcionalidad en desarrollo", Alert.AlertType.INFORMATION);
     }
 
     @FXML
     void onGenerarComentario() {
-        // Implementar lógica de generación de comentarios
         mostrarAlerta("Info", "Funcionalidad en desarrollo", Alert.AlertType.INFORMATION);
     }
 
-    // ===== MÉTODOS AUXILIARES =====
+
     @FXML
     void onVolver() {
         app.mostrarMainView();
@@ -298,10 +292,9 @@ public class ProfesorViewController {
         alert.showAndWait();
     }
 
-    // ===== LISTENERS PARA CAMBIOS DINÁMICOS =====
+
     @FXML
     void onTipoClaseChanged() {
-        // Habilitar/deshabilitar campos según el tipo de clase
         if (cbTipoClase.getValue() == TipoClase.INDIVIDUAL) {
             txtObjetivoPersonal.setDisable(false);
             txtCupoMaximo.setDisable(true);
@@ -318,7 +311,6 @@ public class ProfesorViewController {
 
     @FXML
     void onProfesorClasesChanged() {
-        // Cargar clases del profesor seleccionado
         Profesor profesor = cbProfesorClases.getValue();
         if (profesor != null) {
             listaClasesProfesor.clear();

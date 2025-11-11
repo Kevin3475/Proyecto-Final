@@ -16,14 +16,14 @@ import java.util.List;
 
 public class ReportesViewController {
 
-    // ===== COMPONENTES PESTAÑA REPORTES AVANZADOS =====
+
     @FXML private ComboBox<String> cbTipoReporteAvanzado;
     @FXML private ComboBox<Estudiante> cbEstudianteReporte;
     @FXML private ComboBox<Curso> cbCursoReporte;
     @FXML private ComboBox<Profesor> cbProfesorReporte;
     @FXML private DatePicker dpFechaInicioReporte, dpFechaFinReporte;
 
-    // ===== TABLAS DE REPORTES =====
+
     @FXML private TableView<ReporteProgreso> tblReportesProgreso;
     @FXML private TableColumn<ReporteProgreso, String> colIdReporte, colEstudiante, colCurso, colProfesor, colCalificacion, colAprobado, colFecha;
 
@@ -33,19 +33,19 @@ public class ReportesViewController {
     @FXML private TableView<Matricula> tblReportesMatriculas;
     @FXML private TableColumn<Matricula, String> colIdMatricula, colEstudianteMatricula, colCursoMatricula, colEstadoMatricula, colFechaMatricula;
 
-    // ===== COMPONENTES PESTAÑA ESTADÍSTICAS DETALLADAS =====
+
     @FXML private PieChart pieChartNiveles;
     @FXML private BarChart<String, Number> barChartInstrumentos;
     @FXML private LineChart<String, Number> lineChartProgreso;
     @FXML private Label lblTotalEstudiantes, lblTotalProfesores, lblTotalCursos;
     @FXML private Label lblPromedioCalificaciones, lblTasaAprobacion, lblTasaAsistencia;
 
-    // ===== COMPONENTES PESTAÑA REPORTES PERSONALIZADOS =====
+
     @FXML private TextArea txtConsultaPersonalizada;
     @FXML private Button btnEjecutarConsulta;
     @FXML private TableView<Object[]> tblResultadosPersonalizados;
 
-    // ===== COMPONENTES GENERALES =====
+
     @FXML private Button btnGenerarReporte, btnExportarPDF, btnExportarExcel, btnVolver;
     @FXML private TabPane tabPaneReportes;
 
@@ -71,9 +71,9 @@ public class ReportesViewController {
         configurarPestanaReportesPersonalizados();
     }
 
-    // ===== PESTAÑA 1: REPORTES AVANZADOS =====
+
     private void configurarPestanaReportesAvanzados() {
-        // Configurar combo tipos de reporte
+
         cbTipoReporteAvanzado.setItems(FXCollections.observableArrayList(
                 "📈 Reporte de Progreso General",
                 "✅ Reporte de Asistencias",
@@ -108,7 +108,7 @@ public class ReportesViewController {
         colFechaAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().toString()));
         colPresente.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPresente() ? "✅ Presente" : "❌ Ausente"));
 
-        // Configurar tabla Matrículas
+
         colIdMatricula.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdMatricula())));
         colEstudianteMatricula.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getEstudiante() != null ?
@@ -122,12 +122,10 @@ public class ReportesViewController {
         dpFechaFinReporte.setValue(LocalDate.now());
     }
 
-    // ===== PESTAÑA 2: ESTADÍSTICAS DETALLADAS =====
     private void configurarPestanaEstadisticasDetalladas() {
         // Los gráficos se configurarán al cargar los datos
     }
 
-    // ===== PESTAÑA 3: REPORTES PERSONALIZADOS =====
     private void configurarPestanaReportesPersonalizados() {
         // Configurar consultas predefinidas
         txtConsultaPersonalizada.setText(
@@ -145,20 +143,18 @@ public class ReportesViewController {
     }
 
     private void cargarCombosFiltros() {
-        // Cargar estudiantes
+
         ObservableList<Estudiante> estudiantes = FXCollections.observableArrayList(App.academia.getListEstudiantes());
         cbEstudianteReporte.setItems(estudiantes);
 
-        // Cargar cursos
         ObservableList<Curso> cursos = FXCollections.observableArrayList(App.academia.getListCursos());
         cbCursoReporte.setItems(cursos);
 
-        // Cargar profesores
         ObservableList<Profesor> profesores = FXCollections.observableArrayList(App.academia.getListProfesores());
         cbProfesorReporte.setItems(profesores);
     }
 
-    // ===== MÉTODOS PRINCIPALES =====
+
     @FXML
     void onGenerarReporte() {
         String tipoReporte = cbTipoReporteAvanzado.getValue();
@@ -195,7 +191,6 @@ public class ReportesViewController {
     @FXML
     void onExportarPDF() {
         if (!listaReportesProgreso.isEmpty()) {
-            // Lógica para exportar a PDF
             mostrarAlerta("Éxito", "Reporte exportado a PDF correctamente", Alert.AlertType.INFORMATION);
         } else {
             mostrarAlerta("Error", "No hay datos para exportar", Alert.AlertType.WARNING);
@@ -205,7 +200,6 @@ public class ReportesViewController {
     @FXML
     void onExportarExcel() {
         if (!listaReportesProgreso.isEmpty()) {
-            // Lógica para exportar a Excel
             mostrarAlerta("Éxito", "Reporte exportado a Excel correctamente", Alert.AlertType.INFORMATION);
         } else {
             mostrarAlerta("Error", "No hay datos para exportar", Alert.AlertType.WARNING);
@@ -215,7 +209,6 @@ public class ReportesViewController {
     @FXML
     void onEjecutarConsulta() {
         String consulta = txtConsultaPersonalizada.getText();
-        // Lógica para ejecutar consultas personalizadas
         mostrarAlerta("Info", "Consulta ejecutada (funcionalidad en desarrollo)", Alert.AlertType.INFORMATION);
     }
 
@@ -224,7 +217,7 @@ public class ReportesViewController {
         app.mostrarMainView();
     }
 
-    // ===== MÉTODOS DE GENERACIÓN DE REPORTES =====
+
     private void generarReporteProgresoGeneral() {
         List<ReporteProgreso> reportes = reportesController.generarReporteProgresoGeneral();
         listaReportesProgreso.clear();
@@ -296,23 +289,22 @@ public class ReportesViewController {
     }
 
     private void generarReporteComparativo() {
-        // Lógica para reporte comparativo entre cursos/profesores/estudiantes
         mostrarAlerta("Info", "Reporte comparativo en desarrollo", Alert.AlertType.INFORMATION);
     }
 
-    // ===== MÉTODOS AUXILIARES =====
+
     private void cargarEstadisticasDetalladas() {
-        // Estadísticas generales
+
         lblTotalEstudiantes.setText(String.valueOf(reportesController.contarTotalEstudiantes()));
         lblTotalProfesores.setText(String.valueOf(reportesController.contarTotalProfesores()));
         lblTotalCursos.setText(String.valueOf(reportesController.contarTotalCursos()));
 
-        // Métricas de rendimiento
+
         lblPromedioCalificaciones.setText(String.format("%.2f", reportesController.calcularPromedioCalificaciones()));
         lblTasaAprobacion.setText(String.format("%.1f%%", reportesController.calcularTasaAprobacion()));
         lblTasaAsistencia.setText(String.format("%.1f%%", reportesController.calcularTasaAsistencia()));
 
-        // Cargar gráficos
+
         cargarGraficosEstadisticas();
     }
 
@@ -325,7 +317,7 @@ public class ReportesViewController {
     private void cargarPieChartNiveles() {
         pieChartNiveles.getData().clear();
 
-        // Datos de ejemplo - en implementación real vendrían del controlador
+
         pieChartNiveles.getData().addAll(
                 new PieChart.Data("Básico", 45),
                 new PieChart.Data("Intermedio", 30),

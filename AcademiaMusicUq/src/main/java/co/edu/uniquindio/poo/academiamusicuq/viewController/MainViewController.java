@@ -27,14 +27,14 @@ public class MainViewController {
     }
 
     private void cargarEstadisticas() {
-        // Cargar estadísticas reales desde la academia
+        // Cargar estadisticas reales desde la academia
         if (App.academia != null) {
             lblTotalEstudiantes.setText(String.valueOf(App.academia.getListEstudiantes().size()));
             lblTotalProfesores.setText(String.valueOf(App.academia.getListProfesores().size()));
             lblTotalCursos.setText(String.valueOf(App.academia.getListCursos().size()));
             lblTotalAulas.setText(String.valueOf(App.academia.getListAulas().size()));
 
-            // Placeholders para las demás estadísticas
+            // Placeholders para las demas estadisticas
             lblTotalClases.setText("5"); // Ejemplo
             lblTotalMatriculas.setText("12"); // Ejemplo
             lblAsistenciasHoy.setText("8"); // Ejemplo
@@ -42,7 +42,7 @@ public class MainViewController {
         }
     }
 
-    // ===== MÉTODOS DE NAVEGACIÓN =====
+    // Metodos De Navegacion
 
     @FXML
     void onGestionEstudiantes() {

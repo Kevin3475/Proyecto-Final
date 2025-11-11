@@ -17,7 +17,7 @@ public class ProfesorController {
         this.academia = academia;
     }
 
-    // ===== MÉTODOS CRUD BÁSICOS =====
+    // Metodos del Crud
     public boolean registrarProfesor(Profesor profesor) {
         return academia.registrarProfesor(profesor);
     }
@@ -34,7 +34,7 @@ public class ProfesorController {
         return academia.eliminarProfesor(id);
     }
 
-    // ===== MÉTODOS DE GESTIÓN DE CLASES =====
+    // Metodos de Clase
     public boolean asignarHorarioProfesor(Profesor profesor, BloqueHorario horario) {
         return profesor.asignarHorario(horario);
     }
@@ -47,7 +47,7 @@ public class ProfesorController {
         return profesor.crearClaseGrupal(clase);
     }
 
-    // ===== MÉTODOS DE CONSULTA =====
+    // Metodos de Consulta
     public List<Clase> obtenerClasesProfesor(Profesor profesor) {
         return profesor.getListClases();
     }

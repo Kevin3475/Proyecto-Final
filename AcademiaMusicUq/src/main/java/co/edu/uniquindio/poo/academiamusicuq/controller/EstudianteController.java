@@ -16,7 +16,7 @@ public class EstudianteController {
         this.academia = academia;
     }
 
-    // ===== MÉTODOS CRUD BÁSICOS =====
+    // Metodos del Crud
     public boolean registrarEstudiante(Estudiante estudiante) {
         return academia.registrarEstudiante(estudiante);
     }
@@ -33,7 +33,7 @@ public class EstudianteController {
         return academia.eliminarEstudiante(id);
     }
 
-    // ===== MÉTODOS DE GESTIÓN ACADÉMICA =====
+    // Metodos de Gestion
     public boolean inscribirEstudianteEnCurso(Estudiante estudiante, Curso curso) {
         // Verificar que el estudiante tenga el nivel requerido
         if (curso.verificarNivelEstudiante(estudiante)) {
@@ -55,12 +55,12 @@ public class EstudianteController {
         return estudiante.agregarClaseIndividual(clase);
     }
 
-    // ===== MÉTODOS DE CONSULTA =====
+    // Metodos de Consulta
     public String consultarHorarioEstudiante(Estudiante estudiante) {
         return estudiante.consultarHorario();
     }
 
-    // ===== MÉTODOS DE PROGRESO =====
+    // Metodos del Reporte
     public void generarReporteProgreso(Estudiante estudiante) {
         estudiante.generarReporteProgreso();
     }

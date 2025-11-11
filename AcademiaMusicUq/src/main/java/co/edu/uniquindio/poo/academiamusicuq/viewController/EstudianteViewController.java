@@ -14,14 +14,14 @@ import java.util.List;
 
 public class EstudianteViewController {
 
-    // ===== COMPONENTES PESTAÑA DATOS PERSONALES =====
+    // Datos Personales
     @FXML private TextField txtId, txtNombre, txtApellido, txtEmail, txtTelefono;
     @FXML private ComboBox<Nivel> cbNivel;
     @FXML private TableView<Estudiante> tblEstudiantes;
     @FXML private TableColumn<Estudiante, String> colId, colNombre, colApellido, colEmail, colTelefono, colNivel;
     @FXML private Button btnAgregar, btnActualizar, btnEliminar, btnLimpiar;
 
-    // ===== COMPONENTES PESTAÑA GESTIÓN ACADÉMICA =====
+    // Gestion Academia
     @FXML private ComboBox<Estudiante> cbEstudianteAcademico, cbEstudianteClases, cbEstudianteHorario;
     @FXML private ComboBox<Curso> cbCursosInscribir;
     @FXML private ComboBox<ClaseGrupal> cbClasesGrupales;
@@ -29,7 +29,7 @@ public class EstudianteViewController {
     @FXML private TextArea txtHorario;
     @FXML private Button btnInscribirCurso, btnInscribirClaseGrupal, btnAgregarClaseIndividual, btnConsultarHorario;
 
-    // ===== COMPONENTES PESTAÑA PROGRESO =====
+    // Pestaña Progreso
     @FXML private ComboBox<Estudiante> cbEstudianteReporte;
     @FXML private TableView<ReporteProgreso> tblReportes;
     @FXML private TableView<Asistencia> tblAsistencias;
@@ -37,8 +37,9 @@ public class EstudianteViewController {
     @FXML private TableColumn<Asistencia, String> colClaseAsistencia, colFechaAsistencia, colPresente;
     @FXML private Button btnGenerarReporte, btnCargarAsistencias;
 
-    // ===== COMPONENTES GENERALES =====
+    // Boton General
     @FXML private Button btnVolver;
+    // TabPane General
     @FXML private TabPane tabPane;
 
     private ObservableList<Estudiante> listaEstudiantes = FXCollections.observableArrayList();
@@ -65,7 +66,7 @@ public class EstudianteViewController {
         configurarPestanaProgreso();
     }
 
-    // ===== PESTAÑA 1: DATOS PERSONALES =====
+    // Datos Personales
     private void configurarPestanaDatosPersonales() {
         // Configurar tabla estudiantes
         colId.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getId()));
@@ -84,7 +85,7 @@ public class EstudianteViewController {
         cbNivel.setItems(FXCollections.observableArrayList(Nivel.values()));
     }
 
-    // ===== PESTAÑA 2: GESTIÓN ACADÉMICA =====
+    // Datos Gestion Academia
     private void configurarPestanaGestionAcademica() {
         // Cargar combos de estudiantes
         cbEstudianteAcademico.setItems(listaEstudiantes);
@@ -95,7 +96,7 @@ public class EstudianteViewController {
         cargarCombosGestionAcademica();
     }
 
-    // ===== PESTAÑA 3: PROGRESO =====
+    // Datos Progreso
     private void configurarPestanaProgreso() {
         // Configurar tabla reportes
         colCursoReporte.setCellValueFactory(cell -> new SimpleStringProperty(
@@ -148,7 +149,7 @@ public class EstudianteViewController {
         cbClasesIndividuales.setItems(listaClasesIndividuales);
     }
 
-    // ===== MÉTODOS PESTAÑA DATOS PERSONALES =====
+    // Metodos Datos Personales
     private void mostrarEstudianteSeleccionado() {
         if (estudianteSeleccionado != null) {
             txtId.setText(estudianteSeleccionado.getId());
@@ -237,7 +238,7 @@ public class EstudianteViewController {
         estudianteSeleccionado = null;
     }
 
-    // ===== MÉTODOS PESTAÑA GESTIÓN ACADÉMICA =====
+    // Metodos Gestion Academia
     @FXML
     void onInscribirCurso() {
         if (cbEstudianteAcademico.getValue() != null && cbCursosInscribir.getValue() != null) {
@@ -297,7 +298,7 @@ public class EstudianteViewController {
         }
     }
 
-    // ===== MÉTODOS PESTAÑA PROGRESO =====
+    // Metodos Progreso
     @FXML
     void onGenerarReporte() {
         if (cbEstudianteReporte.getValue() != null) {
@@ -323,7 +324,7 @@ public class EstudianteViewController {
         }
     }
 
-    // ===== MÉTODOS GENERALES =====
+
     @FXML
     void onVolver() {
         app.mostrarMainView();

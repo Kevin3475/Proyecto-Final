@@ -15,7 +15,7 @@ import java.util.List;
 
 public class AsistenciaViewController {
 
-    // ===== COMPONENTES PESTAÑA REGISTRO =====
+    // Pestaña Registro
     @FXML private ComboBox<Profesor> cbProfesorAsistencia;
     @FXML private ComboBox<Clase> cbClaseAsistencia;
     @FXML private Label lblFechaActual;
@@ -23,7 +23,7 @@ public class AsistenciaViewController {
     @FXML private TableColumn<EstudianteAsistencia, String> colEstudianteId, colEstudianteNombre, colEstudianteCurso, colAsistenciaEstado, colAccionesAsistencia;
     @FXML private Button btnCargarEstudiantes, btnRegistrarTodas, btnLimpiarAsistencias, btnGuardarAsistencias;
 
-    // ===== COMPONENTES PESTAÑA CONSULTA =====
+    // Pestaña Consulta
     @FXML private ComboBox<Estudiante> cbEstudianteConsulta;
     @FXML private ComboBox<Curso> cbCursoConsulta;
     @FXML private ComboBox<Profesor> cbProfesorConsulta;
@@ -34,7 +34,7 @@ public class AsistenciaViewController {
     @FXML private Label lblTotalAsistencias, lblTotalAusencias, lblPorcentajeAsistencia;
     @FXML private Button btnBuscarAsistencias, btnExportarReporte, btnGenerarReporte;
 
-    // ===== COMPONENTES GENERALES =====
+    // Botones Generales
     @FXML private Button btnVolver;
     @FXML private TabPane tabPane;
 
@@ -169,7 +169,7 @@ public class AsistenciaViewController {
         cbProfesorConsulta.setItems(listaProfesores);
     }
 
-    // ===== MÉTODOS PESTAÑA REGISTRO =====
+    // Metodos Pestaña Registro
     @FXML
     void onCargarEstudiantes() {
         Profesor profesor = cbProfesorAsistencia.getValue();
@@ -239,7 +239,7 @@ public class AsistenciaViewController {
         }
     }
 
-    // ===== MÉTODOS PESTAÑA CONSULTA =====
+    // Metodos Pestaña Consulta
     @FXML
     void onBuscarAsistencias() {
         Estudiante estudiante = cbEstudianteConsulta.getValue();
@@ -278,7 +278,7 @@ public class AsistenciaViewController {
         mostrarAlerta("Info", "Generando reporte de asistencias...", Alert.AlertType.INFORMATION);
     }
 
-    // ===== MÉTODOS AUXILIARES =====
+
     @FXML
     void onVolver() {
         app.mostrarMainView();
@@ -294,12 +294,11 @@ public class AsistenciaViewController {
         lblPorcentajeAsistencia.setText(String.format("%.1f%%", porcentaje));
     }
 
-    // ===== LISTENERS PARA CAMBIOS DINÁMICOS =====
+
     @FXML
     void onProfesorAsistenciaChanged() {
         Profesor profesor = cbProfesorAsistencia.getValue();
         if (profesor != null) {
-            // Cargar clases del profesor seleccionado
             ObservableList<Clase> clasesProfesor = FXCollections.observableArrayList(profesor.getListClases());
             cbClaseAsistencia.setItems(clasesProfesor);
         }

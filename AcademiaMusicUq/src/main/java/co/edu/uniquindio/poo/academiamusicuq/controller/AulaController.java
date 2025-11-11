@@ -15,7 +15,7 @@ public class AulaController {
         this.academia = academia;
     }
 
-    // ===== MÉTODOS CRUD BÁSICOS =====
+    // Metodos del crud
     public boolean registrarAula(Aula aula) {
         return academia.registrarAula(aula);
     }
@@ -32,7 +32,7 @@ public class AulaController {
         return academia.eliminarAula(idAula);
     }
 
-    // ===== MÉTODOS DE GESTIÓN DE HORARIOS =====
+    // Metodos de los Horarios
     public boolean agregarHorarioAAula(Aula aula, BloqueHorario horario) {
         // Verificar disponibilidad primero
         if (!aula.estaDisponible(horario)) {
@@ -46,7 +46,7 @@ public class AulaController {
         return aula.getListHorarios().remove(horario);
     }
 
-    // ===== MÉTODOS DE CONSULTA =====
+    // Metodos de consulta
     public boolean verificarDisponibilidadAula(Aula aula, BloqueHorario horario) {
         return aula.estaDisponible(horario);
     }
@@ -59,7 +59,7 @@ public class AulaController {
         return aula.getListClases();
     }
 
-    // ===== MÉTODOS DE FILTRADO =====
+    // Metodos del Aula
     public List<Aula> obtenerAulasDisponibles() {
         return academia.listarAulas().stream()
                 .filter(Aula::isDisponible)

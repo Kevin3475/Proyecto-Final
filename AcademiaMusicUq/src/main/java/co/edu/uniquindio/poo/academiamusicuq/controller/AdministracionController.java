@@ -78,23 +78,19 @@ public class AdministracionController {
 
 
     public int contarTotalMatriculas() {
-        // En una implementación real, esto vendría de un controlador de matrículas
-        return 0; // Placeholder
+        return 0;
     }
 
     public int contarMatriculasActivas() {
-        // En una implementación real, esto contaría matrículas activas
-        return 0; // Placeholder
+        return 0;
     }
 
     public int contarMatriculasFinalizadas() {
-        // En una implementación real, esto contaría matrículas finalizadas
-        return 0; // Placeholder
+        return 0;
     }
 
     public int contarCertificadosEmitidos() {
-        // En una implementación real, esto contaría certificados emitidos
-        return 0; // Placeholder
+        return 0;
     }
 
 
@@ -156,7 +152,6 @@ public class AdministracionController {
     }
 
     public boolean actualizarInformacionAcademia(String nombre, String direccion, String telefono) {
-        // En una implementación real, esto actualizaría la base de datos
         if (nombre != null && !nombre.trim().isEmpty()) {
             academia.setNombre(nombre);
         }

@@ -20,15 +20,14 @@ public class ClaseController {
     public ClaseController(Academia academia) {
         this.academia = academia;
         this.listaClases = new ArrayList<>();
-        // En una implementación real, esto vendría de la academia
         inicializarClasesDeEjemplo();
     }
 
     private void inicializarClasesDeEjemplo() {
-        // Esto se puede mejorar obteniendo datos reales de la academia
+
     }
 
-    // ===== MÉTODOS CRUD BÁSICOS =====
+    // Metodos del crud
     public boolean registrarClase(Clase clase) {
         // Verificar si ya existe una clase con el mismo ID
         for (Clase c : listaClases) {
@@ -57,7 +56,7 @@ public class ClaseController {
         return listaClases.removeIf(clase -> clase.getId() == id);
     }
 
-    // ===== MÉTODOS ESPECÍFICOS POR TIPO =====
+    // Metodos de las Clases
     public List<ClaseGrupal> obtenerClasesGrupales() {
         return listaClases.stream()
                 .filter(clase -> clase instanceof ClaseGrupal)
@@ -72,7 +71,7 @@ public class ClaseController {
                 .collect(Collectors.toList());
     }
 
-    // ===== MÉTODOS DE GESTIÓN DE ESTUDIANTES =====
+    // Metodos de los Estudiantes
     public boolean agregarEstudianteAClaseGrupal(ClaseGrupal clase, Estudiante estudiante) {
         return clase.agregarEstudiante(estudiante);
     }
@@ -81,7 +80,7 @@ public class ClaseController {
         return clase.getListEstudiantes().remove(estudiante);
     }
 
-    // ===== MÉTODOS DE ASISTENCIAS =====
+    // Metodos de Asistencia
     public boolean registrarAsistencia(Clase clase, Asistencia asistencia) {
         return clase.registrarAsistencia(clase.getProfesor(), asistencia);
     }
@@ -91,7 +90,7 @@ public class ClaseController {
         return new ArrayList<>();
     }
 
-    // ===== MÉTODOS DE EVALUACIÓN =====
+    // Metodos de Evaluacion del Estudiante
     public ReporteProgreso evaluarProgresoEstudiante(Clase clase, Estudiante estudiante, float calificacion, String observaciones) {
         return clase.evaluarProgreso(estudiante, calificacion, observaciones);
     }
@@ -101,7 +100,7 @@ public class ClaseController {
         return new ArrayList<>();
     }
 
-    // ===== MÉTODOS DE CONSULTA =====
+    // Metodos de Consulta
     public List<Clase> obtenerClasesPorProfesor(String idProfesor) {
         return listaClases.stream()
                 .filter(clase -> clase.getProfesor() != null && clase.getProfesor().getId().equals(idProfesor))
@@ -120,7 +119,7 @@ public class ClaseController {
                 .collect(Collectors.toList());
     }
 
-    // ===== MÉTODOS DE VERIFICACIÓN =====
+    // Metodos del Cupo
     public boolean verificarCupoDisponible(ClaseGrupal clase) {
         return clase.verificarCupo();
     }

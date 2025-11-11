@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MatriculaViewController {
 
-    // ===== COMPONENTES PESTAÑA GESTIÓN MATRÍCULAS =====
+
     @FXML private TextField txtIdMatricula;
     @FXML private ComboBox<Estudiante> cbEstudianteMatricula;
     @FXML private ComboBox<Curso> cbCursoMatricula;
@@ -24,14 +24,14 @@ public class MatriculaViewController {
     @FXML private TableColumn<Matricula, String> colIdMatricula, colEstudianteMatricula, colCursoMatricula, colFechaMatricula, colEstadoMatricula;
     @FXML private Button btnAgregarMatricula, btnActualizarMatricula, btnEliminarMatricula, btnLimpiarMatricula;
 
-    // ===== COMPONENTES PESTAÑA CERTIFICADOS =====
+
     @FXML private ComboBox<Matricula> cbMatriculaCertificado;
     @FXML private TableView<Matricula> tblMatriculasCertificados;
     @FXML private TableColumn<Matricula, String> colIdMatriculaCert, colEstudianteCert, colCursoCert, colEstadoCert, colCertificadoCert;
     @FXML private Button btnEmitirCertificado, btnVerCertificado;
     @FXML private Label lblInfoCertificado;
 
-    // ===== COMPONENTES GENERALES =====
+
     @FXML private Button btnVolver;
     @FXML private TabPane tabPane;
 
@@ -56,9 +56,9 @@ public class MatriculaViewController {
         configurarPestanaCertificados();
     }
 
-    // ===== PESTAÑA 1: GESTIÓN MATRÍCULAS =====
+    // Datos Gestion Matricula
     private void configurarPestanaGestionMatriculas() {
-        // Configurar tabla matrículas
+        // Configurar tabla matriculas
         colIdMatricula.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdMatricula())));
         colEstudianteMatricula.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getEstudiante() != null ?
@@ -78,7 +78,7 @@ public class MatriculaViewController {
         dpFechaInscripcion.setValue(LocalDate.now());
     }
 
-    // ===== PESTAÑA 2: CERTIFICADOS =====
+    // Datos Certificados
     private void configurarPestanaCertificados() {
         // Configurar tabla matrículas para certificados
         colIdMatriculaCert.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdMatricula())));
@@ -133,7 +133,7 @@ public class MatriculaViewController {
         // Los combos ya se configuraron en initialize()
     }
 
-    // ===== MÉTODOS PESTAÑA GESTIÓN MATRÍCULAS =====
+    // Metodos Gestion Matriculas
     private void mostrarMatriculaSeleccionada() {
         if (matriculaSeleccionada != null) {
             txtIdMatricula.setText(String.valueOf(matriculaSeleccionada.getIdMatricula()));
@@ -219,7 +219,7 @@ public class MatriculaViewController {
         matriculaSeleccionada = null;
     }
 
-    // ===== MÉTODOS PESTAÑA CERTIFICADOS =====
+    // Metodos Certificados
     @FXML
     void onEmitirCertificado() {
         Matricula matricula = cbMatriculaCertificado.getValue();
@@ -266,7 +266,7 @@ public class MatriculaViewController {
         }
     }
 
-    // ===== MÉTODOS AUXILIARES =====
+
     private void actualizarInfoCertificado(Matricula matricula) {
         if (matricula != null) {
             StringBuilder info = new StringBuilder();

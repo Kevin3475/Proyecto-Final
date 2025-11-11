@@ -14,14 +14,14 @@ import java.util.List;
 
 public class AulaViewController {
 
-    // ===== COMPONENTES PESTAÑA DATOS DEL AULA =====
+    // Pestaña Datos Aula
     @FXML private TextField txtIdAula, txtNombreAula, txtCapacidadAula;
     @FXML private CheckBox chkDisponible;
     @FXML private TableView<Aula> tblAulas;
     @FXML private TableColumn<Aula, String> colIdAula, colNombreAula, colCapacidadAula, colDisponibleAula;
     @FXML private Button btnAgregarAula, btnActualizarAula, btnEliminarAula, btnLimpiarAula;
 
-    // ===== COMPONENTES PESTAÑA DISPONIBILIDAD =====
+    // Pestaña Disponibilidad
     @FXML private ComboBox<Aula> cbAulaDisponibilidad;
     @FXML private ComboBox<String> cbDiaDisponibilidad;
     @FXML private TextField txtHoraInicioDisponibilidad, txtHoraFinDisponibilidad;
@@ -30,12 +30,12 @@ public class AulaViewController {
     @FXML private Button btnVerificarDisponibilidad, btnAgregarHorario, btnRemoverHorario;
     @FXML private Label lblResultadoDisponibilidad;
 
-    // ===== COMPONENTES PESTAÑA CLASES =====
+    // Pestaña Clase
     @FXML private ComboBox<Aula> cbAulaClases;
     @FXML private TableView<Clase> tblClasesAula;
     @FXML private TableColumn<Clase, String> colIdClaseAula, colTipoClaseAula, colCursoClaseAula, colProfesorClaseAula, colHorarioClaseAula;
 
-    // ===== COMPONENTES GENERALES =====
+    // Botones Generales
     @FXML private Button btnVolver;
     @FXML private TabPane tabPane;
 
@@ -60,7 +60,7 @@ public class AulaViewController {
         configurarPestanaClases();
     }
 
-    // ===== PESTAÑA 1: DATOS DEL AULA =====
+    // Datos Aula
     private void configurarPestanaDatosAula() {
         // Configurar tabla aulas
         colIdAula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getIdAula()));
@@ -80,7 +80,7 @@ public class AulaViewController {
         ));
     }
 
-    // ===== PESTAÑA 2: DISPONIBILIDAD =====
+    // Datos Disponibilidad
     private void configurarPestanaDisponibilidad() {
         // Configurar tabla horarios
         colDiaHorario.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDia()));
@@ -88,7 +88,7 @@ public class AulaViewController {
         colHoraFin.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getHoraFin().toString()));
     }
 
-    // ===== PESTAÑA 3: CLASES =====
+    // Datos Clases
     private void configurarPestanaClases() {
         // Configurar tabla clases del aula
         colIdClaseAula.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getId())));
@@ -123,7 +123,7 @@ public class AulaViewController {
         // Los combos ya se configuraron en initialize()
     }
 
-    // ===== MÉTODOS PESTAÑA DATOS DEL AULA =====
+    // Datos Aula
     private void mostrarAulaSeleccionada() {
         if (aulaSeleccionada != null) {
             txtIdAula.setText(aulaSeleccionada.getIdAula());
@@ -204,7 +204,7 @@ public class AulaViewController {
         aulaSeleccionada = null;
     }
 
-    // ===== MÉTODOS PESTAÑA DISPONIBILIDAD =====
+
     @FXML
     void onVerificarDisponibilidad() {
         if (cbAulaDisponibilidad.getValue() != null && cbDiaDisponibilidad.getValue() != null &&
@@ -285,7 +285,7 @@ public class AulaViewController {
         }
     }
 
-    // ===== MÉTODOS AUXILIARES =====
+
     private void actualizarTablaHorariosAula(Aula aula) {
         tblHorariosAula.getItems().clear();
         if (aula != null && aula.getListHorarios() != null) {

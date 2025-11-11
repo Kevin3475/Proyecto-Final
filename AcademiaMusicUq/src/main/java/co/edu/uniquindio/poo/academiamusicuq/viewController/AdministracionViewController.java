@@ -19,32 +19,32 @@ import java.util.List;
 
 public class AdministracionViewController {
 
-    // ===== COMPONENTES PESTAÑA DATOS ACADEMIA =====
+    // Pestaña Datos Academia
     @FXML private TextField txtNombreAcademia, txtDireccionAcademia, txtTelefonoAcademia;
     @FXML private TextField txtAdminNombre, txtAdminEmail, txtAdminTelefono;
     @FXML private Button btnActualizarAcademia, btnLimpiarAcademia;
 
-    // ===== COMPONENTES PESTAÑA REPORTES =====
+    // Pestaña Reporte
     @FXML private ComboBox<String> cbTipoReporte;
     @FXML private DatePicker dpFechaInicio, dpFechaFin;
     @FXML private TableView<ReporteProgreso> tblReportes;
     @FXML private TableColumn<ReporteProgreso, String> colIdReporte, colEstudianteReporte, colCursoReporte, colProfesorReporte, colCalificacionReporte, colFechaReporte;
     @FXML private Button btnGenerarReporte, btnExportarReporte;
 
-    // ===== COMPONENTES PESTAÑA COMENTARIOS FORMATIVOS =====
+    // Pestaña ComentarioFormartvo
     @FXML private ComboBox<Estudiante> cbEstudianteComentarios;
     @FXML private TableView<ComentarioFormativo> tblComentarios;
     @FXML private TableColumn<ComentarioFormativo, String> colIdComentario, colEstudianteComentario, colCursoComentario, colContenidoComentario, colFechaComentario;
     @FXML private Button btnAgregarComentario, btnLimpiarComentarios;
     @FXML private TextArea txtNuevoComentario;
 
-    // ===== COMPONENTES PESTAÑA ESTADÍSTICAS =====
+    // Pestaña Estadistica
     @FXML private PieChart pieChartEstudiantes;
     @FXML private BarChart<String, Number> barChartCursos;
     @FXML private Label lblTotalEstudiantes, lblTotalProfesores, lblTotalCursos, lblTotalMatriculas;
     @FXML private Label lblMatriculasActivas, lblMatriculasFinalizadas, lblCertificadosEmitidos;
 
-    // ===== COMPONENTES GENERALES =====
+    // Botones Generales
     @FXML private Button btnVolver;
     @FXML private TabPane tabPane;
 
@@ -70,15 +70,15 @@ public class AdministracionViewController {
         configurarPestanaEstadisticas();
     }
 
-    // ===== PESTAÑA 1: DATOS ACADEMIA =====
+    // Datos Academia
     private void configurarPestanaDatosAcademia() {
         // Cargar datos actuales de la academia
         cargarDatosAcademia();
     }
 
-    // ===== PESTAÑA 2: REPORTES =====
+    // Datos Reporte
     private void configurarPestanaReportes() {
-        // Configurar tabla reportes
+
         colIdReporte.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdReporte())));
         colEstudianteReporte.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getEstudiante() != null ?
@@ -105,9 +105,9 @@ public class AdministracionViewController {
         dpFechaFin.setValue(LocalDate.now());
     }
 
-    // ===== PESTAÑA 3: COMENTARIOS FORMATIVOS =====
+    // Comentario Formativo
     private void configurarPestanaComentarios() {
-        // Configurar tabla comentarios
+
         colIdComentario.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdComentario())));
         colEstudianteComentario.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getEstudiante() != null ?
@@ -118,9 +118,8 @@ public class AdministracionViewController {
         colFechaComentario.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().toString()));
     }
 
-    // ===== PESTAÑA 4: ESTADÍSTICAS =====
+    // Estadisticas
     private void configurarPestanaEstadisticas() {
-        // Los gráficos se configurarán al cargar los datos
     }
 
     private void cargarDatosIniciales() {
@@ -146,11 +145,11 @@ public class AdministracionViewController {
     }
 
     private void cargarCombosReportes() {
-        // Los combos ya se configuraron en initialize()
+
     }
 
     private void cargarCombosComentarios() {
-        // Cargar estudiantes para comentarios
+
         listaEstudiantes.clear();
         listaEstudiantes.addAll(App.academia.getListEstudiantes());
         cbEstudianteComentarios.setItems(listaEstudiantes);
@@ -161,7 +160,7 @@ public class AdministracionViewController {
         cargarGraficos();
     }
 
-    // ===== MÉTODOS PESTAÑA DATOS ACADEMIA =====
+    // Metodos Datos Academia
     @FXML
     void onActualizarAcademia() {
         if (validarCamposAcademia()) {
@@ -175,7 +174,7 @@ public class AdministracionViewController {
         cargarDatosAcademia(); // Recargar datos originales
     }
 
-    // ===== MÉTODOS PESTAÑA REPORTES =====
+    // Metodos Reportes
     @FXML
     void onGenerarReporte() {
         String tipoReporte = cbTipoReporte.getValue();
@@ -206,20 +205,20 @@ public class AdministracionViewController {
         }
     }
 
-    // ===== MÉTODOS PESTAÑA COMENTARIOS FORMATIVOS =====
+    // Metodos ComentarioFormativo
     @FXML
     void onAgregarComentario() {
         Estudiante estudiante = cbEstudianteComentarios.getValue();
         String contenido = txtNuevoComentario.getText();
 
         if (estudiante != null && !contenido.trim().isEmpty()) {
-            // En una implementación real, aquí se crearía un comentario formativo
+
             ComentarioFormativo comentario = new ComentarioFormativo(
                     listaComentarios.size() + 1,
                     contenido,
                     LocalDate.now(),
                     estudiante,
-                    null // Curso sería opcional
+                    null
             );
 
             if (administracionController.agregarComentarioFormativo(comentario)) {
@@ -240,7 +239,7 @@ public class AdministracionViewController {
         limpiarCamposComentario();
     }
 
-    // ===== MÉTODOS AUXILIARES =====
+    // Metodos Auxiliares
     private void cargarEstadisticasGenerales() {
         int totalEstudiantes = App.academia.getListEstudiantes().size();
         int totalProfesores = App.academia.getListProfesores().size();

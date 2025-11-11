@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ClaseViewController {
 
-    // ===== COMPONENTES PESTAÑA DATOS DE CLASE =====
+    // Pestaña Datos de Clase
     @FXML private TextField txtIdClase, txtCupoMaximo, txtObjetivoPersonal;
     @FXML private ComboBox<Aula> cbAulaClase;
     @FXML private ComboBox<TipoClase> cbTipoClase;
@@ -27,7 +27,7 @@ public class ClaseViewController {
     @FXML private TableColumn<Clase, String> colIdClase, colTipoClase, colAulaClase, colProfesorClase, colCursoClase, colHorarioClase;
     @FXML private Button btnAgregarClase, btnActualizarClase, btnEliminarClase, btnLimpiarClase;
 
-    // ===== COMPONENTES PESTAÑA GESTIÓN ESTUDIANTES (SOLO GRUPAL) =====
+    // Pestaña Gestion
     @FXML private ComboBox<ClaseGrupal> cbClaseGrupal;
     @FXML private ComboBox<Estudiante> cbEstudianteAgregar;
     @FXML private TableView<Estudiante> tblEstudiantesClase;
@@ -35,7 +35,7 @@ public class ClaseViewController {
     @FXML private Button btnAgregarEstudianteClase, btnRemoverEstudianteClase;
     @FXML private Label lblCupoDisponible;
 
-    // ===== COMPONENTES PESTAÑA ASISTENCIAS =====
+    // Pestaña Asistencia
     @FXML private ComboBox<Clase> cbClaseAsistencia;
     @FXML private ComboBox<Estudiante> cbEstudianteAsistencia;
     @FXML private DatePicker dpFechaAsistencia;
@@ -44,7 +44,7 @@ public class ClaseViewController {
     @FXML private TableColumn<Asistencia, String> colIdAsistencia, colEstudianteAsistencia, colFechaAsistencia, colEstadoAsistencia;
     @FXML private Button btnRegistrarAsistencia;
 
-    // ===== COMPONENTES PESTAÑA EVALUACIÓN =====
+    // Pestaña Evaluacion
     @FXML private ComboBox<Clase> cbClaseEvaluacion;
     @FXML private ComboBox<Estudiante> cbEstudianteEvaluacion;
     @FXML private TextField txtCalificacionEvaluacion;
@@ -53,7 +53,7 @@ public class ClaseViewController {
     @FXML private TableColumn<ReporteProgreso, String> colIdEvaluacion, colEstudianteEvaluacion, colCalificacionEvaluacion, colAprobadoEvaluacion;
     @FXML private Button btnEvaluarProgreso;
 
-    // ===== COMPONENTES GENERALES =====
+
     @FXML private Button btnVolver;
     @FXML private TabPane tabPane;
 
@@ -84,9 +84,9 @@ public class ClaseViewController {
         configurarPestanaEvaluacion();
     }
 
-    // ===== PESTAÑA 1: DATOS DE CLASE =====
+    // Datos Clase
     private void configurarPestanaDatosClase() {
-        // Configurar tabla clases
+
         colIdClase.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getId())));
         colTipoClase.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTipoClase().toString()));
         colAulaClase.setCellValueFactory(cell -> new SimpleStringProperty(
@@ -126,16 +126,16 @@ public class ClaseViewController {
         });
     }
 
-    // ===== PESTAÑA 2: GESTIÓN ESTUDIANTES =====
+    // Datos Estudiantes
     private void configurarPestanaGestionEstudiantes() {
-        // Configurar tabla estudiantes de clase grupal
+
         colIdEstudianteClase.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getId()));
         colNombreEstudianteClase.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getNombre() + " " + cell.getValue().getApellido()));
         colNivelEstudianteClase.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getNivel().toString()));
     }
 
-    // ===== PESTAÑA 3: ASISTENCIAS =====
+    // Datos Asistencia
     private void configurarPestanaAsistencias() {
         // Configurar tabla asistencias
         colIdAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdAsistencia())));
@@ -147,7 +147,7 @@ public class ClaseViewController {
                 cell.getValue().getPresente() ? "✅ Presente" : "❌ Ausente"));
     }
 
-    // ===== PESTAÑA 4: EVALUACIÓN =====
+    // Datos Evaluacion
     private void configurarPestanaEvaluacion() {
         // Configurar tabla evaluaciones
         colIdEvaluacion.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdReporte())));
@@ -215,7 +215,7 @@ public class ClaseViewController {
         cbEstudianteEvaluacion.setItems(listaEstudiantes);
     }
 
-    // ===== MÉTODOS PESTAÑA DATOS DE CLASE =====
+
     private void mostrarClaseSeleccionada() {
         if (claseSeleccionada != null) {
             txtIdClase.setText(String.valueOf(claseSeleccionada.getId()));
@@ -293,7 +293,7 @@ public class ClaseViewController {
     @FXML
     void onActualizarClase() {
         if (claseSeleccionada != null && validarCamposDatosClase()) {
-            // Similar a agregar pero con actualización
+
             mostrarAlerta("Info", "Funcionalidad de actualización en desarrollo", Alert.AlertType.INFORMATION);
         } else {
             mostrarAlerta("Error", "Seleccione una clase para actualizar", Alert.AlertType.WARNING);
@@ -332,7 +332,7 @@ public class ClaseViewController {
         claseSeleccionada = null;
     }
 
-    // ===== MÉTODOS PESTAÑA GESTIÓN ESTUDIANTES =====
+    // Metodos Gestion Estudiantes
     @FXML
     void onAgregarEstudianteClase() {
         if (cbClaseGrupal.getValue() != null && cbEstudianteAgregar.getValue() != null) {
@@ -369,7 +369,7 @@ public class ClaseViewController {
         }
     }
 
-    // ===== MÉTODOS PESTAÑA ASISTENCIAS =====
+    // Metodos Asistencia
     @FXML
     void onRegistrarAsistencia() {
         if (cbClaseAsistencia.getValue() != null && cbEstudianteAsistencia.getValue() != null &&
@@ -404,7 +404,7 @@ public class ClaseViewController {
         }
     }
 
-    // ===== MÉTODOS PESTAÑA EVALUACIÓN =====
+    // Metodos Evaluacion
     @FXML
     void onEvaluarProgreso() {
         if (cbClaseEvaluacion.getValue() != null && cbEstudianteEvaluacion.getValue() != null &&
@@ -434,7 +434,7 @@ public class ClaseViewController {
         }
     }
 
-    // ===== MÉTODOS AUXILIARES =====
+
     private void actualizarTablaEstudiantesClase(ClaseGrupal clase) {
         tblEstudiantesClase.getItems().clear();
         if (clase != null && clase.getListEstudiantes() != null) {
@@ -534,12 +534,12 @@ public class ClaseViewController {
 
     @FXML
     void onClaseAsistenciaChanged() {
-        // Puedes cargar asistencias específicas de la clase si es necesario
+        // Puede cargar asistencias especificas de la clase si es necesario
     }
 
     @FXML
     void onClaseEvaluacionChanged() {
-        // Puedes cargar evaluaciones específicas de la clase si es necesario
+        // Puede cargar evaluaciones especificas de la clase si es necesario
     }
 
     public void setApp(App app) {

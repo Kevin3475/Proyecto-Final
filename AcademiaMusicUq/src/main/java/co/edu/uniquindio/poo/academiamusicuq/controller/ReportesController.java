@@ -14,7 +14,7 @@ public class ReportesController {
         this.academia = academia;
     }
 
-    // ===== MÉTODOS DE REPORTES DE PROGRESO =====
+    // Metodos de Reporte
     public List<ReporteProgreso> generarReporteProgresoGeneral() {
         List<ReporteProgreso> todosLosReportes = new ArrayList<>();
 
@@ -66,7 +66,7 @@ public class ReportesController {
         return reportesDelProfesor;
     }
 
-    // ===== MÉTODOS DE REPORTES DE ASISTENCIA =====
+
     public List<Asistencia> generarReporteAsistencias(LocalDate fechaInicio, LocalDate fechaFin) {
         List<Asistencia> asistenciasFiltradas = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class ReportesController {
         return asistenciasEstudiante;
     }
 
-    // ===== MÉTODOS DE REPORTES DE MATRÍCULAS =====
+
     public List<Matricula> generarReporteMatriculas() {
         List<Matricula> todasLasMatriculas = new ArrayList<>();
 
@@ -129,7 +129,7 @@ public class ReportesController {
         return matriculasFiltradas;
     }
 
-    // ===== MÉTODOS DE ESTADÍSTICAS =====
+
     public int contarTotalEstudiantes() {
         return academia.getListEstudiantes().size();
     }
@@ -188,7 +188,7 @@ public class ReportesController {
         return (double) presentes / todasLasAsistencias.size() * 100;
     }
 
-    // ===== MÉTODOS DE ANÁLISIS AVANZADO =====
+
     public List<Object[]> generarReporteEstudiantesPorNivel() {
         List<Object[]> resultado = new ArrayList<>();
 
@@ -221,7 +221,7 @@ public class ReportesController {
             });
         }
 
-        // Ordenar por popularidad
+
         resultado.sort((a, b) -> Integer.compare((Integer)b[2], (Integer)a[2]));
 
         return resultado;
@@ -259,13 +259,12 @@ public class ReportesController {
         return resultado;
     }
 
-    // ===== MÉTODOS DE EXPORTACIÓN =====
+
     public String generarReporteTextoCompleto() {
         StringBuilder reporte = new StringBuilder();
 
         reporte.append("=== REPORTE COMPLETO ACADEMIA DE MÚSICA ===\n\n");
 
-        // Estadísticas generales
         reporte.append("ESTADÍSTICAS GENERALES:\n");
         reporte.append("=======================\n");
         reporte.append("Total Estudiantes: ").append(contarTotalEstudiantes()).append("\n");
@@ -276,7 +275,7 @@ public class ReportesController {
         reporte.append("Tasa de Aprobación: ").append(String.format("%.1f%%", calcularTasaAprobacion())).append("\n");
         reporte.append("Tasa de Asistencia: ").append(String.format("%.1f%%", calcularTasaAsistencia())).append("\n\n");
 
-        // Cursos más populares
+
         reporte.append("CURSOS MÁS POPULARES:\n");
         reporte.append("====================\n");
         List<Object[]> cursosPopulares = generarReporteCursosPopulares();

@@ -18,34 +18,34 @@ public class AsistenciaController {
                                               String estado, LocalDate fechaInicio, LocalDate fechaFin) {
         List<Asistencia> resultado = new ArrayList<>();
 
-        // Recopilar todas las asistencias de todos los estudiantes
+
         for (Estudiante est : academia.getListEstudiantes()) {
             if (est.getListAsistencias() != null) {
                 for (Asistencia asistencia : est.getListAsistencias()) {
 
-                    // Aplicar filtros
+
                     boolean cumpleFiltros = true;
 
-                    // Filtro por estudiante
+
                     if (estudiante != null && !asistencia.getEstudiante().equals(estudiante)) {
                         cumpleFiltros = false;
                     }
 
-                    // Filtro por curso
+
                     if (curso != null && (asistencia.getClase() == null ||
                             asistencia.getClase().getCurso() == null ||
                             !asistencia.getClase().getCurso().equals(curso))) {
                         cumpleFiltros = false;
                     }
 
-                    // Filtro por profesor
+
                     if (profesor != null && (asistencia.getClase() == null ||
                             asistencia.getClase().getProfesor() == null ||
                             !asistencia.getClase().getProfesor().equals(profesor))) {
                         cumpleFiltros = false;
                     }
 
-                    // Filtro por estado
+
                     if (estado != null && !estado.equals("Todos")) {
                         boolean estadoBuscado = estado.equals("Presente");
                         if (asistencia.getPresente() != estadoBuscado) {
@@ -53,7 +53,6 @@ public class AsistenciaController {
                         }
                     }
 
-                    // Filtro por fecha
                     if (fechaInicio != null && asistencia.getFecha().isBefore(fechaInicio)) {
                         cumpleFiltros = false;
                     }

@@ -48,7 +48,7 @@ public class App extends Application {
             loader.setLocation(App.class.getResource("/co/edu/uniquindio/poo/academiamusicuq/main.fxml"));
             AnchorPane rootLayout = loader.load();
 
-            // CONECTAR MainViewController
+
             MainViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -68,7 +68,7 @@ public class App extends Application {
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/estudiante.fxml"));
             AnchorPane rootLayout = loader.load();
 
-            // CONECTAR EstudianteViewController
+
             EstudianteViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -87,7 +87,6 @@ public class App extends Application {
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/profesor.fxml"));
             AnchorPane rootLayout = loader.load();
 
-            // CONECTAR ProfesorViewController
             ProfesorViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -106,7 +105,7 @@ public class App extends Application {
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/curso.fxml"));
             AnchorPane rootLayout = loader.load();
 
-            // CONECTAR CursoViewController
+            // Aqui se conecta con el viewController y obtiene los metodos y cosas de Controller
             CursoViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -125,7 +124,6 @@ public class App extends Application {
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/aula.fxml"));
             AnchorPane rootLayout = loader.load();
 
-            // CONECTAR AulaViewController
             AulaViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -144,7 +142,6 @@ public class App extends Application {
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/clase.fxml"));
             AnchorPane rootLayout = loader.load();
 
-            // CONECTAR ClaseViewController
             ClaseViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -163,7 +160,6 @@ public class App extends Application {
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/matricula.fxml"));
             AnchorPane rootLayout = loader.load();
 
-            // CONECTAR MatriculaViewController
             MatriculaViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -182,7 +178,6 @@ public class App extends Application {
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/administracion.fxml"));
             AnchorPane rootLayout = loader.load();
 
-            // CONECTAR AdministracionViewController
             AdministracionViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -201,7 +196,7 @@ public class App extends Application {
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/asistencia.fxml"));
             AnchorPane rootLayout = loader.load();
 
-            // CONECTAR AsistenciasViewController
+
             AsistenciaViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -220,7 +215,7 @@ public class App extends Application {
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/reportes.fxml"));
             AnchorPane rootLayout = loader.load();
 
-            // CONECTAR ReportesViewController
+
             ReportesViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -240,7 +235,7 @@ public class App extends Application {
 
         Academia academia = new Academia("Academia de Música UQ", "Calle 123", "6011234567", admin);
 
-        // ===== DATOS DE EJEMPLO - PROFESORES =====
+        // Profesores ya creados para probar el funcionamiento
         Profesor profesor1 = new Profesor("PROF001", "Ana", "García", "ana@academia.edu", "3001112233",
                 "Piano Clásico", Instrumento.PIANO, true);
         Profesor profesor2 = new Profesor("PROF002", "Luis", "Martínez", "luis@academia.edu", "3002223344",
@@ -250,7 +245,7 @@ public class App extends Application {
         Profesor profesor4 = new Profesor("PROF004", "Carlos", "Hernández", "carlos@academia.edu", "3004445566",
                 "Canto Lírico", Instrumento.CANTO, true);
 
-        // ===== DATOS DE EJEMPLO - ESTUDIANTES =====
+        // Estudiantes creados para pobrar el funcionamiento
         Estudiante estudiante1 = new Estudiante("EST001", "Juan", "Pérez", "juan@estudiante.edu",
                 "3004445566", Nivel.BASICO, true);
         Estudiante estudiante2 = new Estudiante("EST002", "María", "López", "maria@estudiante.edu",
@@ -262,19 +257,19 @@ public class App extends Application {
         Estudiante estudiante5 = new Estudiante("EST005", "Pedro", "Martínez", "pedro@estudiante.edu",
                 "3008889900", Nivel.INTERMEDIO, true);
 
-        // ===== DATOS DE EJEMPLO - CURSOS =====
+        // Cursos para pruebas de funcionamiento
         Curso curso1 = new Curso("CUR001", "Piano Básico", Instrumento.PIANO, Nivel.BASICO, 10, profesor1);
         Curso curso2 = new Curso("CUR002", "Guitarra Intermedia", Instrumento.GUITARRA, Nivel.INTERMEDIO, 8, profesor2);
         Curso curso3 = new Curso("CUR003", "Violín Avanzado", Instrumento.VIOLIN, Nivel.AVANZADO, 6, profesor3);
         Curso curso4 = new Curso("CUR004", "Canto para Principiantes", Instrumento.CANTO, Nivel.BASICO, 12, profesor4);
 
-        // ===== DATOS DE EJEMPLO - AULAS =====
+        // Aulas para pruebas de funcionamiento
         Aula aula1 = new Aula("AUL001", "Sala de Piano", 15, true);
         Aula aula2 = new Aula("AUL002", "Sala de Cuerdas", 12, true);
         Aula aula3 = new Aula("AUL003", "Sala de Canto", 20, true);
         Aula aula4 = new Aula("AUL004", "Sala Polivalente", 25, true);
 
-        // ===== DATOS DE EJEMPLO - CLASES =====
+        // Bloque de horarios para pruebas
         BloqueHorario horario1 = new BloqueHorario("LUNES", java.time.LocalTime.of(9, 0), java.time.LocalTime.of(10, 0));
         BloqueHorario horario2 = new BloqueHorario("MIÉRCOLES", java.time.LocalTime.of(14, 0), java.time.LocalTime.of(15, 30));
 
@@ -282,15 +277,15 @@ public class App extends Application {
         ClaseIndividual clase2 = new ClaseIndividual(2, aula2, TipoClase.INDIVIDUAL, profesor2, horario2, curso2,
                 "Mejorar técnica de digitación", estudiante1);
 
-        // ===== REGISTRAR EN ACADEMIA =====
 
-        // Registrar profesores
+        // Registros De las Clases En la Academia
+
         academia.registrarProfesor(profesor1);
         academia.registrarProfesor(profesor2);
         academia.registrarProfesor(profesor3);
         academia.registrarProfesor(profesor4);
 
-        // Registrar estudiantes
+
         academia.registrarEstudiante(estudiante1);
         academia.registrarEstudiante(estudiante2);
         academia.registrarEstudiante(estudiante3);

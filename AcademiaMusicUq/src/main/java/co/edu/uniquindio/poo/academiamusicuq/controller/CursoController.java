@@ -15,7 +15,7 @@ public class CursoController {
         this.academia = academia;
     }
 
-    // ===== MÉTODOS CRUD BÁSICOS =====
+    // Metodos del Crud
     public boolean registrarCurso(Curso curso) {
         return academia.registrarCurso(curso);
     }
@@ -32,7 +32,7 @@ public class CursoController {
         return academia.eliminarCurso(idCurso);
     }
 
-    // ===== MÉTODOS DE GESTIÓN DE CLASES =====
+    // Metodos de Clase
     public boolean agregarClaseACurso(Curso curso, Clase clase) {
         return curso.agregarClase(clase);
     }
@@ -41,7 +41,7 @@ public class CursoController {
         return curso.getListClases().remove(clase);
     }
 
-    // ===== MÉTODOS DE GESTIÓN DE ESTUDIANTES =====
+    // Metodos del Estudiante
     public boolean agregarEstudianteACurso(Curso curso, Estudiante estudiante) {
         // Verificar nivel primero
         if (!curso.verificarNivelEstudiante(estudiante)) {
@@ -60,7 +60,7 @@ public class CursoController {
         return curso.getListEstudiantes().remove(estudiante);
     }
 
-    // ===== MÉTODOS DE CONSULTA =====
+    // Metodos de Consulta
     public boolean verificarNivelEstudiante(Curso curso, Estudiante estudiante) {
         return curso.verificarNivelEstudiante(estudiante);
     }
