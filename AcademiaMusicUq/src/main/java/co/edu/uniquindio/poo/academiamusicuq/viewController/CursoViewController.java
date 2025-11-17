@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 
 import java.util.List;
 
@@ -62,6 +63,93 @@ public class CursoViewController {
         configurarPestanaDatosCurso();
         configurarPestanaConfiguracion();
         configurarPestanaEstudiantes();
+        configurarStringConverters(); // NUEVO: Configurar cómo se muestran los objetos
+    }
+
+    // NUEVO MÉTODO: Configurar cómo se muestran los objetos en los ComboBox
+    private void configurarStringConverters() {
+        // Configurar ComboBox de profesores
+        if (cbProfesor != null) {
+            cbProfesor.setConverter(new StringConverter<Profesor>() {
+                @Override
+                public String toString(Profesor profesor) {
+                    if (profesor == null) return "";
+                    return profesor.getNombre() + " " + profesor.getApellido() + " - " + profesor.getEspecialidad();
+                }
+
+                @Override
+                public Profesor fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de cursos para configuración
+        if (cbCursoConfiguracion != null) {
+            cbCursoConfiguracion.setConverter(new StringConverter<Curso>() {
+                @Override
+                public String toString(Curso curso) {
+                    if (curso == null) return "";
+                    return curso.getNombreCurso() + " - " + curso.getInstrumento() + " (" + curso.getNivel() + ")";
+                }
+
+                @Override
+                public Curso fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de cursos para estudiantes
+        if (cbCursoEstudiantes != null) {
+            cbCursoEstudiantes.setConverter(new StringConverter<Curso>() {
+                @Override
+                public String toString(Curso curso) {
+                    if (curso == null) return "";
+                    return curso.getNombreCurso() + " - " + curso.getInstrumento();
+                }
+
+                @Override
+                public Curso fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de estudiantes
+        if (cbEstudianteVerificar != null) {
+            cbEstudianteVerificar.setConverter(new StringConverter<Estudiante>() {
+                @Override
+                public String toString(Estudiante estudiante) {
+                    if (estudiante == null) return "";
+                    return estudiante.getNombre() + " " + estudiante.getApellido() + " - " + estudiante.getNivel();
+                }
+
+                @Override
+                public Estudiante fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de clases
+        if (cbClaseAgregar != null) {
+            cbClaseAgregar.setConverter(new StringConverter<Clase>() {
+                @Override
+                public String toString(Clase clase) {
+                    if (clase == null) return "";
+                    String tipo = clase.getTipoClase() != null ? clase.getTipoClase().toString() : "N/A";
+                    String horario = clase.getHorario() != null ?
+                            clase.getHorario().getDia() + " " + clase.getHorario().getHoraInicio() + "-" + clase.getHorario().getHoraFin() : "N/A";
+                    return tipo + " - " + horario;
+                }
+
+                @Override
+                public Clase fromString(String string) {
+                    return null;
+                }
+            });
+        }
     }
 
     // Datos Del Curso
@@ -134,19 +222,33 @@ public class CursoViewController {
     private void cargarCombosConfiguracion() {
         // Cargar profesores disponibles
         listaProfesores.clear();
-        listaProfesores.addAll(App.academia.getListProfesores());
-        cbProfesor.setItems(listaProfesores);
+        if (App.academia != null && App.academia.getListProfesores() != null) {
+            listaProfesores.addAll(App.academia.getListProfesores());
+            cbProfesor.setItems(listaProfesores);
+            if (!listaProfesores.isEmpty()) {
+                cbProfesor.setValue(listaProfesores.get(0));
+            }
+        }
 
         // Cargar clases disponibles
         listaClases.clear();
-        // Aquí deberías cargar las clases disponibles de la academia
+        if (App.academia != null) {
+            // Aquí deberías cargar las clases disponibles de la academia
+            // Por ejemplo: listaClases.addAll(App.academia.getListClases());
+        }
+        cbClaseAgregar.setItems(listaClases);
     }
 
     private void cargarCombosEstudiantes() {
         // Cargar estudiantes disponibles
         listaEstudiantes.clear();
-        listaEstudiantes.addAll(App.academia.getListEstudiantes());
-        cbEstudianteVerificar.setItems(listaEstudiantes);
+        if (App.academia != null && App.academia.getListEstudiantes() != null) {
+            listaEstudiantes.addAll(App.academia.getListEstudiantes());
+            cbEstudianteVerificar.setItems(listaEstudiantes);
+            if (!listaEstudiantes.isEmpty()) {
+                cbEstudianteVerificar.setValue(listaEstudiantes.get(0));
+            }
+        }
     }
 
     // ===== MÉTODOS PESTAÑA DATOS DEL CURSO =====
@@ -336,7 +438,6 @@ public class CursoViewController {
         }
     }
 
-
     private void actualizarTablaClasesCurso(Curso curso) {
         tblClasesCurso.getItems().clear();
         if (curso != null && curso.getListClases() != null) {
@@ -395,7 +496,6 @@ public class CursoViewController {
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
-
 
     @FXML
     void onCursoConfiguracionChanged() {

@@ -9,20 +9,18 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.chart.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class ReportesViewController {
 
-
     @FXML private ComboBox<String> cbTipoReporteAvanzado;
     @FXML private ComboBox<Estudiante> cbEstudianteReporte;
     @FXML private ComboBox<Curso> cbCursoReporte;
     @FXML private ComboBox<Profesor> cbProfesorReporte;
     @FXML private DatePicker dpFechaInicioReporte, dpFechaFinReporte;
-
 
     @FXML private TableView<ReporteProgreso> tblReportesProgreso;
     @FXML private TableColumn<ReporteProgreso, String> colIdReporte, colEstudiante, colCurso, colProfesor, colCalificacion, colAprobado, colFecha;
@@ -33,18 +31,15 @@ public class ReportesViewController {
     @FXML private TableView<Matricula> tblReportesMatriculas;
     @FXML private TableColumn<Matricula, String> colIdMatricula, colEstudianteMatricula, colCursoMatricula, colEstadoMatricula, colFechaMatricula;
 
-
     @FXML private PieChart pieChartNiveles;
     @FXML private BarChart<String, Number> barChartInstrumentos;
     @FXML private LineChart<String, Number> lineChartProgreso;
     @FXML private Label lblTotalEstudiantes, lblTotalProfesores, lblTotalCursos;
     @FXML private Label lblPromedioCalificaciones, lblTasaAprobacion, lblTasaAsistencia;
 
-
     @FXML private TextArea txtConsultaPersonalizada;
     @FXML private Button btnEjecutarConsulta;
     @FXML private TableView<Object[]> tblResultadosPersonalizados;
-
 
     @FXML private Button btnGenerarReporte, btnExportarPDF, btnExportarExcel, btnVolver;
     @FXML private TabPane tabPaneReportes;
@@ -59,67 +54,161 @@ public class ReportesViewController {
 
     @FXML
     void initialize() {
-        this.reportesController = new ReportesController(App.academia);
-        configurarInterfaz();
-        cargarDatosIniciales();
-        cargarEstadisticasDetalladas();
+        try {
+            this.reportesController = new ReportesController(App.academia);
+            configurarInterfaz();
+            cargarDatosIniciales();
+            cargarEstadisticasDetalladas();
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al inicializar: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     private void configurarInterfaz() {
         configurarPestanaReportesAvanzados();
         configurarPestanaEstadisticasDetalladas();
         configurarPestanaReportesPersonalizados();
+        configurarStringConverters(); // NUEVO: Para mostrar nombres en combos
     }
 
+    // NUEVO MÉTODO: Configurar cómo se muestran los objetos en los ComboBox
+    private void configurarStringConverters() {
+        // Configurar ComboBox de estudiantes
+        if (cbEstudianteReporte != null) {
+            cbEstudianteReporte.setConverter(new StringConverter<Estudiante>() {
+                @Override
+                public String toString(Estudiante estudiante) {
+                    if (estudiante == null) return "";
+                    return estudiante.getNombre() + " " + estudiante.getApellido() + " - " + estudiante.getNivel();
+                }
+
+                @Override
+                public Estudiante fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de cursos
+        if (cbCursoReporte != null) {
+            cbCursoReporte.setConverter(new StringConverter<Curso>() {
+                @Override
+                public String toString(Curso curso) {
+                    if (curso == null) return "";
+                    return curso.getNombreCurso() + " - " + curso.getNivel();
+                }
+
+                @Override
+                public Curso fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de profesores
+        if (cbProfesorReporte != null) {
+            cbProfesorReporte.setConverter(new StringConverter<Profesor>() {
+                @Override
+                public String toString(Profesor profesor) {
+                    if (profesor == null) return "";
+                    return profesor.getNombre() + " " + profesor.getApellido() + " - " + profesor.getEspecialidad();
+                }
+
+                @Override
+                public Profesor fromString(String string) {
+                    return null;
+                }
+            });
+        }
+    }
 
     private void configurarPestanaReportesAvanzados() {
-
-        cbTipoReporteAvanzado.setItems(FXCollections.observableArrayList(
-                "📈 Reporte de Progreso General",
-                "✅ Reporte de Asistencias",
-                "📋 Reporte de Matrículas",
-                "🎓 Reporte por Estudiante",
-                "📚 Reporte por Curso",
-                "👨‍🏫 Reporte por Profesor",
-                "📊 Reporte Comparativo"
-        ));
+        if (cbTipoReporteAvanzado != null) {
+            cbTipoReporteAvanzado.setItems(FXCollections.observableArrayList(
+                    "📈 Reporte de Progreso General",
+                    "✅ Reporte de Asistencias",
+                    "📋 Reporte de Matrículas",
+                    "🎓 Reporte por Estudiante",
+                    "📚 Reporte por Curso",
+                    "👨‍🏫 Reporte por Profesor",
+                    "📊 Reporte Comparativo"
+            ));
+        }
 
         // Configurar tabla Reportes de Progreso
-        colIdReporte.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdReporte())));
-        colEstudiante.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getEstudiante() != null ?
-                        cell.getValue().getEstudiante().getNombre() + " " + cell.getValue().getEstudiante().getApellido() : "N/A"));
-        colCurso.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getCurso() != null ? cell.getValue().getCurso().getNombreCurso() : "N/A"));
-        colProfesor.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getProfesor() != null ?
-                        cell.getValue().getProfesor().getNombre() + " " + cell.getValue().getProfesor().getApellido() : "N/A"));
-        colCalificacion.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", cell.getValue().getCalificacion())));
-        colAprobado.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().isAprobado() ? "✅ Sí" : "❌ No"));
-        colFecha.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().toString()));
+        if (colIdReporte != null) {
+            colIdReporte.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdReporte())));
+        }
+        if (colEstudiante != null) {
+            colEstudiante.setCellValueFactory(cell -> new SimpleStringProperty(
+                    cell.getValue().getEstudiante() != null ?
+                            cell.getValue().getEstudiante().getNombre() + " " + cell.getValue().getEstudiante().getApellido() : "N/A"));
+        }
+        if (colCurso != null) {
+            colCurso.setCellValueFactory(cell -> new SimpleStringProperty(
+                    cell.getValue().getCurso() != null ? cell.getValue().getCurso().getNombreCurso() : "N/A"));
+        }
+        if (colProfesor != null) {
+            colProfesor.setCellValueFactory(cell -> new SimpleStringProperty(
+                    cell.getValue().getProfesor() != null ?
+                            cell.getValue().getProfesor().getNombre() + " " + cell.getValue().getProfesor().getApellido() : "N/A"));
+        }
+        if (colCalificacion != null) {
+            colCalificacion.setCellValueFactory(cell -> new SimpleStringProperty(String.format("%.2f", cell.getValue().getCalificacion())));
+        }
+        if (colAprobado != null) {
+            colAprobado.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().isAprobado() ? "✅ Sí" : "❌ No"));
+        }
+        if (colFecha != null) {
+            colFecha.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().toString()));
+        }
 
         // Configurar tabla Asistencias
-        colIdAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdAsistencia())));
-        colEstudianteAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getEstudiante() != null ?
-                        cell.getValue().getEstudiante().getNombre() + " " + cell.getValue().getEstudiante().getApellido() : "N/A"));
-        colClaseAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getClase() != null ? "Clase " + cell.getValue().getClase().getId() : "N/A"));
-        colFechaAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().toString()));
-        colPresente.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPresente() ? "✅ Presente" : "❌ Ausente"));
+        if (colIdAsistencia != null) {
+            colIdAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdAsistencia())));
+        }
+        if (colEstudianteAsistencia != null) {
+            colEstudianteAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(
+                    cell.getValue().getEstudiante() != null ?
+                            cell.getValue().getEstudiante().getNombre() + " " + cell.getValue().getEstudiante().getApellido() : "N/A"));
+        }
+        if (colClaseAsistencia != null) {
+            colClaseAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(
+                    cell.getValue().getClase() != null ? "Clase " + cell.getValue().getClase().getId() : "N/A"));
+        }
+        if (colFechaAsistencia != null) {
+            colFechaAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().toString()));
+        }
+        if (colPresente != null) {
+            colPresente.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getPresente() ? "✅ Presente" : "❌ Ausente"));
+        }
 
+        // Configurar tabla Matrículas
+        if (colIdMatricula != null) {
+            colIdMatricula.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdMatricula())));
+        }
+        if (colEstudianteMatricula != null) {
+            colEstudianteMatricula.setCellValueFactory(cell -> new SimpleStringProperty(
+                    cell.getValue().getEstudiante() != null ?
+                            cell.getValue().getEstudiante().getNombre() + " " + cell.getValue().getEstudiante().getApellido() : "N/A"));
+        }
+        if (colCursoMatricula != null) {
+            colCursoMatricula.setCellValueFactory(cell -> new SimpleStringProperty(
+                    cell.getValue().getCurso() != null ? cell.getValue().getCurso().getNombreCurso() : "N/A"));
+        }
+        if (colEstadoMatricula != null) {
+            colEstadoMatricula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getEstadoMatricula().toString()));
+        }
+        if (colFechaMatricula != null) {
+            colFechaMatricula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFechaInscripcion().toString()));
+        }
 
-        colIdMatricula.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getIdMatricula())));
-        colEstudianteMatricula.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getEstudiante() != null ?
-                        cell.getValue().getEstudiante().getNombre() + " " + cell.getValue().getEstudiante().getApellido() : "N/A"));
-        colCursoMatricula.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getCurso() != null ? cell.getValue().getCurso().getNombreCurso() : "N/A"));
-        colEstadoMatricula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getEstadoMatricula().toString()));
-        colFechaMatricula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFechaInscripcion().toString()));
-
-        dpFechaInicioReporte.setValue(LocalDate.now().minusMonths(1));
-        dpFechaFinReporte.setValue(LocalDate.now());
+        if (dpFechaInicioReporte != null) {
+            dpFechaInicioReporte.setValue(LocalDate.now().minusMonths(1));
+        }
+        if (dpFechaFinReporte != null) {
+            dpFechaFinReporte.setValue(LocalDate.now());
+        }
     }
 
     private void configurarPestanaEstadisticasDetalladas() {
@@ -127,15 +216,16 @@ public class ReportesViewController {
     }
 
     private void configurarPestanaReportesPersonalizados() {
-        // Configurar consultas predefinidas
-        txtConsultaPersonalizada.setText(
-                "Consultas disponibles:\n" +
-                        "1. Estudiantes por nivel\n" +
-                        "2. Cursos más populares\n" +
-                        "3. Profesores con más clases\n" +
-                        "4. Asistencia por mes\n" +
-                        "5. Progreso promedio por curso"
-        );
+        if (txtConsultaPersonalizada != null) {
+            txtConsultaPersonalizada.setText(
+                    "Consultas disponibles:\n" +
+                            "1. Estudiantes por nivel\n" +
+                            "2. Cursos más populares\n" +
+                            "3. Profesores con más clases\n" +
+                            "4. Asistencia por mes\n" +
+                            "5. Progreso promedio por curso"
+            );
+        }
     }
 
     private void cargarDatosIniciales() {
@@ -143,148 +233,237 @@ public class ReportesViewController {
     }
 
     private void cargarCombosFiltros() {
+        try {
+            // Cargar estudiantes
+            if (cbEstudianteReporte != null && App.academia != null && App.academia.getListEstudiantes() != null) {
+                ObservableList<Estudiante> estudiantes = FXCollections.observableArrayList(App.academia.getListEstudiantes());
+                cbEstudianteReporte.setItems(estudiantes);
+                if (!estudiantes.isEmpty()) {
+                    cbEstudianteReporte.setValue(estudiantes.get(0));
+                }
+            }
 
-        ObservableList<Estudiante> estudiantes = FXCollections.observableArrayList(App.academia.getListEstudiantes());
-        cbEstudianteReporte.setItems(estudiantes);
+            // Cargar cursos
+            if (cbCursoReporte != null && App.academia != null && App.academia.getListCursos() != null) {
+                ObservableList<Curso> cursos = FXCollections.observableArrayList(App.academia.getListCursos());
+                cbCursoReporte.setItems(cursos);
+                if (!cursos.isEmpty()) {
+                    cbCursoReporte.setValue(cursos.get(0));
+                }
+            }
 
-        ObservableList<Curso> cursos = FXCollections.observableArrayList(App.academia.getListCursos());
-        cbCursoReporte.setItems(cursos);
-
-        ObservableList<Profesor> profesores = FXCollections.observableArrayList(App.academia.getListProfesores());
-        cbProfesorReporte.setItems(profesores);
+            // Cargar profesores
+            if (cbProfesorReporte != null && App.academia != null && App.academia.getListProfesores() != null) {
+                ObservableList<Profesor> profesores = FXCollections.observableArrayList(App.academia.getListProfesores());
+                cbProfesorReporte.setItems(profesores);
+                if (!profesores.isEmpty()) {
+                    cbProfesorReporte.setValue(profesores.get(0));
+                }
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al cargar datos de filtros: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
-
 
     @FXML
     void onGenerarReporte() {
-        String tipoReporte = cbTipoReporteAvanzado.getValue();
-        if (tipoReporte == null) {
-            mostrarAlerta("Error", "Seleccione un tipo de reporte", Alert.AlertType.WARNING);
-            return;
-        }
+        try {
+            String tipoReporte = cbTipoReporteAvanzado.getValue();
+            if (tipoReporte == null) {
+                mostrarAlerta("Error", "Seleccione un tipo de reporte", Alert.AlertType.WARNING);
+                return;
+            }
 
-        switch (tipoReporte) {
-            case "📈 Reporte de Progreso General":
-                generarReporteProgresoGeneral();
-                break;
-            case "✅ Reporte de Asistencias":
-                generarReporteAsistencias();
-                break;
-            case "📋 Reporte de Matrículas":
-                generarReporteMatriculas();
-                break;
-            case "🎓 Reporte por Estudiante":
-                generarReportePorEstudiante();
-                break;
-            case "📚 Reporte por Curso":
-                generarReportePorCurso();
-                break;
-            case "👨‍🏫 Reporte por Profesor":
-                generarReportePorProfesor();
-                break;
-            case "📊 Reporte Comparativo":
-                generarReporteComparativo();
-                break;
+            switch (tipoReporte) {
+                case "📈 Reporte de Progreso General":
+                    generarReporteProgresoGeneral();
+                    break;
+                case "✅ Reporte de Asistencias":
+                    generarReporteAsistencias();
+                    break;
+                case "📋 Reporte de Matrículas":
+                    generarReporteMatriculas();
+                    break;
+                case "🎓 Reporte por Estudiante":
+                    generarReportePorEstudiante();
+                    break;
+                case "📚 Reporte por Curso":
+                    generarReportePorCurso();
+                    break;
+                case "👨‍🏫 Reporte por Profesor":
+                    generarReportePorProfesor();
+                    break;
+                case "📊 Reporte Comparativo":
+                    generarReporteComparativo();
+                    break;
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al generar reporte: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     void onExportarPDF() {
-        if (!listaReportesProgreso.isEmpty()) {
-            mostrarAlerta("Éxito", "Reporte exportado a PDF correctamente", Alert.AlertType.INFORMATION);
-        } else {
-            mostrarAlerta("Error", "No hay datos para exportar", Alert.AlertType.WARNING);
+        try {
+            if (!listaReportesProgreso.isEmpty()) {
+                mostrarAlerta("Éxito", "Reporte exportado a PDF correctamente", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Error", "No hay datos para exportar", Alert.AlertType.WARNING);
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al exportar PDF: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     void onExportarExcel() {
-        if (!listaReportesProgreso.isEmpty()) {
-            mostrarAlerta("Éxito", "Reporte exportado a Excel correctamente", Alert.AlertType.INFORMATION);
-        } else {
-            mostrarAlerta("Error", "No hay datos para exportar", Alert.AlertType.WARNING);
+        try {
+            if (!listaReportesProgreso.isEmpty()) {
+                mostrarAlerta("Éxito", "Reporte exportado a Excel correctamente", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Error", "No hay datos para exportar", Alert.AlertType.WARNING);
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al exportar Excel: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     void onEjecutarConsulta() {
-        String consulta = txtConsultaPersonalizada.getText();
-        mostrarAlerta("Info", "Consulta ejecutada (funcionalidad en desarrollo)", Alert.AlertType.INFORMATION);
+        try {
+            String consulta = txtConsultaPersonalizada.getText();
+            mostrarAlerta("Info", "Consulta ejecutada (funcionalidad en desarrollo)", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al ejecutar consulta: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     @FXML
     void onVolver() {
-        app.mostrarMainView();
+        try {
+            if (app != null) {
+                app.mostrarMainView();
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al volver al menú: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
-
     private void generarReporteProgresoGeneral() {
-        List<ReporteProgreso> reportes = reportesController.generarReporteProgresoGeneral();
-        listaReportesProgreso.clear();
-        listaReportesProgreso.addAll(reportes);
-        tblReportesProgreso.setItems(listaReportesProgreso);
+        try {
+            List<ReporteProgreso> reportes = reportesController.generarReporteProgresoGeneral();
+            listaReportesProgreso.clear();
+            if (reportes != null) {
+                listaReportesProgreso.addAll(reportes);
+            }
+            if (tblReportesProgreso != null) {
+                tblReportesProgreso.setItems(listaReportesProgreso);
+            }
 
-        mostrarAlerta("Éxito", "Reporte de Progreso General generado: " + reportes.size() + " registros", Alert.AlertType.INFORMATION);
+            mostrarAlerta("Éxito", "Reporte de Progreso General generado: " + listaReportesProgreso.size() + " registros", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al generar reporte de progreso: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     private void generarReporteAsistencias() {
-        List<Asistencia> asistencias = reportesController.generarReporteAsistencias(
-                dpFechaInicioReporte.getValue(), dpFechaFinReporte.getValue());
-        listaReportesAsistencia.clear();
-        listaReportesAsistencia.addAll(asistencias);
-        tblReportesAsistencia.setItems(listaReportesAsistencia);
+        try {
+            List<Asistencia> asistencias = reportesController.generarReporteAsistencias(
+                    dpFechaInicioReporte.getValue(), dpFechaFinReporte.getValue());
+            listaReportesAsistencia.clear();
+            if (asistencias != null) {
+                listaReportesAsistencia.addAll(asistencias);
+            }
+            if (tblReportesAsistencia != null) {
+                tblReportesAsistencia.setItems(listaReportesAsistencia);
+            }
 
-        mostrarAlerta("Éxito", "Reporte de Asistencias generado: " + asistencias.size() + " registros", Alert.AlertType.INFORMATION);
+            mostrarAlerta("Éxito", "Reporte de Asistencias generado: " + listaReportesAsistencia.size() + " registros", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al generar reporte de asistencias: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     private void generarReporteMatriculas() {
-        List<Matricula> matriculas = reportesController.generarReporteMatriculas();
-        listaReportesMatriculas.clear();
-        listaReportesMatriculas.addAll(matriculas);
-        tblReportesMatriculas.setItems(listaReportesMatriculas);
+        try {
+            List<Matricula> matriculas = reportesController.generarReporteMatriculas();
+            listaReportesMatriculas.clear();
+            if (matriculas != null) {
+                listaReportesMatriculas.addAll(matriculas);
+            }
+            if (tblReportesMatriculas != null) {
+                tblReportesMatriculas.setItems(listaReportesMatriculas);
+            }
 
-        mostrarAlerta("Éxito", "Reporte de Matrículas generado: " + matriculas.size() + " registros", Alert.AlertType.INFORMATION);
+            mostrarAlerta("Éxito", "Reporte de Matrículas generado: " + listaReportesMatriculas.size() + " registros", Alert.AlertType.INFORMATION);
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al generar reporte de matrículas: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     private void generarReportePorEstudiante() {
-        Estudiante estudiante = cbEstudianteReporte.getValue();
-        if (estudiante != null) {
-            List<ReporteProgreso> reportes = reportesController.generarReportePorEstudiante(estudiante);
-            listaReportesProgreso.clear();
-            listaReportesProgreso.addAll(reportes);
-            tblReportesProgreso.setItems(listaReportesProgreso);
+        try {
+            Estudiante estudiante = cbEstudianteReporte.getValue();
+            if (estudiante != null) {
+                List<ReporteProgreso> reportes = reportesController.generarReportePorEstudiante(estudiante);
+                listaReportesProgreso.clear();
+                if (reportes != null) {
+                    listaReportesProgreso.addAll(reportes);
+                }
+                if (tblReportesProgreso != null) {
+                    tblReportesProgreso.setItems(listaReportesProgreso);
+                }
 
-            mostrarAlerta("Éxito", "Reporte del estudiante generado: " + reportes.size() + " registros", Alert.AlertType.INFORMATION);
-        } else {
-            mostrarAlerta("Error", "Seleccione un estudiante", Alert.AlertType.WARNING);
+                mostrarAlerta("Éxito", "Reporte del estudiante generado: " + listaReportesProgreso.size() + " registros", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Error", "Seleccione un estudiante", Alert.AlertType.WARNING);
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al generar reporte por estudiante: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     private void generarReportePorCurso() {
-        Curso curso = cbCursoReporte.getValue();
-        if (curso != null) {
-            List<ReporteProgreso> reportes = reportesController.generarReportePorCurso(curso);
-            listaReportesProgreso.clear();
-            listaReportesProgreso.addAll(reportes);
-            tblReportesProgreso.setItems(listaReportesProgreso);
+        try {
+            Curso curso = cbCursoReporte.getValue();
+            if (curso != null) {
+                List<ReporteProgreso> reportes = reportesController.generarReportePorCurso(curso);
+                listaReportesProgreso.clear();
+                if (reportes != null) {
+                    listaReportesProgreso.addAll(reportes);
+                }
+                if (tblReportesProgreso != null) {
+                    tblReportesProgreso.setItems(listaReportesProgreso);
+                }
 
-            mostrarAlerta("Éxito", "Reporte del curso generado: " + reportes.size() + " registros", Alert.AlertType.INFORMATION);
-        } else {
-            mostrarAlerta("Error", "Seleccione un curso", Alert.AlertType.WARNING);
+                mostrarAlerta("Éxito", "Reporte del curso generado: " + listaReportesProgreso.size() + " registros", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Error", "Seleccione un curso", Alert.AlertType.WARNING);
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al generar reporte por curso: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     private void generarReportePorProfesor() {
-        Profesor profesor = cbProfesorReporte.getValue();
-        if (profesor != null) {
-            List<ReporteProgreso> reportes = reportesController.generarReportePorProfesor(profesor);
-            listaReportesProgreso.clear();
-            listaReportesProgreso.addAll(reportes);
-            tblReportesProgreso.setItems(listaReportesProgreso);
+        try {
+            Profesor profesor = cbProfesorReporte.getValue();
+            if (profesor != null) {
+                List<ReporteProgreso> reportes = reportesController.generarReportePorProfesor(profesor);
+                listaReportesProgreso.clear();
+                if (reportes != null) {
+                    listaReportesProgreso.addAll(reportes);
+                }
+                if (tblReportesProgreso != null) {
+                    tblReportesProgreso.setItems(listaReportesProgreso);
+                }
 
-            mostrarAlerta("Éxito", "Reporte del profesor generado: " + reportes.size() + " registros", Alert.AlertType.INFORMATION);
-        } else {
-            mostrarAlerta("Error", "Seleccione un profesor", Alert.AlertType.WARNING);
+                mostrarAlerta("Éxito", "Reporte del profesor generado: " + listaReportesProgreso.size() + " registros", Alert.AlertType.INFORMATION);
+            } else {
+                mostrarAlerta("Error", "Seleccione un profesor", Alert.AlertType.WARNING);
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al generar reporte por profesor: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -292,20 +471,32 @@ public class ReportesViewController {
         mostrarAlerta("Info", "Reporte comparativo en desarrollo", Alert.AlertType.INFORMATION);
     }
 
-
     private void cargarEstadisticasDetalladas() {
+        try {
+            if (lblTotalEstudiantes != null) {
+                lblTotalEstudiantes.setText(String.valueOf(reportesController.contarTotalEstudiantes()));
+            }
+            if (lblTotalProfesores != null) {
+                lblTotalProfesores.setText(String.valueOf(reportesController.contarTotalProfesores()));
+            }
+            if (lblTotalCursos != null) {
+                lblTotalCursos.setText(String.valueOf(reportesController.contarTotalCursos()));
+            }
 
-        lblTotalEstudiantes.setText(String.valueOf(reportesController.contarTotalEstudiantes()));
-        lblTotalProfesores.setText(String.valueOf(reportesController.contarTotalProfesores()));
-        lblTotalCursos.setText(String.valueOf(reportesController.contarTotalCursos()));
+            if (lblPromedioCalificaciones != null) {
+                lblPromedioCalificaciones.setText(String.format("%.2f", reportesController.calcularPromedioCalificaciones()));
+            }
+            if (lblTasaAprobacion != null) {
+                lblTasaAprobacion.setText(String.format("%.1f%%", reportesController.calcularTasaAprobacion()));
+            }
+            if (lblTasaAsistencia != null) {
+                lblTasaAsistencia.setText(String.format("%.1f%%", reportesController.calcularTasaAsistencia()));
+            }
 
-
-        lblPromedioCalificaciones.setText(String.format("%.2f", reportesController.calcularPromedioCalificaciones()));
-        lblTasaAprobacion.setText(String.format("%.1f%%", reportesController.calcularTasaAprobacion()));
-        lblTasaAsistencia.setText(String.format("%.1f%%", reportesController.calcularTasaAsistencia()));
-
-
-        cargarGraficosEstadisticas();
+            cargarGraficosEstadisticas();
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al cargar estadísticas: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     private void cargarGraficosEstadisticas() {
@@ -315,45 +506,47 @@ public class ReportesViewController {
     }
 
     private void cargarPieChartNiveles() {
-        pieChartNiveles.getData().clear();
-
-
-        pieChartNiveles.getData().addAll(
-                new PieChart.Data("Básico", 45),
-                new PieChart.Data("Intermedio", 30),
-                new PieChart.Data("Avanzado", 25)
-        );
+        if (pieChartNiveles != null) {
+            pieChartNiveles.getData().clear();
+            pieChartNiveles.getData().addAll(
+                    new PieChart.Data("Básico", 45),
+                    new PieChart.Data("Intermedio", 30),
+                    new PieChart.Data("Avanzado", 25)
+            );
+        }
     }
 
     private void cargarBarChartInstrumentos() {
-        barChartInstrumentos.getData().clear();
+        if (barChartInstrumentos != null) {
+            barChartInstrumentos.getData().clear();
 
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Estudiantes por Instrumento");
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Estudiantes por Instrumento");
 
-        // Datos de ejemplo
-        series.getData().add(new XYChart.Data<>("Piano", 35));
-        series.getData().add(new XYChart.Data<>("Guitarra", 28));
-        series.getData().add(new XYChart.Data<>("Violín", 15));
-        series.getData().add(new XYChart.Data<>("Canto", 22));
+            series.getData().add(new XYChart.Data<>("Piano", 35));
+            series.getData().add(new XYChart.Data<>("Guitarra", 28));
+            series.getData().add(new XYChart.Data<>("Violín", 15));
+            series.getData().add(new XYChart.Data<>("Canto", 22));
 
-        barChartInstrumentos.getData().add(series);
+            barChartInstrumentos.getData().add(series);
+        }
     }
 
     private void cargarLineChartProgreso() {
-        lineChartProgreso.getData().clear();
+        if (lineChartProgreso != null) {
+            lineChartProgreso.getData().clear();
 
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Progreso Promedio");
+            XYChart.Series<String, Number> series = new XYChart.Series<>();
+            series.setName("Progreso Promedio");
 
-        // Datos de ejemplo
-        series.getData().add(new XYChart.Data<>("Ene", 3.2));
-        series.getData().add(new XYChart.Data<>("Feb", 3.5));
-        series.getData().add(new XYChart.Data<>("Mar", 3.8));
-        series.getData().add(new XYChart.Data<>("Abr", 4.0));
-        series.getData().add(new XYChart.Data<>("May", 4.2));
+            series.getData().add(new XYChart.Data<>("Ene", 3.2));
+            series.getData().add(new XYChart.Data<>("Feb", 3.5));
+            series.getData().add(new XYChart.Data<>("Mar", 3.8));
+            series.getData().add(new XYChart.Data<>("Abr", 4.0));
+            series.getData().add(new XYChart.Data<>("May", 4.2));
 
-        lineChartProgreso.getData().add(series);
+            lineChartProgreso.getData().add(series);
+        }
     }
 
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {

@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -49,168 +50,265 @@ public class AulaViewController {
 
     @FXML
     void initialize() {
-        this.aulaController = new AulaController(App.academia);
-        configurarInterfaz();
-        cargarDatosIniciales();
+        try {
+            this.aulaController = new AulaController(App.academia);
+            configurarInterfaz();
+            cargarDatosIniciales();
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al inicializar: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     private void configurarInterfaz() {
         configurarPestanaDatosAula();
         configurarPestanaDisponibilidad();
         configurarPestanaClases();
+        configurarStringConverters();
     }
 
-    // Datos Aula
+    // CORREGIDO: Configurar cómo se muestran los objetos en los ComboBox
+    private void configurarStringConverters() {
+        // Configurar ComboBox de aulas para disponibilidad
+        if (cbAulaDisponibilidad != null) {
+            cbAulaDisponibilidad.setConverter(new StringConverter<Aula>() {
+                @Override
+                public String toString(Aula aula) {
+                    if (aula == null) return "";
+                    return aula.getNombre() + " - Capacidad: " + aula.getCapacidad();
+                }
+
+                @Override
+                public Aula fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de aulas para clases
+        if (cbAulaClases != null) {
+            cbAulaClases.setConverter(new StringConverter<Aula>() {
+                @Override
+                public String toString(Aula aula) {
+                    if (aula == null) return "";
+                    return aula.getNombre() + " (" + aula.getIdAula() + ")";
+                }
+
+                @Override
+                public Aula fromString(String string) {
+                    return null;
+                }
+            });
+        }
+    }
+
     private void configurarPestanaDatosAula() {
         // Configurar tabla aulas
-        colIdAula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getIdAula()));
-        colNombreAula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getNombre()));
-        colCapacidadAula.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getCapacidad())));
-        colDisponibleAula.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().isDisponible() ? "✅ Disponible" : "❌ Ocupada"));
+        if (colIdAula != null) {
+            colIdAula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getIdAula()));
+        }
+        if (colNombreAula != null) {
+            colNombreAula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getNombre()));
+        }
+        if (colCapacidadAula != null) {
+            colCapacidadAula.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getCapacidad())));
+        }
+        if (colDisponibleAula != null) {
+            colDisponibleAula.setCellValueFactory(cell -> new SimpleStringProperty(
+                    cell.getValue().isDisponible() ? "✅ Disponible" : "❌ Ocupada"));
+        }
 
-        tblAulas.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            aulaSeleccionada = newVal;
-            mostrarAulaSeleccionada();
-        });
+        if (tblAulas != null) {
+            tblAulas.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+                aulaSeleccionada = newVal;
+                mostrarAulaSeleccionada();
+            });
+        }
 
         // Configurar combo días
-        cbDiaDisponibilidad.setItems(FXCollections.observableArrayList(
-                "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"
-        ));
+        if (cbDiaDisponibilidad != null) {
+            cbDiaDisponibilidad.setItems(FXCollections.observableArrayList(
+                    "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"
+            ));
+        }
     }
 
-    // Datos Disponibilidad
     private void configurarPestanaDisponibilidad() {
         // Configurar tabla horarios
-        colDiaHorario.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDia()));
-        colHoraInicio.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getHoraInicio().toString()));
-        colHoraFin.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getHoraFin().toString()));
+        if (colDiaHorario != null) {
+            colDiaHorario.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getDia()));
+        }
+        if (colHoraInicio != null) {
+            colHoraInicio.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getHoraInicio().toString()));
+        }
+        if (colHoraFin != null) {
+            colHoraFin.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getHoraFin().toString()));
+        }
     }
 
-    // Datos Clases
     private void configurarPestanaClases() {
         // Configurar tabla clases del aula
-        colIdClaseAula.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getId())));
-        colTipoClaseAula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTipoClase().toString()));
-        colCursoClaseAula.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getCurso() != null ? cell.getValue().getCurso().getNombreCurso() : "N/A"));
-        colProfesorClaseAula.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getProfesor() != null ?
-                        cell.getValue().getProfesor().getNombre() + " " + cell.getValue().getProfesor().getApellido() : "N/A"));
-        colHorarioClaseAula.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getHorario() != null ?
-                        cell.getValue().getHorario().getDia() + " " + cell.getValue().getHorario().getHoraInicio() + "-" + cell.getValue().getHorario().getHoraFin() :
-                        "N/A"));
+        if (colIdClaseAula != null) {
+            colIdClaseAula.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getId())));
+        }
+        if (colTipoClaseAula != null) {
+            colTipoClaseAula.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTipoClase().toString()));
+        }
+        if (colCursoClaseAula != null) {
+            colCursoClaseAula.setCellValueFactory(cell -> new SimpleStringProperty(
+                    cell.getValue().getCurso() != null ? cell.getValue().getCurso().getNombreCurso() : "N/A"));
+        }
+        if (colProfesorClaseAula != null) {
+            colProfesorClaseAula.setCellValueFactory(cell -> new SimpleStringProperty(
+                    cell.getValue().getProfesor() != null ?
+                            cell.getValue().getProfesor().getNombre() + " " + cell.getValue().getProfesor().getApellido() : "N/A"));
+        }
+        if (colHorarioClaseAula != null) {
+            colHorarioClaseAula.setCellValueFactory(cell -> new SimpleStringProperty(
+                    cell.getValue().getHorario() != null ?
+                            cell.getValue().getHorario().getDia() + " " + cell.getValue().getHorario().getHoraInicio() + "-" + cell.getValue().getHorario().getHoraFin() :
+                            "N/A"));
+        }
     }
 
     private void cargarDatosIniciales() {
         cargarAulas();
-        cargarCombosDisponibilidad();
     }
 
     private void cargarAulas() {
-        listaAulas.clear();
-        listaAulas.addAll(aulaController.obtenerAulas());
-        tblAulas.setItems(listaAulas);
+        try {
+            listaAulas.clear();
+            if (aulaController != null) {
+                List<Aula> aulas = aulaController.obtenerAulas();
+                if (aulas != null) {
+                    listaAulas.addAll(aulas);
+                }
+            }
 
-        // Actualizar combos que dependen de aulas
-        cbAulaDisponibilidad.setItems(listaAulas);
-        cbAulaClases.setItems(listaAulas);
+            if (tblAulas != null) {
+                tblAulas.setItems(listaAulas);
+            }
+
+            // Actualizar combos que dependen de aulas
+            if (cbAulaDisponibilidad != null) {
+                cbAulaDisponibilidad.setItems(listaAulas);
+                if (!listaAulas.isEmpty()) {
+                    cbAulaDisponibilidad.setValue(listaAulas.get(0));
+                }
+            }
+
+            if (cbAulaClases != null) {
+                cbAulaClases.setItems(listaAulas);
+                if (!listaAulas.isEmpty()) {
+                    cbAulaClases.setValue(listaAulas.get(0));
+                }
+            }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al cargar aulas: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
-    private void cargarCombosDisponibilidad() {
-        // Los combos ya se configuraron en initialize()
-    }
-
-    // Datos Aula
     private void mostrarAulaSeleccionada() {
         if (aulaSeleccionada != null) {
-            txtIdAula.setText(aulaSeleccionada.getIdAula());
-            txtNombreAula.setText(aulaSeleccionada.getNombre());
-            txtCapacidadAula.setText(String.valueOf(aulaSeleccionada.getCapacidad()));
-            chkDisponible.setSelected(aulaSeleccionada.isDisponible());
+            if (txtIdAula != null) txtIdAula.setText(aulaSeleccionada.getIdAula());
+            if (txtNombreAula != null) txtNombreAula.setText(aulaSeleccionada.getNombre());
+            if (txtCapacidadAula != null) txtCapacidadAula.setText(String.valueOf(aulaSeleccionada.getCapacidad()));
+            if (chkDisponible != null) chkDisponible.setSelected(aulaSeleccionada.isDisponible());
         }
     }
 
     @FXML
     void onAgregarAula() {
-        if (validarCamposDatosAula()) {
-            Aula aula = new Aula(
-                    txtIdAula.getText(),
-                    txtNombreAula.getText(),
-                    Integer.parseInt(txtCapacidadAula.getText()),
-                    chkDisponible.isSelected()
-            );
+        try {
+            if (validarCamposDatosAula()) {
+                Aula aula = new Aula(
+                        txtIdAula.getText(),
+                        txtNombreAula.getText(),
+                        Integer.parseInt(txtCapacidadAula.getText()),
+                        chkDisponible.isSelected()
+                );
 
-            if (aulaController.registrarAula(aula)) {
-                listaAulas.add(aula);
-                limpiarCamposDatosAula();
-                mostrarAlerta("Éxito", "Aula registrada correctamente", Alert.AlertType.INFORMATION);
-            } else {
-                mostrarAlerta("Error", "Ya existe un aula con esta ID", Alert.AlertType.ERROR);
+                if (aulaController.registrarAula(aula)) {
+                    listaAulas.add(aula);
+                    limpiarCamposDatosAula();
+                    mostrarAlerta("Éxito", "Aula registrada correctamente", Alert.AlertType.INFORMATION);
+                    cargarAulas(); // Actualizar combos
+                } else {
+                    mostrarAlerta("Error", "Ya existe un aula con esta ID", Alert.AlertType.ERROR);
+                }
             }
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al agregar aula: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     void onActualizarAula() {
-        if (aulaSeleccionada != null && validarCamposDatosAula()) {
-            Aula actualizada = new Aula(
-                    txtIdAula.getText(),
-                    txtNombreAula.getText(),
-                    Integer.parseInt(txtCapacidadAula.getText()),
-                    chkDisponible.isSelected()
-            );
+        try {
+            if (aulaSeleccionada != null && validarCamposDatosAula()) {
+                Aula actualizada = new Aula(
+                        txtIdAula.getText(),
+                        txtNombreAula.getText(),
+                        Integer.parseInt(txtCapacidadAula.getText()),
+                        chkDisponible.isSelected()
+                );
 
-            if (aulaController.actualizarAula(aulaSeleccionada.getIdAula(), actualizada)) {
-                cargarAulas();
-                limpiarCamposDatosAula();
-                mostrarAlerta("Éxito", "Aula actualizada correctamente", Alert.AlertType.INFORMATION);
+                if (aulaController.actualizarAula(aulaSeleccionada.getIdAula(), actualizada)) {
+                    cargarAulas();
+                    limpiarCamposDatosAula();
+                    mostrarAlerta("Éxito", "Aula actualizada correctamente", Alert.AlertType.INFORMATION);
+                } else {
+                    mostrarAlerta("Error", "Error al actualizar el aula", Alert.AlertType.ERROR);
+                }
             } else {
-                mostrarAlerta("Error", "Error al actualizar el aula", Alert.AlertType.ERROR);
+                mostrarAlerta("Error", "Seleccione un aula para actualizar", Alert.AlertType.WARNING);
             }
-        } else {
-            mostrarAlerta("Error", "Seleccione un aula para actualizar", Alert.AlertType.WARNING);
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al actualizar aula: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     void onEliminarAula() {
-        if (aulaSeleccionada != null) {
-            Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmacion.setTitle("Confirmar Eliminación");
-            confirmacion.setHeaderText("¿Está seguro de eliminar este aula?");
-            confirmacion.setContentText("Aula: " + aulaSeleccionada.getNombre());
+        try {
+            if (aulaSeleccionada != null) {
+                Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmacion.setTitle("Confirmar Eliminación");
+                confirmacion.setHeaderText("¿Está seguro de eliminar este aula?");
+                confirmacion.setContentText("Aula: " + aulaSeleccionada.getNombre());
 
-            if (confirmacion.showAndWait().get() == ButtonType.OK) {
-                if (aulaController.eliminarAula(aulaSeleccionada.getIdAula())) {
-                    listaAulas.remove(aulaSeleccionada);
-                    limpiarCamposDatosAula();
-                    mostrarAlerta("Éxito", "Aula eliminada correctamente", Alert.AlertType.INFORMATION);
-                } else {
-                    mostrarAlerta("Error", "Error al eliminar el aula", Alert.AlertType.ERROR);
+                if (confirmacion.showAndWait().get() == ButtonType.OK) {
+                    if (aulaController.eliminarAula(aulaSeleccionada.getIdAula())) {
+                        listaAulas.remove(aulaSeleccionada);
+                        limpiarCamposDatosAula();
+                        mostrarAlerta("Éxito", "Aula eliminada correctamente", Alert.AlertType.INFORMATION);
+                        cargarAulas(); // Actualizar combos
+                    } else {
+                        mostrarAlerta("Error", "Error al eliminar el aula", Alert.AlertType.ERROR);
+                    }
                 }
+            } else {
+                mostrarAlerta("Error", "Seleccione un aula para eliminar", Alert.AlertType.WARNING);
             }
-        } else {
-            mostrarAlerta("Error", "Seleccione un aula para eliminar", Alert.AlertType.WARNING);
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al eliminar aula: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     void onLimpiarCamposAula() {
         limpiarCamposDatosAula();
-        tblAulas.getSelectionModel().clearSelection();
+        if (tblAulas != null) {
+            tblAulas.getSelectionModel().clearSelection();
+        }
         aulaSeleccionada = null;
     }
 
-
     @FXML
     void onVerificarDisponibilidad() {
-        if (cbAulaDisponibilidad.getValue() != null && cbDiaDisponibilidad.getValue() != null &&
-                !txtHoraInicioDisponibilidad.getText().isEmpty() && !txtHoraFinDisponibilidad.getText().isEmpty()) {
+        try {
+            if (cbAulaDisponibilidad.getValue() != null && cbDiaDisponibilidad.getValue() != null &&
+                    !txtHoraInicioDisponibilidad.getText().isEmpty() && !txtHoraFinDisponibilidad.getText().isEmpty()) {
 
-            try {
                 Aula aula = cbAulaDisponibilidad.getValue();
                 BloqueHorario nuevoBloque = new BloqueHorario(
                         cbDiaDisponibilidad.getValue(),
@@ -220,27 +318,29 @@ public class AulaViewController {
 
                 boolean disponible = aula.estaDisponible(nuevoBloque);
 
-                if (disponible) {
-                    lblResultadoDisponibilidad.setText("✅ El aula está disponible en ese horario");
-                    lblResultadoDisponibilidad.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
-                } else {
-                    lblResultadoDisponibilidad.setText("❌ El aula NO está disponible en ese horario");
-                    lblResultadoDisponibilidad.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                if (lblResultadoDisponibilidad != null) {
+                    if (disponible) {
+                        lblResultadoDisponibilidad.setText("✅ El aula está disponible en ese horario");
+                        lblResultadoDisponibilidad.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
+                    } else {
+                        lblResultadoDisponibilidad.setText("❌ El aula NO está disponible en ese horario");
+                        lblResultadoDisponibilidad.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+                    }
                 }
-            } catch (Exception e) {
-                mostrarAlerta("Error", "Formato de hora inválido. Use formato HH:mm", Alert.AlertType.ERROR);
+            } else {
+                mostrarAlerta("Error", "Complete todos los campos para verificar disponibilidad", Alert.AlertType.WARNING);
             }
-        } else {
-            mostrarAlerta("Error", "Complete todos los campos para verificar disponibilidad", Alert.AlertType.WARNING);
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Formato de hora inválido. Use formato HH:mm", Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     void onAgregarHorario() {
-        if (cbAulaDisponibilidad.getValue() != null && cbDiaDisponibilidad.getValue() != null &&
-                !txtHoraInicioDisponibilidad.getText().isEmpty() && !txtHoraFinDisponibilidad.getText().isEmpty()) {
+        try {
+            if (cbAulaDisponibilidad.getValue() != null && cbDiaDisponibilidad.getValue() != null &&
+                    !txtHoraInicioDisponibilidad.getText().isEmpty() && !txtHoraFinDisponibilidad.getText().isEmpty()) {
 
-            try {
                 Aula aula = cbAulaDisponibilidad.getValue();
                 BloqueHorario nuevoHorario = new BloqueHorario(
                         cbDiaDisponibilidad.getValue(),
@@ -248,76 +348,83 @@ public class AulaViewController {
                         LocalTime.parse(txtHoraFinDisponibilidad.getText())
                 );
 
-                // Verificar disponibilidad primero
                 if (!aula.estaDisponible(nuevoHorario)) {
                     mostrarAlerta("Error", "El aula no está disponible en ese horario", Alert.AlertType.ERROR);
                     return;
                 }
 
-                // Agregar horario al aula
                 aula.getListHorarios().add(nuevoHorario);
                 actualizarTablaHorariosAula(aula);
                 mostrarAlerta("Éxito", "Horario agregado correctamente", Alert.AlertType.INFORMATION);
                 limpiarCamposHorario();
 
-            } catch (Exception e) {
-                mostrarAlerta("Error", "Formato de hora inválido. Use formato HH:mm", Alert.AlertType.ERROR);
+            } else {
+                mostrarAlerta("Error", "Complete todos los campos del horario", Alert.AlertType.WARNING);
             }
-        } else {
-            mostrarAlerta("Error", "Complete todos los campos del horario", Alert.AlertType.WARNING);
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Formato de hora inválido. Use formato HH:mm", Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     void onRemoverHorario() {
-        BloqueHorario horarioSeleccionado = tblHorariosAula.getSelectionModel().getSelectedItem();
-        Aula aula = cbAulaDisponibilidad.getValue();
+        try {
+            BloqueHorario horarioSeleccionado = tblHorariosAula.getSelectionModel().getSelectedItem();
+            Aula aula = cbAulaDisponibilidad.getValue();
 
-        if (aula != null && horarioSeleccionado != null) {
-            if (aula.getListHorarios().remove(horarioSeleccionado)) {
-                actualizarTablaHorariosAula(aula);
-                mostrarAlerta("Éxito", "Horario removido correctamente", Alert.AlertType.INFORMATION);
+            if (aula != null && horarioSeleccionado != null) {
+                if (aula.getListHorarios().remove(horarioSeleccionado)) {
+                    actualizarTablaHorariosAula(aula);
+                    mostrarAlerta("Éxito", "Horario removido correctamente", Alert.AlertType.INFORMATION);
+                } else {
+                    mostrarAlerta("Error", "No se pudo remover el horario", Alert.AlertType.ERROR);
+                }
             } else {
-                mostrarAlerta("Error", "No se pudo remover el horario", Alert.AlertType.ERROR);
+                mostrarAlerta("Error", "Seleccione un aula y un horario para remover", Alert.AlertType.WARNING);
             }
-        } else {
-            mostrarAlerta("Error", "Seleccione un aula y un horario para remover", Alert.AlertType.WARNING);
+        } catch (Exception e) {
+            mostrarAlerta("Error", "Error al remover horario: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
-
     private void actualizarTablaHorariosAula(Aula aula) {
-        tblHorariosAula.getItems().clear();
-        if (aula != null && aula.getListHorarios() != null) {
-            tblHorariosAula.getItems().addAll(aula.getListHorarios());
+        if (tblHorariosAula != null) {
+            tblHorariosAula.getItems().clear();
+            if (aula != null && aula.getListHorarios() != null) {
+                tblHorariosAula.getItems().addAll(aula.getListHorarios());
+            }
         }
     }
 
     private void actualizarTablaClasesAula(Aula aula) {
-        tblClasesAula.getItems().clear();
-        if (aula != null && aula.getListClases() != null) {
-            tblClasesAula.getItems().addAll(aula.getListClases());
+        if (tblClasesAula != null) {
+            tblClasesAula.getItems().clear();
+            if (aula != null && aula.getListClases() != null) {
+                tblClasesAula.getItems().addAll(aula.getListClases());
+            }
         }
     }
 
     @FXML
     void onVolver() {
-        app.mostrarMainView();
+        if (app != null) {
+            app.mostrarMainView();
+        }
     }
 
     private void limpiarCamposDatosAula() {
-        txtIdAula.clear();
-        txtNombreAula.clear();
-        txtCapacidadAula.clear();
-        chkDisponible.setSelected(true);
-        txtIdAula.requestFocus();
+        if (txtIdAula != null) txtIdAula.clear();
+        if (txtNombreAula != null) txtNombreAula.clear();
+        if (txtCapacidadAula != null) txtCapacidadAula.clear();
+        if (chkDisponible != null) chkDisponible.setSelected(true);
+        if (txtIdAula != null) txtIdAula.requestFocus();
     }
 
     private void limpiarCamposHorario() {
-        cbDiaDisponibilidad.setValue(null);
-        txtHoraInicioDisponibilidad.clear();
-        txtHoraFinDisponibilidad.clear();
-        lblResultadoDisponibilidad.setText("");
+        if (cbDiaDisponibilidad != null) cbDiaDisponibilidad.setValue(null);
+        if (txtHoraInicioDisponibilidad != null) txtHoraInicioDisponibilidad.clear();
+        if (txtHoraFinDisponibilidad != null) txtHoraFinDisponibilidad.clear();
+        if (lblResultadoDisponibilidad != null) lblResultadoDisponibilidad.setText("");
     }
 
     private boolean validarCamposDatosAula() {

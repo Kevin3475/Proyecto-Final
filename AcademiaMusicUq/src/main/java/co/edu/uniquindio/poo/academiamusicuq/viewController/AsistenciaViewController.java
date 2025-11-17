@@ -69,8 +69,132 @@ public class AsistenciaViewController {
     @FXML
     void initialize() {
         this.asistenciasController = new AsistenciaController(App.academia);
+        configurarCombos();
         configurarInterfaz();
         cargarDatosIniciales();
+    }
+
+    private void configurarCombos() {
+        // Configurar ComboBox de Profesores
+        configurarComboProfesor(cbProfesorAsistencia);
+        configurarComboProfesor(cbProfesorConsulta);
+
+        // Configurar ComboBox de Clases
+        configurarComboClase(cbClaseAsistencia);
+
+        // Configurar ComboBox de Estudiantes
+        configurarComboEstudiante(cbEstudianteConsulta);
+
+        // Configurar ComboBox de Cursos
+        configurarComboCurso(cbCursoConsulta);
+    }
+
+    private void configurarComboProfesor(ComboBox<Profesor> comboBox) {
+        comboBox.setCellFactory(param -> new ListCell<Profesor>() {
+            @Override
+            protected void updateItem(Profesor profesor, boolean empty) {
+                super.updateItem(profesor, empty);
+                if (empty || profesor == null) {
+                    setText(null);
+                } else {
+                    setText(profesor.getNombre() + " " + profesor.getApellido() + " (" + profesor.getId() + ")");
+                }
+            }
+        });
+
+        comboBox.setButtonCell(new ListCell<Profesor>() {
+            @Override
+            protected void updateItem(Profesor profesor, boolean empty) {
+                super.updateItem(profesor, empty);
+                if (empty || profesor == null) {
+                    setText(null);
+                } else {
+                    setText(profesor.getNombre() + " " + profesor.getApellido() + " (" + profesor.getId() + ")");
+                }
+            }
+        });
+    }
+
+    private void configurarComboClase(ComboBox<Clase> comboBox) {
+        comboBox.setCellFactory(param -> new ListCell<Clase>() {
+            @Override
+            protected void updateItem(Clase clase, boolean empty) {
+                super.updateItem(clase, empty);
+                if (empty || clase == null) {
+                    setText(null);
+                } else {
+                    String nombreCurso = clase.getCurso() != null ? clase.getCurso().getNombreCurso() : "Sin curso";
+                    String tipoClase = clase.getTipoClase() != null ? clase.getTipoClase().toString() : "N/A";
+                    setText("Clase " + clase.getId() + " - " + nombreCurso + " (" + tipoClase + ")");
+                }
+            }
+        });
+
+        comboBox.setButtonCell(new ListCell<Clase>() {
+            @Override
+            protected void updateItem(Clase clase, boolean empty) {
+                super.updateItem(clase, empty);
+                if (empty || clase == null) {
+                    setText(null);
+                } else {
+                    String nombreCurso = clase.getCurso() != null ? clase.getCurso().getNombreCurso() : "Sin curso";
+                    String tipoClase = clase.getTipoClase() != null ? clase.getTipoClase().toString() : "N/A";
+                    setText("Clase " + clase.getId() + " - " + nombreCurso + " (" + tipoClase + ")");
+                }
+            }
+        });
+    }
+
+    private void configurarComboEstudiante(ComboBox<Estudiante> comboBox) {
+        comboBox.setCellFactory(param -> new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante estudiante, boolean empty) {
+                super.updateItem(estudiante, empty);
+                if (empty || estudiante == null) {
+                    setText(null);
+                } else {
+                    setText(estudiante.getNombre() + " " + estudiante.getApellido() + " (" + estudiante.getId() + ")");
+                }
+            }
+        });
+
+        comboBox.setButtonCell(new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante estudiante, boolean empty) {
+                super.updateItem(estudiante, empty);
+                if (empty || estudiante == null) {
+                    setText(null);
+                } else {
+                    setText(estudiante.getNombre() + " " + estudiante.getApellido() + " (" + estudiante.getId() + ")");
+                }
+            }
+        });
+    }
+
+    private void configurarComboCurso(ComboBox<Curso> comboBox) {
+        comboBox.setCellFactory(param -> new ListCell<Curso>() {
+            @Override
+            protected void updateItem(Curso curso, boolean empty) {
+                super.updateItem(curso, empty);
+                if (empty || curso == null) {
+                    setText(null);
+                } else {
+                    setText(curso.getNombreCurso() + " - " + curso.getInstrumento());
+                }
+            }
+        });
+
+        comboBox.setButtonCell(new ListCell<Curso>() {
+            @Override
+            protected void updateItem(Curso curso, boolean empty) {
+                super.updateItem(curso, empty);
+                if (empty || curso == null) {
+                    setText(null);
+                } else {
+                    setText(curso.getNombreCurso() + " - " + curso.getInstrumento());
+                }
+            }
+        });
     }
 
     private void configurarInterfaz() {
@@ -87,8 +211,11 @@ public class AsistenciaViewController {
                 new SimpleStringProperty(cell.getValue().getEstudiante().getId()));
         colEstudianteNombre.setCellValueFactory(cell ->
                 new SimpleStringProperty(cell.getValue().getEstudiante().getNombre() + " " + cell.getValue().getEstudiante().getApellido()));
-        colEstudianteCurso.setCellValueFactory(cell ->
-                new SimpleStringProperty(cell.getValue().getClase().getCurso().getNombreCurso()));
+        colEstudianteCurso.setCellValueFactory(cell -> {
+            Curso curso = cell.getValue().getClase().getCurso();
+            String nombreCurso = curso != null ? curso.getNombreCurso() : "Sin curso";
+            return new SimpleStringProperty(nombreCurso);
+        });
         colAsistenciaEstado.setCellValueFactory(cell ->
                 new SimpleStringProperty(cell.getValue().isPresente() ? "✅ Presente" : "❌ Ausente"));
 
@@ -97,17 +224,20 @@ public class AsistenciaViewController {
             private final Button btnToggle = new Button("Cambiar");
 
             {
+                btnToggle.setStyle("-fx-pref-width: 80; -fx-pref-height: 25; -fx-background-color: #3498db; -fx-text-fill: white;");
                 btnToggle.setOnAction(event -> {
                     EstudianteAsistencia estudiante = getTableView().getItems().get(getIndex());
-                    estudiante.setPresente(!estudiante.isPresente());
-                    getTableView().refresh();
+                    if (estudiante != null) {
+                        estudiante.setPresente(!estudiante.isPresente());
+                        getTableView().refresh();
+                    }
                 });
             }
 
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
+                if (empty || getTableView().getItems().get(getIndex()) == null) {
                     setGraphic(null);
                 } else {
                     setGraphic(btnToggle);
@@ -125,17 +255,29 @@ public class AsistenciaViewController {
         // Configurar tabla asistencias consultadas
         colIdAsistencia.setCellValueFactory(cell ->
                 new SimpleStringProperty(String.valueOf(cell.getValue().getIdAsistencia())));
-        colEstudianteAsistencia.setCellValueFactory(cell ->
-                new SimpleStringProperty(cell.getValue().getEstudiante().getNombre() + " " + cell.getValue().getEstudiante().getApellido()));
-        colClaseAsistencia.setCellValueFactory(cell ->
-                new SimpleStringProperty(cell.getValue().getClase() != null ? "Clase " + cell.getValue().getClase().getId() : "N/A"));
+        colEstudianteAsistencia.setCellValueFactory(cell -> {
+            Estudiante estudiante = cell.getValue().getEstudiante();
+            String nombreEstudiante = estudiante != null ?
+                    estudiante.getNombre() + " " + estudiante.getApellido() : "N/A";
+            return new SimpleStringProperty(nombreEstudiante);
+        });
+        colClaseAsistencia.setCellValueFactory(cell -> {
+            Clase clase = cell.getValue().getClase();
+            String infoClase = clase != null ? "Clase " + clase.getId() : "N/A";
+            return new SimpleStringProperty(infoClase);
+        });
         colFechaAsistencia.setCellValueFactory(cell ->
                 new SimpleStringProperty(cell.getValue().getFecha().toString()));
         colEstadoAsistencia.setCellValueFactory(cell ->
                 new SimpleStringProperty(cell.getValue().getPresente() ? "✅ Presente" : "❌ Ausente"));
-        colProfesorAsistencia.setCellValueFactory(cell ->
-                new SimpleStringProperty(cell.getValue().getClase() != null && cell.getValue().getClase().getProfesor() != null ?
-                        cell.getValue().getClase().getProfesor().getNombre() : "N/A"));
+        colProfesorAsistencia.setCellValueFactory(cell -> {
+            Clase clase = cell.getValue().getClase();
+            if (clase != null && clase.getProfesor() != null) {
+                Profesor profesor = clase.getProfesor();
+                return new SimpleStringProperty(profesor.getNombre() + " " + profesor.getApellido());
+            }
+            return new SimpleStringProperty("N/A");
+        });
 
         // Configurar fechas por defecto
         dpFechaInicioConsulta.setValue(LocalDate.now().minusDays(7));
@@ -278,7 +420,6 @@ public class AsistenciaViewController {
         mostrarAlerta("Info", "Generando reporte de asistencias...", Alert.AlertType.INFORMATION);
     }
 
-
     @FXML
     void onVolver() {
         app.mostrarMainView();
@@ -294,13 +435,27 @@ public class AsistenciaViewController {
         lblPorcentajeAsistencia.setText(String.format("%.1f%%", porcentaje));
     }
 
-
     @FXML
     void onProfesorAsistenciaChanged() {
         Profesor profesor = cbProfesorAsistencia.getValue();
         if (profesor != null) {
+            // Limpiar la selección actual de clase
+            cbClaseAsistencia.setValue(null);
+
+            // Cargar las clases del profesor
             ObservableList<Clase> clasesProfesor = FXCollections.observableArrayList(profesor.getListClases());
             cbClaseAsistencia.setItems(clasesProfesor);
+
+            // Si el profesor solo tiene una clase, seleccionarla automáticamente
+            if (clasesProfesor.size() == 1) {
+                cbClaseAsistencia.setValue(clasesProfesor.get(0));
+            }
+
+            mostrarAlerta("Info", "Clases del profesor cargadas: " + clasesProfesor.size(), Alert.AlertType.INFORMATION);
+        } else {
+            // Limpiar las clases si no hay profesor seleccionado
+            cbClaseAsistencia.setItems(FXCollections.emptyObservableList());
+            cbClaseAsistencia.setValue(null);
         }
     }
 
