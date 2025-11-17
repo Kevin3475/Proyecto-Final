@@ -5,337 +5,299 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="dashboard-container"
+<AnchorPane prefHeight="600.0" prefWidth="900.0" styleClass="dashboard-container"
             xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="co.edu.uniquindio.poo.academiamusicuq.viewController.ClaseViewController">
 
     <children>
-        <VBox prefHeight="700.0" prefWidth="1000.0">
-            <!-- Header -->
-            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #2c3e50; -fx-padding: 15;">
+        <VBox prefHeight="600.0" prefWidth="900.0" spacing="0">
+            <!-- Header Compacto -->
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #2c3e50; -fx-padding: 12;" prefHeight="50">
                 <children>
-                    <Button mnemonicParsing="false" onAction="#onVolver" text="⬅ Volver al Menú" styleClass="secondary-button">
+                    <Button mnemonicParsing="false" onAction="#onVolver" text="⬅ Volver"
+                            styleClass="secondary-button" prefWidth="100" prefHeight="30">
                         <HBox.margin>
                             <Insets right="20.0" />
                         </HBox.margin>
                     </Button>
-                    <Label text="🎼 Gestión Completa de Clases" style="-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;"/>
+                    <Label text="🎼 Gestión de Clases"
+                           style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
                 </children>
+                <padding>
+                    <Insets left="15.0" right="15.0" />
+                </padding>
             </HBox>
 
             <!-- Contenido principal con pestañas -->
             <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
                 <tabs>
-                    <!-- PESTAÑA 1: DATOS DE CLASE -->
-                    <Tab text="📅 Datos de Clase">
+                    <!-- PESTAÑA 1: DATOS DE CLASE COMPACTO -->
+                    <Tab text="📅 Datos">
                         <content>
-                            <VBox styleClass="content-area" spacing="20.0">
-                                <VBox.margin>
-                                    <Insets top="20.0" />
-                                </VBox.margin>
+                            <VBox styleClass="content-area" spacing="15.0" prefHeight="500">
+                                <padding>
+                                    <Insets top="15.0" bottom="15.0" left="15.0" right="15.0" />
+                                </padding>
 
-                                <!-- Formulario Datos de Clase -->
-                                <VBox styleClass="form-container" spacing="15.0">
-                                    <VBox.margin>
-                                        <Insets left="20.0" right="20.0" />
-                                    </VBox.margin>
+                                <!-- Formulario Compacto -->
+                                <VBox styleClass="form-container" spacing="12.0">
+                                    <Label text="Registrar/Editar Clase" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
-                                    <Label text="Registrar/Editar Clase" styleClass="section-title"/>
-
-                                    <GridPane hgap="15.0" vgap="15.0">
+                                    <GridPane hgap="12.0" vgap="12.0">
                                         <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="180.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="180.0" />
                                         </columnConstraints>
                                         <rowConstraints>
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
                                         </rowConstraints>
                                         <children>
-                                            <Label text="ID Clase:*" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                            <TextField fx:id="txtIdClase" promptText="Ej: 1" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                            <!-- Fila 1 -->
+                                            <Label text="ID Clase:*" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                            <TextField fx:id="txtIdClase" promptText="Ej: 1" style="-fx-pref-height: 30; -fx-background-radius: 4; -fx-border-radius: 4;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                                            <Label text="Aula:*" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                            <ComboBox fx:id="cbAulaClase" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                                            <Label text="Aula:*" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                            <ComboBox fx:id="cbAulaClase" style="-fx-pref-height: 30;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-                                            <Label text="Tipo Clase:*" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                            <ComboBox fx:id="cbTipoClase" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                            <!-- Fila 2 -->
+                                            <Label text="Tipo:*" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <ComboBox fx:id="cbTipoClase" style="-fx-pref-height: 30;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                                            <Label text="Profesor:*" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                            <ComboBox fx:id="cbProfesorClase" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                            <Label text="Profesor:*" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                            <ComboBox fx:id="cbProfesorClase" style="-fx-pref-height: 30;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-                                            <Label text="Curso:*" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                            <ComboBox fx:id="cbCursoClase" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                            <!-- Fila 3 -->
+                                            <Label text="Curso:*" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <ComboBox fx:id="cbCursoClase" style="-fx-pref-height: 30;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                                            <Label text="Día:*" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                            <ComboBox fx:id="cbDiaClase" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                            <Label text="Día:*" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                            <ComboBox fx:id="cbDiaClase" style="-fx-pref-height: 30;" GridPane.columnIndex="3" GridPane.rowIndex="2" />
 
-                                            <Label text="Hora Inicio:*" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                            <TextField fx:id="txtHoraInicioClase" promptText="HH:mm" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                            <!-- Fila 4 -->
+                                            <Label text="Hora Inicio:*" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                            <TextField fx:id="txtHoraInicioClase" promptText="HH:mm" style="-fx-pref-height: 30; -fx-background-radius: 4; -fx-border-radius: 4;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                                            <Label text="Hora Fin:*" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                            <TextField fx:id="txtHoraFinClase" promptText="HH:mm" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                            <Label text="Hora Fin:*" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                            <TextField fx:id="txtHoraFinClase" promptText="HH:mm" style="-fx-pref-height: 30; -fx-background-radius: 4; -fx-border-radius: 4;" GridPane.columnIndex="3" GridPane.rowIndex="3" />
 
-                                            <Label text="Cupo Máximo:" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                                            <TextField fx:id="txtCupoMaximo" promptText="Solo grupal" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                            <!-- Fila 5 -->
+                                            <Label text="Cupo:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                            <TextField fx:id="txtCupoMaximo" promptText="Solo grupal" style="-fx-pref-height: 30; -fx-background-radius: 4; -fx-border-radius: 4;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                                            <Label text="Objetivo Personal:" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                            <TextField fx:id="txtObjetivoPersonal" promptText="Solo individual" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                            <Label text="Objetivo:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                            <TextField fx:id="txtObjetivoPersonal" promptText="Solo individual" style="-fx-pref-height: 30; -fx-background-radius: 4; -fx-border-radius: 4;" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                                         </children>
                                     </GridPane>
 
-                                    <HBox alignment="CENTER" spacing="15.0">
+                                    <!-- Botones compactos -->
+                                    <HBox alignment="CENTER" spacing="15.0" style="-fx-padding: 10;">
                                         <children>
-                                            <Button fx:id="btnAgregarClase" mnemonicParsing="false" onAction="#onAgregarClase" text="➕ Agregar" styleClass="primary-button"/>
-                                            <Button fx:id="btnActualizarClase" mnemonicParsing="false" onAction="#onActualizarClase" text="✏️ Actualizar" styleClass="primary-button"/>
-                                            <Button fx:id="btnEliminarClase" mnemonicParsing="false" onAction="#onEliminarClase" text="🗑️ Eliminar" styleClass="warning-button"/>
-                                            <Button fx:id="btnLimpiarClase" mnemonicParsing="false" onAction="#onLimpiarCamposClase" text="🧹 Limpiar" styleClass="secondary-button"/>
+                                            <Button fx:id="btnAgregarClase" mnemonicParsing="false" onAction="#onAgregarClase"
+                                                    text="➕ Agregar" style="-fx-pref-width: 100; -fx-pref-height: 32; -fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 4;" />
+                                            <Button fx:id="btnActualizarClase" mnemonicParsing="false" onAction="#onActualizarClase"
+                                                    text="✏️ Actualizar" style="-fx-pref-width: 100; -fx-pref-height: 32; -fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 4;" />
+                                            <Button fx:id="btnEliminarClase" mnemonicParsing="false" onAction="#onEliminarClase"
+                                                    text="🗑️ Eliminar" style="-fx-pref-width: 100; -fx-pref-height: 32; -fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 4;" />
+                                            <Button fx:id="btnLimpiarClase" mnemonicParsing="false" onAction="#onLimpiarCamposClase"
+                                                    text="🧹 Limpiar" style="-fx-pref-width: 100; -fx-pref-height: 32; -fx-background-color: #95a5a6; -fx-text-fill: white; -fx-background-radius: 4;" />
                                         </children>
                                     </HBox>
 
-                                    <Label text="* Campos obligatorios" style="-fx-text-fill: #7f8c8d; -fx-font-size: 12;"/>
+                                    <Label text="* Campos obligatorios" style="-fx-text-fill: #7f8c8d; -fx-font-size: 11;"/>
                                 </VBox>
 
-                                <!-- Tabla Clases -->
-                                <Label text="Lista de Clases Registradas" styleClass="section-subtitle">
-                                    <VBox.margin>
-                                        <Insets left="20.0" />
-                                    </VBox.margin>
-                                </Label>
+                                <!-- Tabla Clases Compacta -->
+                                <Label text="Lista de Clases" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-font-size: 14;"/>
 
-                                <TableView fx:id="tblClases" VBox.vgrow="ALWAYS">
-                                    <VBox.margin>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                    </VBox.margin>
+                                <TableView fx:id="tblClases" VBox.vgrow="ALWAYS" prefHeight="200">
                                     <columns>
-                                        <TableColumn fx:id="colIdClase" prefWidth="80.0" text="ID" />
-                                        <TableColumn fx:id="colTipoClase" prefWidth="120.0" text="Tipo" />
-                                        <TableColumn fx:id="colAulaClase" prefWidth="150.0" text="Aula" />
-                                        <TableColumn fx:id="colProfesorClase" prefWidth="150.0" text="Profesor" />
-                                        <TableColumn fx:id="colCursoClase" prefWidth="150.0" text="Curso" />
-                                        <TableColumn fx:id="colHorarioClase" prefWidth="200.0" text="Horario" />
+                                        <TableColumn fx:id="colIdClase" prefWidth="60.0" text="ID" />
+                                        <TableColumn fx:id="colTipoClase" prefWidth="80.0" text="Tipo" />
+                                        <TableColumn fx:id="colAulaClase" prefWidth="100.0" text="Aula" />
+                                        <TableColumn fx:id="colProfesorClase" prefWidth="120.0" text="Profesor" />
+                                        <TableColumn fx:id="colCursoClase" prefWidth="120.0" text="Curso" />
+                                        <TableColumn fx:id="colHorarioClase" prefWidth="150.0" text="Horario" />
                                     </columns>
                                 </TableView>
                             </VBox>
                         </content>
                     </Tab>
 
-                    <!-- PESTAÑA 2: GESTIÓN ESTUDIANTES -->
-                    <Tab text="👥 Gestión Estudiantes">
+                    <!-- PESTAÑA 2: GESTIÓN ESTUDIANTES COMPACTO -->
+                    <Tab text="👥 Estudiantes">
                         <content>
-                            <VBox styleClass="content-area" spacing="20.0">
-                                <VBox.margin>
-                                    <Insets top="20.0" />
-                                </VBox.margin>
+                            <VBox styleClass="content-area" spacing="15.0" prefHeight="500">
+                                <padding>
+                                    <Insets top="15.0" bottom="15.0" left="15.0" right="15.0" />
+                                </padding>
 
-                                <Label text="Gestión de Estudiantes en Clases Grupales" styleClass="section-title">
-                                    <VBox.margin>
-                                        <Insets left="20.0" />
-                                    </VBox.margin>
-                                </Label>
+                                <Label text="Gestión de Estudiantes" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
-                                <!-- Sección Selección de Clase Grupal -->
-                                <VBox styleClass="form-container" spacing="15.0">
-                                    <VBox.margin>
-                                        <Insets left="20.0" right="20.0" />
-                                    </VBox.margin>
-
-                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
+                                <!-- Selección de Clase Grupal -->
+                                <VBox spacing="12.0">
+                                    <HBox alignment="CENTER_LEFT" spacing="12.0">
                                         <children>
-                                            <Label text="Seleccionar Clase Grupal:" styleClass="form-label"/>
-                                            <ComboBox fx:id="cbClaseGrupal" styleClass="form-field" prefWidth="300.0" onAction="#onClaseGrupalChanged"/>
+                                            <Label text="Clase Grupal:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" prefWidth="100"/>
+                                            <ComboBox fx:id="cbClaseGrupal" style="-fx-pref-width: 300; -fx-pref-height: 30;" onAction="#onClaseGrupalChanged"/>
                                         </children>
                                     </HBox>
 
                                     <Label fx:id="lblCupoDisponible" text="Seleccione una clase grupal"
-                                           style="-fx-text-fill: #7f8c8d; -fx-font-style: italic;"/>
+                                           style="-fx-text-fill: #7f8c8d; -fx-font-size: 12;"/>
                                 </VBox>
 
-                                <!-- Sección Agregar Estudiante -->
-                                <VBox styleClass="form-container" spacing="15.0">
-                                    <VBox.margin>
-                                        <Insets left="20.0" right="20.0" />
-                                    </VBox.margin>
+                                <!-- Agregar Estudiante -->
+                                <VBox spacing="12.0">
+                                    <Label text="Agregar/Remover Estudiante" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
-                                    <Label text="➕ Agregar Estudiante a Clase" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
-
-                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
+                                    <HBox alignment="CENTER_LEFT" spacing="12.0">
                                         <children>
-                                            <Label text="Estudiante:" styleClass="form-label"/>
-                                            <ComboBox fx:id="cbEstudianteAgregar" styleClass="form-field" prefWidth="250.0"/>
-                                            <Button fx:id="btnAgregarEstudianteClase" mnemonicParsing="false" onAction="#onAgregarEstudianteClase" text="➕ Agregar" styleClass="primary-button"/>
-                                            <Button fx:id="btnRemoverEstudianteClase" mnemonicParsing="false" onAction="#onRemoverEstudianteClase" text="➖ Remover" styleClass="warning-button"/>
+                                            <Label text="Estudiante:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" prefWidth="80"/>
+                                            <ComboBox fx:id="cbEstudianteAgregar" style="-fx-pref-width: 250; -fx-pref-height: 30;"/>
+                                            <Button fx:id="btnAgregarEstudianteClase" mnemonicParsing="false" onAction="#onAgregarEstudianteClase"
+                                                    text="➕ Agregar" style="-fx-pref-width: 90; -fx-pref-height: 30; -fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 4;" />
+                                            <Button fx:id="btnRemoverEstudianteClase" mnemonicParsing="false" onAction="#onRemoverEstudianteClase"
+                                                    text="➖ Remover" style="-fx-pref-width: 90; -fx-pref-height: 30; -fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 4;" />
                                         </children>
                                     </HBox>
                                 </VBox>
 
-                                <!-- Tabla Estudiantes de la Clase -->
-                                <Label text="Estudiantes Inscritos en la Clase" styleClass="section-subtitle">
-                                    <VBox.margin>
-                                        <Insets left="20.0" />
-                                    </VBox.margin>
-                                </Label>
+                                <!-- Tabla Estudiantes -->
+                                <Label text="Estudiantes Inscritos" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-font-size: 14;"/>
 
-                                <TableView fx:id="tblEstudiantesClase" VBox.vgrow="ALWAYS">
-                                    <VBox.margin>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                    </VBox.margin>
+                                <TableView fx:id="tblEstudiantesClase" VBox.vgrow="ALWAYS" prefHeight="200">
                                     <columns>
-                                        <TableColumn fx:id="colIdEstudianteClase" prefWidth="80.0" text="ID" />
-                                        <TableColumn fx:id="colNombreEstudianteClase" prefWidth="200.0" text="Nombre" />
-                                        <TableColumn fx:id="colNivelEstudianteClase" prefWidth="120.0" text="Nivel" />
+                                        <TableColumn fx:id="colIdEstudianteClase" prefWidth="70.0" text="ID" />
+                                        <TableColumn fx:id="colNombreEstudianteClase" prefWidth="180.0" text="Nombre" />
+                                        <TableColumn fx:id="colNivelEstudianteClase" prefWidth="100.0" text="Nivel" />
                                     </columns>
                                 </TableView>
                             </VBox>
                         </content>
                     </Tab>
 
-                    <!-- PESTAÑA 3: ASISTENCIAS -->
+                    <!-- PESTAÑA 3: ASISTENCIAS COMPACTO -->
                     <Tab text="✅ Asistencias">
                         <content>
-                            <VBox styleClass="content-area" spacing="20.0">
-                                <VBox.margin>
-                                    <Insets top="20.0" />
-                                </VBox.margin>
+                            <VBox styleClass="content-area" spacing="15.0" prefHeight="500">
+                                <padding>
+                                    <Insets top="15.0" bottom="15.0" left="15.0" right="15.0" />
+                                </padding>
 
-                                <Label text="Registro de Asistencias" styleClass="section-title">
-                                    <VBox.margin>
-                                        <Insets left="20.0" />
-                                    </VBox.margin>
-                                </Label>
+                                <Label text="Registro de Asistencias" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
-                                <!-- Sección Registro de Asistencia -->
-                                <VBox styleClass="form-container" spacing="15.0">
-                                    <VBox.margin>
-                                        <Insets left="20.0" right="20.0" />
-                                    </VBox.margin>
+                                <!-- Registro de Asistencia -->
+                                <VBox spacing="12.0">
+                                    <Label text="Registrar Asistencia" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
-                                    <Label text="📝 Registrar Asistencia" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
-
-                                    <GridPane hgap="15.0" vgap="15.0">
+                                    <GridPane hgap="12.0" vgap="12.0">
                                         <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
                                         </columnConstraints>
                                         <rowConstraints>
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
                                         </rowConstraints>
                                         <children>
-                                            <Label text="Clase:" styleClass="form-label" GridPane.columnIndex="0"/>
-                                            <ComboBox fx:id="cbClaseAsistencia" styleClass="form-field" GridPane.columnIndex="1" onAction="#onClaseAsistenciaChanged"/>
+                                            <Label text="Clase:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                                            <ComboBox fx:id="cbClaseAsistencia" style="-fx-pref-height: 30;" GridPane.columnIndex="1" onAction="#onClaseAsistenciaChanged"/>
 
-                                            <Label text="Estudiante:" styleClass="form-label" GridPane.columnIndex="2"/>
-                                            <ComboBox fx:id="cbEstudianteAsistencia" styleClass="form-field" GridPane.columnIndex="3"/>
+                                            <Label text="Estudiante:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="2"/>
+                                            <ComboBox fx:id="cbEstudianteAsistencia" style="-fx-pref-height: 30;" GridPane.columnIndex="3"/>
 
-                                            <Label text="Fecha:" styleClass="form-label" GridPane.columnIndex="4"/>
-                                            <DatePicker fx:id="dpFechaAsistencia" styleClass="form-field" GridPane.columnIndex="5"/>
+                                            <Label text="Fecha:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="4"/>
+                                            <DatePicker fx:id="dpFechaAsistencia" style="-fx-pref-height: 30;" GridPane.columnIndex="5"/>
 
-                                            <Label text="Presente:" styleClass="form-label" GridPane.columnIndex="6"/>
+                                            <Label text="Presente:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="6"/>
                                             <CheckBox fx:id="chkPresente" text="Sí" selected="true" GridPane.columnIndex="7"/>
 
-                                            <Button fx:id="btnRegistrarAsistencia" mnemonicParsing="false" onAction="#onRegistrarAsistencia" text="✅ Registrar" styleClass="primary-button" GridPane.columnIndex="8"/>
+                                            <Button fx:id="btnRegistrarAsistencia" mnemonicParsing="false" onAction="#onRegistrarAsistencia"
+                                                    text="✅ Registrar" style="-fx-pref-width: 100; -fx-pref-height: 30; -fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 4;" GridPane.columnIndex="8"/>
                                         </children>
                                     </GridPane>
                                 </VBox>
 
                                 <!-- Tabla Asistencias -->
-                                <Label text="Historial de Asistencias" styleClass="section-subtitle">
-                                    <VBox.margin>
-                                        <Insets left="20.0" />
-                                    </VBox.margin>
-                                </Label>
+                                <Label text="Historial de Asistencias" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-font-size: 14;"/>
 
-                                <TableView fx:id="tblAsistencias" VBox.vgrow="ALWAYS">
-                                    <VBox.margin>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                    </VBox.margin>
+                                <TableView fx:id="tblAsistencias" VBox.vgrow="ALWAYS" prefHeight="200">
                                     <columns>
-                                        <TableColumn fx:id="colIdAsistencia" prefWidth="80.0" text="ID" />
-                                        <TableColumn fx:id="colEstudianteAsistencia" prefWidth="200.0" text="Estudiante" />
-                                        <TableColumn fx:id="colFechaAsistencia" prefWidth="120.0" text="Fecha" />
-                                        <TableColumn fx:id="colEstadoAsistencia" prefWidth="120.0" text="Estado" />
+                                        <TableColumn fx:id="colIdAsistencia" prefWidth="60.0" text="ID" />
+                                        <TableColumn fx:id="colEstudianteAsistencia" prefWidth="180.0" text="Estudiante" />
+                                        <TableColumn fx:id="colFechaAsistencia" prefWidth="100.0" text="Fecha" />
+                                        <TableColumn fx:id="colEstadoAsistencia" prefWidth="100.0" text="Estado" />
                                     </columns>
                                 </TableView>
                             </VBox>
                         </content>
                     </Tab>
 
-                    <!-- PESTAÑA 4: EVALUACIÓN -->
+                    <!-- PESTAÑA 4: EVALUACIÓN COMPACTO -->
                     <Tab text="📈 Evaluación">
                         <content>
-                            <VBox styleClass="content-area" spacing="20.0">
-                                <VBox.margin>
-                                    <Insets top="20.0" />
-                                </VBox.margin>
+                            <VBox styleClass="content-area" spacing="15.0" prefHeight="500">
+                                <padding>
+                                    <Insets top="15.0" bottom="15.0" left="15.0" right="15.0" />
+                                </padding>
 
-                                <Label text="Evaluación de Progreso" styleClass="section-title">
-                                    <VBox.margin>
-                                        <Insets left="20.0" />
-                                    </VBox.margin>
-                                </Label>
+                                <Label text="Evaluación de Progreso" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
-                                <!-- Sección Evaluación -->
-                                <VBox styleClass="form-container" spacing="15.0">
-                                    <VBox.margin>
-                                        <Insets left="20.0" right="20.0" />
-                                    </VBox.margin>
+                                <!-- Evaluación -->
+                                <VBox spacing="12.0">
+                                    <Label text="Evaluar Progreso" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
-                                    <Label text="⭐ Evaluar Progreso" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
-
-                                    <GridPane hgap="15.0" vgap="15.0">
+                                    <GridPane hgap="12.0" vgap="12.0">
                                         <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
                                         </columnConstraints>
                                         <rowConstraints>
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="32.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
                                         </rowConstraints>
                                         <children>
-                                            <Label text="Clase:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                                            <ComboBox fx:id="cbClaseEvaluacion" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1" onAction="#onClaseEvaluacionChanged"/>
+                                            <!-- Fila 1 -->
+                                            <Label text="Clase:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                                            <ComboBox fx:id="cbClaseEvaluacion" style="-fx-pref-height: 30;" GridPane.columnIndex="1" onAction="#onClaseEvaluacionChanged"/>
 
-                                            <Label text="Estudiante:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                                            <ComboBox fx:id="cbEstudianteEvaluacion" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                                            <Label text="Estudiante:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.columnIndex="2"/>
+                                            <ComboBox fx:id="cbEstudianteEvaluacion" style="-fx-pref-height: 30;" GridPane.columnIndex="3"/>
 
-                                            <Label text="Calificación:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
-                                            <TextField fx:id="txtCalificacionEvaluacion" promptText="0.0 - 5.0" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+                                            <!-- Fila 2 -->
+                                            <Label text="Calificación:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.rowIndex="1"/>
+                                            <TextField fx:id="txtCalificacionEvaluacion" promptText="0.0 - 5.0" style="-fx-pref-height: 30; -fx-background-radius: 4; -fx-border-radius: 4;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                                            <Label text="Observaciones:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                                            <TextArea fx:id="txtObservacionesEvaluacion" promptText="Observaciones sobre el progreso..." styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
+                                            <Label text="Observaciones:" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                                            <TextArea fx:id="txtObservacionesEvaluacion" promptText="Observaciones..."
+                                                      style="-fx-pref-height: 70;" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
 
-                                            <Button fx:id="btnEvaluarProgreso" mnemonicParsing="false" onAction="#onEvaluarProgreso" text="⭐ Evaluar" styleClass="primary-button" GridPane.rowIndex="1" GridPane.columnIndex="4" GridPane.columnSpan="2"/>
+                                            <Button fx:id="btnEvaluarProgreso" mnemonicParsing="false" onAction="#onEvaluarProgreso"
+                                                    text="⭐ Evaluar" style="-fx-pref-width: 100; -fx-pref-height: 32; -fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 4;"
+                                                    GridPane.rowIndex="1" GridPane.columnIndex="4"/>
                                         </children>
                                     </GridPane>
                                 </VBox>
 
                                 <!-- Tabla Evaluaciones -->
-                                <Label text="Historial de Evaluaciones" styleClass="section-subtitle">
-                                    <VBox.margin>
-                                        <Insets left="20.0" />
-                                    </VBox.margin>
-                                </Label>
+                                <Label text="Historial de Evaluaciones" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50; -fx-font-size: 14;"/>
 
-                                <TableView fx:id="tblEvaluaciones" VBox.vgrow="ALWAYS">
-                                    <VBox.margin>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                    </VBox.margin>
+                                <TableView fx:id="tblEvaluaciones" VBox.vgrow="ALWAYS" prefHeight="150">
                                     <columns>
-                                        <TableColumn fx:id="colIdEvaluacion" prefWidth="80.0" text="ID" />
-                                        <TableColumn fx:id="colEstudianteEvaluacion" prefWidth="200.0" text="Estudiante" />
-                                        <TableColumn fx:id="colCalificacionEvaluacion" prefWidth="100.0" text="Calificación" />
-                                        <TableColumn fx:id="colAprobadoEvaluacion" prefWidth="120.0" text="Estado" />
+                                        <TableColumn fx:id="colIdEvaluacion" prefWidth="60.0" text="ID" />
+                                        <TableColumn fx:id="colEstudianteEvaluacion" prefWidth="180.0" text="Estudiante" />
+                                        <TableColumn fx:id="colCalificacionEvaluacion" prefWidth="80.0" text="Nota" />
+                                        <TableColumn fx:id="colAprobadoEvaluacion" prefWidth="80.0" text="Estado" />
                                     </columns>
                                 </TableView>
                             </VBox>

@@ -8,12 +8,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class MatriculaViewController {
-
 
     @FXML private TextField txtIdMatricula;
     @FXML private ComboBox<Estudiante> cbEstudianteMatricula;
@@ -24,13 +24,11 @@ public class MatriculaViewController {
     @FXML private TableColumn<Matricula, String> colIdMatricula, colEstudianteMatricula, colCursoMatricula, colFechaMatricula, colEstadoMatricula;
     @FXML private Button btnAgregarMatricula, btnActualizarMatricula, btnEliminarMatricula, btnLimpiarMatricula;
 
-
     @FXML private ComboBox<Matricula> cbMatriculaCertificado;
     @FXML private TableView<Matricula> tblMatriculasCertificados;
     @FXML private TableColumn<Matricula, String> colIdMatriculaCert, colEstudianteCert, colCursoCert, colEstadoCert, colCertificadoCert;
     @FXML private Button btnEmitirCertificado, btnVerCertificado;
     @FXML private Label lblInfoCertificado;
-
 
     @FXML private Button btnVolver;
     @FXML private TabPane tabPane;
@@ -47,8 +45,88 @@ public class MatriculaViewController {
     @FXML
     void initialize() {
         this.matriculaController = new MatriculaController(App.academia);
+        configurarCombos(); // Nueva línea agregada
         configurarInterfaz();
         cargarDatosIniciales();
+    }
+
+    private void configurarCombos() {
+        // Configurar ComboBox de Estudiantes
+        cbEstudianteMatricula.setCellFactory(param -> new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante estudiante, boolean empty) {
+                super.updateItem(estudiante, empty);
+                if (empty || estudiante == null) {
+                    setText(null);
+                } else {
+                    setText(estudiante.getNombre() + " " + estudiante.getApellido() + " (" + estudiante.getId() + ")");
+                }
+            }
+        });
+
+        cbEstudianteMatricula.setButtonCell(new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante estudiante, boolean empty) {
+                super.updateItem(estudiante, empty);
+                if (empty || estudiante == null) {
+                    setText(null);
+                } else {
+                    setText(estudiante.getNombre() + " " + estudiante.getApellido() + " (" + estudiante.getId() + ")");
+                }
+            }
+        });
+
+        // Configurar ComboBox de Cursos
+        cbCursoMatricula.setCellFactory(param -> new ListCell<Curso>() {
+            @Override
+            protected void updateItem(Curso curso, boolean empty) {
+                super.updateItem(curso, empty);
+                if (empty || curso == null) {
+                    setText(null);
+                } else {
+                    setText(curso.getNombreCurso() + " - " + curso.getInstrumento());
+                }
+            }
+        });
+
+        cbCursoMatricula.setButtonCell(new ListCell<Curso>() {
+            @Override
+            protected void updateItem(Curso curso, boolean empty) {
+                super.updateItem(curso, empty);
+                if (empty || curso == null) {
+                    setText(null);
+                } else {
+                    setText(curso.getNombreCurso() + " - " + curso.getInstrumento());
+                }
+            }
+        });
+
+        // Configurar ComboBox de Matrículas para Certificados
+        cbMatriculaCertificado.setCellFactory(param -> new ListCell<Matricula>() {
+            @Override
+            protected void updateItem(Matricula matricula, boolean empty) {
+                super.updateItem(matricula, empty);
+                if (empty || matricula == null) {
+                    setText(null);
+                } else {
+                    setText("Matrícula " + matricula.getIdMatricula() + " - " +
+                            matricula.getEstudiante().getNombre() + " " + matricula.getEstudiante().getApellido());
+                }
+            }
+        });
+
+        cbMatriculaCertificado.setButtonCell(new ListCell<Matricula>() {
+            @Override
+            protected void updateItem(Matricula matricula, boolean empty) {
+                super.updateItem(matricula, empty);
+                if (empty || matricula == null) {
+                    setText(null);
+                } else {
+                    setText("Matrícula " + matricula.getIdMatricula() + " - " +
+                            matricula.getEstudiante().getNombre() + " " + matricula.getEstudiante().getApellido());
+                }
+            }
+        });
     }
 
     private void configurarInterfaz() {
@@ -265,7 +343,6 @@ public class MatriculaViewController {
             mostrarAlerta("Error", "Seleccione una matrícula para ver el certificado", Alert.AlertType.WARNING);
         }
     }
-
 
     private void actualizarInfoCertificado(Matricula matricula) {
         if (matricula != null) {
