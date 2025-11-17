@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -53,7 +54,6 @@ public class ClaseViewController {
     @FXML private TableColumn<ReporteProgreso, String> colIdEvaluacion, colEstudianteEvaluacion, colCalificacionEvaluacion, colAprobadoEvaluacion;
     @FXML private Button btnEvaluarProgreso;
 
-
     @FXML private Button btnVolver;
     @FXML private TabPane tabPane;
 
@@ -73,8 +73,236 @@ public class ClaseViewController {
     @FXML
     void initialize() {
         this.claseController = new ClaseController(App.academia);
+        configurarCombos(); // Nueva línea agregada
         configurarInterfaz();
         cargarDatosIniciales();
+    }
+
+    private void configurarCombos() {
+        // Configurar ComboBox de Aulas
+        cbAulaClase.setCellFactory(param -> new ListCell<Aula>() {
+            @Override
+            protected void updateItem(Aula aula, boolean empty) {
+                super.updateItem(aula, empty);
+                if (empty || aula == null) {
+                    setText(null);
+                } else {
+                    setText(aula.getNombre());
+                }
+            }
+        });
+
+        cbAulaClase.setButtonCell(new ListCell<Aula>() {
+            @Override
+            protected void updateItem(Aula aula, boolean empty) {
+                super.updateItem(aula, empty);
+                if (empty || aula == null) {
+                    setText(null);
+                } else {
+                    setText(aula.getNombre());
+                }
+            }
+        });
+
+        // Configurar ComboBox de Profesores
+        cbProfesorClase.setCellFactory(param -> new ListCell<Profesor>() {
+            @Override
+            protected void updateItem(Profesor profesor, boolean empty) {
+                super.updateItem(profesor, empty);
+                if (empty || profesor == null) {
+                    setText(null);
+                } else {
+                    setText(profesor.getNombre() + " " + profesor.getApellido());
+                }
+            }
+        });
+
+        cbProfesorClase.setButtonCell(new ListCell<Profesor>() {
+            @Override
+            protected void updateItem(Profesor profesor, boolean empty) {
+                super.updateItem(profesor, empty);
+                if (empty || profesor == null) {
+                    setText(null);
+                } else {
+                    setText(profesor.getNombre() + " " + profesor.getApellido());
+                }
+            }
+        });
+
+        // Configurar ComboBox de Cursos
+        cbCursoClase.setCellFactory(param -> new ListCell<Curso>() {
+            @Override
+            protected void updateItem(Curso curso, boolean empty) {
+                super.updateItem(curso, empty);
+                if (empty || curso == null) {
+                    setText(null);
+                } else {
+                    setText(curso.getNombreCurso());
+                }
+            }
+        });
+
+        cbCursoClase.setButtonCell(new ListCell<Curso>() {
+            @Override
+            protected void updateItem(Curso curso, boolean empty) {
+                super.updateItem(curso, empty);
+                if (empty || curso == null) {
+                    setText(null);
+                } else {
+                    setText(curso.getNombreCurso());
+                }
+            }
+        });
+
+        // Configurar ComboBox de Clases Grupales
+        cbClaseGrupal.setCellFactory(param -> new ListCell<ClaseGrupal>() {
+            @Override
+            protected void updateItem(ClaseGrupal clase, boolean empty) {
+                super.updateItem(clase, empty);
+                if (empty || clase == null) {
+                    setText(null);
+                } else {
+                    setText("Clase " + clase.getId() + " - " + clase.getCurso().getNombreCurso());
+                }
+            }
+        });
+
+        cbClaseGrupal.setButtonCell(new ListCell<ClaseGrupal>() {
+            @Override
+            protected void updateItem(ClaseGrupal clase, boolean empty) {
+                super.updateItem(clase, empty);
+                if (empty || clase == null) {
+                    setText(null);
+                } else {
+                    setText("Clase " + clase.getId() + " - " + clase.getCurso().getNombreCurso());
+                }
+            }
+        });
+
+        // Configurar ComboBox de Estudiantes
+        cbEstudianteAgregar.setCellFactory(param -> new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante estudiante, boolean empty) {
+                super.updateItem(estudiante, empty);
+                if (empty || estudiante == null) {
+                    setText(null);
+                } else {
+                    setText(estudiante.getNombre() + " " + estudiante.getApellido() + " (" + estudiante.getId() + ")");
+                }
+            }
+        });
+
+        cbEstudianteAgregar.setButtonCell(new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante estudiante, boolean empty) {
+                super.updateItem(estudiante, empty);
+                if (empty || estudiante == null) {
+                    setText(null);
+                } else {
+                    setText(estudiante.getNombre() + " " + estudiante.getApellido() + " (" + estudiante.getId() + ")");
+                }
+            }
+        });
+
+        // Configurar ComboBox de Clases para Asistencia
+        cbClaseAsistencia.setCellFactory(param -> new ListCell<Clase>() {
+            @Override
+            protected void updateItem(Clase clase, boolean empty) {
+                super.updateItem(clase, empty);
+                if (empty || clase == null) {
+                    setText(null);
+                } else {
+                    setText("Clase " + clase.getId() + " - " + clase.getCurso().getNombreCurso());
+                }
+            }
+        });
+
+        cbClaseAsistencia.setButtonCell(new ListCell<Clase>() {
+            @Override
+            protected void updateItem(Clase clase, boolean empty) {
+                super.updateItem(clase, empty);
+                if (empty || clase == null) {
+                    setText(null);
+                } else {
+                    setText("Clase " + clase.getId() + " - " + clase.getCurso().getNombreCurso());
+                }
+            }
+        });
+
+        // Configurar ComboBox de Estudiantes para Asistencia
+        cbEstudianteAsistencia.setCellFactory(param -> new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante estudiante, boolean empty) {
+                super.updateItem(estudiante, empty);
+                if (empty || estudiante == null) {
+                    setText(null);
+                } else {
+                    setText(estudiante.getNombre() + " " + estudiante.getApellido() + " (" + estudiante.getId() + ")");
+                }
+            }
+        });
+
+        cbEstudianteAsistencia.setButtonCell(new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante estudiante, boolean empty) {
+                super.updateItem(estudiante, empty);
+                if (empty || estudiante == null) {
+                    setText(null);
+                } else {
+                    setText(estudiante.getNombre() + " " + estudiante.getApellido() + " (" + estudiante.getId() + ")");
+                }
+            }
+        });
+
+        // Configurar ComboBox de Clases para Evaluación
+        cbClaseEvaluacion.setCellFactory(param -> new ListCell<Clase>() {
+            @Override
+            protected void updateItem(Clase clase, boolean empty) {
+                super.updateItem(clase, empty);
+                if (empty || clase == null) {
+                    setText(null);
+                } else {
+                    setText("Clase " + clase.getId() + " - " + clase.getCurso().getNombreCurso());
+                }
+            }
+        });
+
+        cbClaseEvaluacion.setButtonCell(new ListCell<Clase>() {
+            @Override
+            protected void updateItem(Clase clase, boolean empty) {
+                super.updateItem(clase, empty);
+                if (empty || clase == null) {
+                    setText(null);
+                } else {
+                    setText("Clase " + clase.getId() + " - " + clase.getCurso().getNombreCurso());
+                }
+            }
+        });
+
+        // Configurar ComboBox de Estudiantes para Evaluación
+        cbEstudianteEvaluacion.setCellFactory(param -> new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante estudiante, boolean empty) {
+                super.updateItem(estudiante, empty);
+                if (empty || estudiante == null) {
+                    setText(null);
+                } else {
+                    setText(estudiante.getNombre() + " " + estudiante.getApellido() + " (" + estudiante.getId() + ")");
+                }
+            }
+        });
+
+        cbEstudianteEvaluacion.setButtonCell(new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante estudiante, boolean empty) {
+                super.updateItem(estudiante, empty);
+                if (empty || estudiante == null) {
+                    setText(null);
+                } else {
+                    setText(estudiante.getNombre() + " " + estudiante.getApellido() + " (" + estudiante.getId() + ")");
+                }
+            }
+        });
     }
 
     private void configurarInterfaz() {
@@ -86,7 +314,6 @@ public class ClaseViewController {
 
     // Datos Clase
     private void configurarPestanaDatosClase() {
-
         colIdClase.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getId())));
         colTipoClase.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTipoClase().toString()));
         colAulaClase.setCellValueFactory(cell -> new SimpleStringProperty(
@@ -128,7 +355,6 @@ public class ClaseViewController {
 
     // Datos Estudiantes
     private void configurarPestanaGestionEstudiantes() {
-
         colIdEstudianteClase.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getId()));
         colNombreEstudianteClase.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getNombre() + " " + cell.getValue().getApellido()));
@@ -215,7 +441,6 @@ public class ClaseViewController {
         cbEstudianteEvaluacion.setItems(listaEstudiantes);
     }
 
-
     private void mostrarClaseSeleccionada() {
         if (claseSeleccionada != null) {
             txtIdClase.setText(String.valueOf(claseSeleccionada.getId()));
@@ -293,7 +518,6 @@ public class ClaseViewController {
     @FXML
     void onActualizarClase() {
         if (claseSeleccionada != null && validarCamposDatosClase()) {
-
             mostrarAlerta("Info", "Funcionalidad de actualización en desarrollo", Alert.AlertType.INFORMATION);
         } else {
             mostrarAlerta("Error", "Seleccione una clase para actualizar", Alert.AlertType.WARNING);
@@ -433,7 +657,6 @@ public class ClaseViewController {
             mostrarAlerta("Error", "Complete todos los campos de la evaluación", Alert.AlertType.WARNING);
         }
     }
-
 
     private void actualizarTablaEstudiantesClase(ClaseGrupal clase) {
         tblEstudiantesClase.getItems().clear();
