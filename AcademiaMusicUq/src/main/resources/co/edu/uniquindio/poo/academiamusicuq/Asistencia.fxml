@@ -5,22 +5,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" styleClass="dashboard-container"
+<AnchorPane prefHeight="600.0" prefWidth="800.0" minHeight="500.0" minWidth="700.0" styleClass="dashboard-container"
             xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="co.edu.uniquindio.poo.academiamusicuq.viewController.AsistenciaViewController">
 
     <children>
-        <VBox prefHeight="700.0" prefWidth="1000.0">
-            <!-- Header -->
-            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #27ae60; -fx-padding: 15;">
+        <VBox prefHeight="600.0" prefWidth="800.0" minHeight="500.0" minWidth="700.0"
+              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+              spacing="0">
+
+            <!-- Header Compacto -->
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #27ae60;" VBox.vgrow="NEVER" prefHeight="50.0">
+                <padding>
+                    <Insets left="15.0" right="15.0" />
+                </padding>
                 <children>
-                    <Button mnemonicParsing="false" onAction="#onVolver" text="⬅ Volver al Menú" styleClass="secondary-button">
+                    <Button mnemonicParsing="false" onAction="#onVolver" text="⬅ Volver"
+                            styleClass="secondary-button" prefWidth="90.0" prefHeight="32.0">
                         <HBox.margin>
-                            <Insets right="20.0" />
+                            <Insets right="15.0" />
                         </HBox.margin>
                     </Button>
-                    <Label text="✅ Gestión de Asistencias" style="-fx-text-fill: white; -fx-font-size: 20; -fx-font-weight: bold;"/>
+                    <Label text="✅ Gestión de Asistencias" style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
                 </children>
             </HBox>
 
@@ -28,81 +35,91 @@
             <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
                 <tabs>
                     <!-- PESTAÑA 1: REGISTRO DE ASISTENCIAS -->
-                    <Tab text="📝 Registrar Asistencias">
+                    <Tab text="📝 Registrar">
                         <content>
-                            <VBox styleClass="content-area" spacing="20.0">
-                                <VBox.margin>
-                                    <Insets top="20.0" />
-                                </VBox.margin>
+                            <VBox styleClass="content-area" spacing="15.0" VBox.vgrow="ALWAYS">
+                                <padding>
+                                    <Insets top="15.0" bottom="15.0" left="10.0" right="10.0" />
+                                </padding>
 
-                                <Label text="Registro de Asistencias" styleClass="section-title">
-                                    <VBox.margin>
-                                        <Insets left="20.0" />
-                                    </VBox.margin>
+                                <Label text="Registro de Asistencias" styleClass="section-title" style="-fx-font-size: 14;">
+                                    <padding>
+                                        <Insets left="15.0" bottom="10.0" />
+                                    </padding>
                                 </Label>
 
-                                <!-- Filtros para registro -->
-                                <VBox styleClass="form-container" spacing="15.0">
-                                    <VBox.margin>
-                                        <Insets left="20.0" right="20.0" />
-                                    </VBox.margin>
+                                <!-- Filtros compactos -->
+                                <VBox styleClass="form-container" spacing="12.0" VBox.vgrow="NEVER">
+                                    <padding>
+                                        <Insets left="15.0" right="15.0" />
+                                    </padding>
 
-                                    <Label text="🔍 Seleccionar Clase" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
+                                    <Label text="🔍 Seleccionar Clase" style="-fx-font-weight: bold; -fx-font-size: 13;"/>
 
-                                    <GridPane hgap="15.0" vgap="15.0">
+                                    <GridPane hgap="10.0" vgap="10.0" VBox.vgrow="NEVER">
                                         <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="80.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="70.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="140.0" />
                                         </columnConstraints>
                                         <rowConstraints>
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="30.0" prefHeight="35.0" vgrow="SOMETIMES" />
                                         </rowConstraints>
                                         <children>
                                             <Label text="Profesor:" styleClass="form-label" GridPane.columnIndex="0"/>
-                                            <ComboBox fx:id="cbProfesorAsistencia" styleClass="form-field" GridPane.columnIndex="1"/>
+                                            <ComboBox fx:id="cbProfesorAsistencia" styleClass="form-field" prefHeight="32" GridPane.columnIndex="1"/>
 
                                             <Label text="Clase:" styleClass="form-label" GridPane.columnIndex="2"/>
-                                            <ComboBox fx:id="cbClaseAsistencia" styleClass="form-field" GridPane.columnIndex="3"/>
+                                            <ComboBox fx:id="cbClaseAsistencia" styleClass="form-field" prefHeight="32" GridPane.columnIndex="3"/>
 
-                                            <Button fx:id="btnCargarEstudiantes" mnemonicParsing="false" onAction="#onCargarEstudiantes" text="👥 Cargar Estudiantes" styleClass="primary-button" GridPane.columnIndex="4"/>
+                                            <Button fx:id="btnCargarEstudiantes" mnemonicParsing="false" onAction="#onCargarEstudiantes"
+                                                    text="👥 Cargar" styleClass="primary-button" prefWidth="120" prefHeight="32" GridPane.columnIndex="4"/>
                                         </children>
                                     </GridPane>
 
-                                    <Label text="Fecha: " fx:id="lblFechaActual" style="-fx-font-weight: bold;"/>
+                                    <Label text="Fecha: " fx:id="lblFechaActual" style="-fx-font-weight: bold; -fx-font-size: 12; -fx-padding: 5 0 0 0;"/>
                                 </VBox>
 
-                                <!-- Lista de estudiantes para tomar asistencia -->
-                                <Label text="👥 Lista de Estudiantes - Marcar Asistencia" styleClass="section-subtitle">
-                                    <VBox.margin>
-                                        <Insets left="20.0" />
-                                    </VBox.margin>
-                                </Label>
+                                <!-- Separador -->
+                                <Separator prefWidth="200.0" VBox.vgrow="NEVER">
+                                    <padding>
+                                        <Insets left="15.0" right="15.0" top="8.0" bottom="8.0" />
+                                    </padding>
+                                </Separator>
 
-                                <TableView fx:id="tblEstudiantesAsistencia" VBox.vgrow="ALWAYS">
-                                    <VBox.margin>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                    </VBox.margin>
-                                    <columns>
-                                        <TableColumn fx:id="colEstudianteId" prefWidth="80.0" text="ID" />
-                                        <TableColumn fx:id="colEstudianteNombre" prefWidth="150.0" text="Estudiante" />
-                                        <TableColumn fx:id="colEstudianteCurso" prefWidth="150.0" text="Curso" />
-                                        <TableColumn fx:id="colAsistenciaEstado" prefWidth="120.0" text="Asistencia" />
-                                        <TableColumn fx:id="colAccionesAsistencia" prefWidth="150.0" text="Acciones" />
-                                    </columns>
-                                </TableView>
-
-                                <!-- Botones de acción -->
-                                <HBox alignment="CENTER" spacing="15.0">
-                                    <VBox.margin>
-                                        <Insets bottom="20.0" />
-                                    </VBox.margin>
+                                <!-- Lista de estudiantes compacta -->
+                                <VBox spacing="8.0" VBox.vgrow="ALWAYS">
+                                    <padding>
+                                        <Insets left="15.0" right="15.0" />
+                                    </padding>
                                     <children>
-                                        <Button fx:id="btnRegistrarTodas" mnemonicParsing="false" onAction="#onRegistrarTodasAsistencias" text="✅ Registrar Todas" styleClass="primary-button"/>
-                                        <Button fx:id="btnLimpiarAsistencias" mnemonicParsing="false" onAction="#onLimpiarAsistencias" text="🧹 Limpiar" styleClass="secondary-button"/>
-                                        <Button fx:id="btnGuardarAsistencias" mnemonicParsing="false" onAction="#onGuardarAsistencias" text="💾 Guardar Asistencias" styleClass="success-button"/>
+                                        <Label text="👥 Lista de Estudiantes" styleClass="section-subtitle" style="-fx-font-size: 13;"/>
+                                        <TableView fx:id="tblEstudiantesAsistencia" VBox.vgrow="ALWAYS" prefHeight="200.0">
+                                            <columns>
+                                                <TableColumn fx:id="colEstudianteId" prefWidth="70.0" minWidth="50.0" text="ID" />
+                                                <TableColumn fx:id="colEstudianteNombre" prefWidth="130.0" minWidth="100.0" text="Estudiante" />
+                                                <TableColumn fx:id="colEstudianteCurso" prefWidth="120.0" minWidth="90.0" text="Curso" />
+                                                <TableColumn fx:id="colAsistenciaEstado" prefWidth="100.0" minWidth="80.0" text="Asistencia" />
+                                                <TableColumn fx:id="colAccionesAsistencia" prefWidth="120.0" minWidth="100.0" text="Acciones" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                </VBox>
+
+                                <!-- Botones de acción compactos -->
+                                <HBox alignment="CENTER" spacing="10.0" VBox.vgrow="NEVER">
+                                    <padding>
+                                        <Insets top="10.0" bottom="5.0" />
+                                    </padding>
+                                    <children>
+                                        <Button fx:id="btnRegistrarTodas" mnemonicParsing="false" onAction="#onRegistrarTodasAsistencias"
+                                                text="✅ Registrar Todas" styleClass="primary-button" prefWidth="120" prefHeight="32"/>
+                                        <Button fx:id="btnLimpiarAsistencias" mnemonicParsing="false" onAction="#onLimpiarAsistencias"
+                                                text="🧹 Limpiar" styleClass="secondary-button" prefWidth="100" prefHeight="32"/>
+                                        <Button fx:id="btnGuardarAsistencias" mnemonicParsing="false" onAction="#onGuardarAsistencias"
+                                                text="💾 Guardar" styleClass="success-button" prefWidth="100" prefHeight="32"/>
                                     </children>
                                 </HBox>
                             </VBox>
@@ -110,126 +127,142 @@
                     </Tab>
 
                     <!-- PESTAÑA 2: CONSULTA DE ASISTENCIAS -->
-                    <Tab text="📊 Consultar Asistencias">
+                    <Tab text="📊 Consultar">
                         <content>
-                            <VBox styleClass="content-area" spacing="20.0">
-                                <VBox.margin>
-                                    <Insets top="20.0" />
-                                </VBox.margin>
+                            <VBox styleClass="content-area" spacing="15.0" VBox.vgrow="ALWAYS">
+                                <padding>
+                                    <Insets top="15.0" bottom="15.0" left="10.0" right="10.0" />
+                                </padding>
 
-                                <Label text="Consulta de Asistencias Registradas" styleClass="section-title">
-                                    <VBox.margin>
-                                        <Insets left="20.0" />
-                                    </VBox.margin>
+                                <Label text="Consulta de Asistencias" styleClass="section-title" style="-fx-font-size: 14;">
+                                    <padding>
+                                        <Insets left="15.0" bottom="10.0" />
+                                    </padding>
                                 </Label>
 
-                                <!-- Filtros de consulta -->
-                                <VBox styleClass="form-container" spacing="15.0">
-                                    <VBox.margin>
-                                        <Insets left="20.0" right="20.0" />
-                                    </VBox.margin>
+                                <!-- Filtros de consulta compactos -->
+                                <VBox styleClass="form-container" spacing="12.0" VBox.vgrow="NEVER">
+                                    <padding>
+                                        <Insets left="15.0" right="15.0" />
+                                    </padding>
 
-                                    <Label text="🔍 Filtros de Búsqueda" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
+                                    <Label text="🔍 Filtros de Búsqueda" style="-fx-font-weight: bold; -fx-font-size: 13;"/>
 
-                                    <GridPane hgap="15.0" vgap="15.0">
+                                    <GridPane hgap="10.0" vgap="10.0" VBox.vgrow="NEVER">
                                         <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="80.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="80.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
                                         </columnConstraints>
                                         <rowConstraints>
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="30.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="30.0" prefHeight="35.0" vgrow="SOMETIMES" />
                                         </rowConstraints>
                                         <children>
                                             <!-- Fila 1 -->
                                             <Label text="Estudiante:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                                            <ComboBox fx:id="cbEstudianteConsulta" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                            <ComboBox fx:id="cbEstudianteConsulta" styleClass="form-field" prefHeight="32" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
                                             <Label text="Curso:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                                            <ComboBox fx:id="cbCursoConsulta" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-
-                                            <Label text="Fecha Inicio:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
-                                            <DatePicker fx:id="dpFechaInicioConsulta" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+                                            <ComboBox fx:id="cbCursoConsulta" styleClass="form-field" prefHeight="32" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
 
                                             <!-- Fila 2 -->
                                             <Label text="Profesor:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                                            <ComboBox fx:id="cbProfesorConsulta" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                            <ComboBox fx:id="cbProfesorConsulta" styleClass="form-field" prefHeight="32" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
                                             <Label text="Estado:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-                                            <ComboBox fx:id="cbEstadoAsistencia" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
-
-                                            <Label text="Fecha Fin:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="4"/>
-                                            <DatePicker fx:id="dpFechaFinConsulta" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="5"/>
-
-                                            <Button fx:id="btnBuscarAsistencias" mnemonicParsing="false" onAction="#onBuscarAsistencias" text="🔍 Buscar" styleClass="primary-button" GridPane.rowIndex="1" GridPane.columnIndex="6"/>
+                                            <ComboBox fx:id="cbEstadoAsistencia" styleClass="form-field" prefHeight="32" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
                                         </children>
                                     </GridPane>
+
+                                    <!-- Fechas en fila separada -->
+                                    <HBox alignment="CENTER_LEFT" spacing="10.0" VBox.vgrow="NEVER">
+                                        <padding>
+                                            <Insets top="8.0" />
+                                        </padding>
+                                        <children>
+                                            <Label text="Fecha Inicio:" styleClass="form-label" style="-fx-font-size: 12;"/>
+                                            <DatePicker fx:id="dpFechaInicioConsulta" styleClass="form-field" prefWidth="130" prefHeight="32"/>
+
+                                            <Label text="Fecha Fin:" styleClass="form-label" style="-fx-font-size: 12;"/>
+                                            <DatePicker fx:id="dpFechaFinConsulta" styleClass="form-field" prefWidth="130" prefHeight="32"/>
+
+                                            <Button fx:id="btnBuscarAsistencias" mnemonicParsing="false" onAction="#onBuscarAsistencias"
+                                                    text="🔍 Buscar" styleClass="primary-button" prefWidth="100" prefHeight="32"/>
+                                        </children>
+                                    </HBox>
                                 </VBox>
 
-                                <!-- Estadísticas rápidas -->
-                                <HBox spacing="20.0" alignment="CENTER">
-                                    <VBox.margin>
-                                        <Insets left="20.0" right="20.0" />
-                                    </VBox.margin>
+                                <!-- Estadísticas compactas -->
+                                <HBox spacing="12.0" alignment="CENTER" VBox.vgrow="NEVER">
+                                    <padding>
+                                        <Insets left="15.0" right="15.0" top="5.0" bottom="5.0" />
+                                    </padding>
                                     <children>
-                                        <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 10; -fx-padding: 15;">
+                                        <VBox alignment="CENTER" spacing="3.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 8; -fx-padding: 10;" prefWidth="110">
                                             <children>
-                                                <Label text="✅" style="-fx-font-size: 24;"/>
-                                                <Label text="Asistencias" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
-                                                <Label fx:id="lblTotalAsistencias" text="0" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                                                <Label text="✅" style="-fx-font-size: 18;"/>
+                                                <Label text="Asistencias" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 11;"/>
+                                                <Label fx:id="lblTotalAsistencias" text="0" style="-fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;"/>
                                             </children>
                                         </VBox>
 
-                                        <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 10; -fx-padding: 15;">
+                                        <VBox alignment="CENTER" spacing="3.0" style="-fx-background-color: #e74c3c; -fx-background-radius: 8; -fx-padding: 10;" prefWidth="110">
                                             <children>
-                                                <Label text="❌" style="-fx-font-size: 24;"/>
-                                                <Label text="Ausencias" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
-                                                <Label fx:id="lblTotalAusencias" text="0" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                                                <Label text="❌" style="-fx-font-size: 18;"/>
+                                                <Label text="Ausencias" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 11;"/>
+                                                <Label fx:id="lblTotalAusencias" text="0" style="-fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;"/>
                                             </children>
                                         </VBox>
 
-                                        <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #3498db; -fx-background-radius: 10; -fx-padding: 15;">
+                                        <VBox alignment="CENTER" spacing="3.0" style="-fx-background-color: #3498db; -fx-background-radius: 8; -fx-padding: 10;" prefWidth="110">
                                             <children>
-                                                <Label text="📊" style="-fx-font-size: 24;"/>
-                                                <Label text="Porcentaje" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
-                                                <Label fx:id="lblPorcentajeAsistencia" text="0%" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;"/>
+                                                <Label text="📊" style="-fx-font-size: 18;"/>
+                                                <Label text="Porcentaje" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 11;"/>
+                                                <Label fx:id="lblPorcentajeAsistencia" text="0%" style="-fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;"/>
                                             </children>
                                         </VBox>
                                     </children>
                                 </HBox>
 
-                                <!-- Tabla de asistencias consultadas -->
-                                <Label text="Resultados de la Búsqueda" styleClass="section-subtitle">
-                                    <VBox.margin>
-                                        <Insets left="20.0" />
-                                    </VBox.margin>
-                                </Label>
+                                <!-- Separador -->
+                                <Separator prefWidth="200.0" VBox.vgrow="NEVER">
+                                    <padding>
+                                        <Insets left="15.0" right="15.0" top="8.0" bottom="8.0" />
+                                    </padding>
+                                </Separator>
 
-                                <TableView fx:id="tblAsistenciasConsultadas" VBox.vgrow="ALWAYS">
-                                    <VBox.margin>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                                    </VBox.margin>
-                                    <columns>
-                                        <TableColumn fx:id="colIdAsistencia" prefWidth="80.0" text="ID" />
-                                        <TableColumn fx:id="colEstudianteAsistencia" prefWidth="150.0" text="Estudiante" />
-                                        <TableColumn fx:id="colClaseAsistencia" prefWidth="150.0" text="Clase" />
-                                        <TableColumn fx:id="colFechaAsistencia" prefWidth="120.0" text="Fecha" />
-                                        <TableColumn fx:id="colEstadoAsistencia" prefWidth="100.0" text="Estado" />
-                                        <TableColumn fx:id="colProfesorAsistencia" prefWidth="150.0" text="Profesor" />
-                                    </columns>
-                                </TableView>
-
-                                <!-- Botones de exportación -->
-                                <HBox alignment="CENTER" spacing="15.0">
-                                    <VBox.margin>
-                                        <Insets bottom="20.0" />
-                                    </VBox.margin>
+                                <!-- Tabla de asistencias compacta -->
+                                <VBox spacing="8.0" VBox.vgrow="ALWAYS">
+                                    <padding>
+                                        <Insets left="15.0" right="15.0" />
+                                    </padding>
                                     <children>
-                                        <Button fx:id="btnExportarReporte" mnemonicParsing="false" onAction="#onExportarReporte" text="📄 Exportar PDF" styleClass="secondary-button"/>
-                                        <Button fx:id="btnGenerarReporte" mnemonicParsing="false" onAction="#onGenerarReporte" text="📊 Generar Reporte" styleClass="primary-button"/>
+                                        <Label text="Resultados de Búsqueda" styleClass="section-subtitle" style="-fx-font-size: 13;"/>
+                                        <TableView fx:id="tblAsistenciasConsultadas" VBox.vgrow="ALWAYS" prefHeight="150.0">
+                                            <columns>
+                                                <TableColumn fx:id="colIdAsistencia" prefWidth="70.0" minWidth="50.0" text="ID" />
+                                                <TableColumn fx:id="colEstudianteAsistencia" prefWidth="130.0" minWidth="100.0" text="Estudiante" />
+                                                <TableColumn fx:id="colClaseAsistencia" prefWidth="120.0" minWidth="90.0" text="Clase" />
+                                                <TableColumn fx:id="colFechaAsistencia" prefWidth="100.0" minWidth="80.0" text="Fecha" />
+                                                <TableColumn fx:id="colEstadoAsistencia" prefWidth="90.0" minWidth="70.0" text="Estado" />
+                                                <TableColumn fx:id="colProfesorAsistencia" prefWidth="120.0" minWidth="100.0" text="Profesor" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                </VBox>
+
+                                <!-- Botones de exportación compactos -->
+                                <HBox alignment="CENTER" spacing="10.0" VBox.vgrow="NEVER">
+                                    <padding>
+                                        <Insets top="10.0" bottom="5.0" />
+                                    </padding>
+                                    <children>
+                                        <Button fx:id="btnExportarReporte" mnemonicParsing="false" onAction="#onExportarReporte"
+                                                text="📄 Exportar PDF" styleClass="secondary-button" prefWidth="120" prefHeight="32"/>
+                                        <Button fx:id="btnGenerarReporte" mnemonicParsing="false" onAction="#onGenerarReporte"
+                                                text="📊 Generar Reporte" styleClass="primary-button" prefWidth="130" prefHeight="32"/>
                                     </children>
                                 </HBox>
                             </VBox>
