@@ -15,6 +15,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class AdministracionViewController {
@@ -55,6 +56,8 @@ public class AdministracionViewController {
     private AdministracionController administracionController;
     private App app;
 
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     @FXML
     void initialize() {
         this.administracionController = new AdministracionController(App.academia);
@@ -89,7 +92,7 @@ public class AdministracionViewController {
                 cell.getValue().getProfesor() != null ?
                         cell.getValue().getProfesor().getNombre() + " " + cell.getValue().getProfesor().getApellido() : "N/A"));
         colCalificacionReporte.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getCalificacion())));
-        colFechaReporte.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().toString()));
+        colFechaReporte.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().format(dateFormatter)));
 
         // Configurar combo tipos de reporte
         cbTipoReporte.setItems(FXCollections.observableArrayList(
@@ -115,7 +118,33 @@ public class AdministracionViewController {
         colCursoComentario.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getCurso() != null ? cell.getValue().getCurso().getNombreCurso() : "N/A"));
         colContenidoComentario.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getContenido()));
-        colFechaComentario.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().toString()));
+        colFechaComentario.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getFecha().format(dateFormatter)));
+
+        // Configurar el ComboBox de estudiantes para mostrar nombres
+        cbEstudianteComentarios.setCellFactory(param -> new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getNombre() + " " + item.getApellido());
+                }
+            }
+        });
+
+        // Configurar cómo se muestra el estudiante seleccionado en el ComboBox
+        cbEstudianteComentarios.setButtonCell(new ListCell<Estudiante>() {
+            @Override
+            protected void updateItem(Estudiante item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getNombre() + " " + item.getApellido());
+                }
+            }
+        });
     }
 
     // Estadisticas
@@ -334,6 +363,8 @@ public class AdministracionViewController {
             listaComentarios.clear();
             listaComentarios.addAll(comentarios);
             tblComentarios.setItems(listaComentarios);
+        } else {
+            listaComentarios.clear();
         }
     }
 

@@ -176,7 +176,9 @@ public class Estudiante extends Persona implements IReportable{
         return true;
     }
 
-
-
+    @Override
+    public String toString() {
+        return getNombre() + " " + getApellido() + " (" + getEmail() + ")";
+    }
 
 }
