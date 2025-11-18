@@ -8,15 +8,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Optional;
 
 public class ProfesorViewController {
 
-    // [Los mismos campos FXML se mantienen igual...]
+    // Campos FXML - Datos Personales
     @FXML private TextField txtId, txtNombre, txtApellido, txtEmail, txtTelefono, txtEspecialidad;
     @FXML private ComboBox<Instrumento> cbInstrumento;
     @FXML private Button btnAgregar, btnActualizar, btnEliminar, btnLimpiar;
@@ -29,6 +29,7 @@ public class ProfesorViewController {
     @FXML private ComboBox<Aula> cbAulaClase;
     @FXML private ComboBox<Curso> cbCursoClase;
     @FXML private ComboBox<TipoClase> cbTipoClase;
+    @FXML private ComboBox<Estudiante> cbEstudianteClaseIndividual; // NUEVO: ComboBox para estudiante
     @FXML private Button btnAsignarHorario, btnCrearClaseGrupal, btnAgregarClase;
     @FXML private TableView<Clase> tblClasesProfesor;
     @FXML private TableColumn<Clase, String> colIdClase, colTipoClase, colCursoClase, colAulaClase, colHorarioClase;
@@ -64,10 +65,127 @@ public class ProfesorViewController {
         configurarPestanaGestionClases();
         configurarPestanaEvaluacion();
         configurarListeners();
+        configurarStringConverters();
+    }
+
+    private void configurarStringConverters() {
+        // Configurar ComboBox de profesores para clases
+        if (cbProfesorClases != null) {
+            cbProfesorClases.setConverter(new StringConverter<Profesor>() {
+                @Override
+                public String toString(Profesor profesor) {
+                    if (profesor == null) return "";
+                    return profesor.getNombre() + " " + profesor.getApellido() + " - " + profesor.getEspecialidad();
+                }
+                @Override
+                public Profesor fromString(String string) { return null; }
+            });
+        }
+
+        // Configurar ComboBox de profesores para evaluación
+        if (cbProfesorEvaluacion != null) {
+            cbProfesorEvaluacion.setConverter(new StringConverter<Profesor>() {
+                @Override
+                public String toString(Profesor profesor) {
+                    if (profesor == null) return "";
+                    return profesor.getNombre() + " " + profesor.getApellido();
+                }
+                @Override
+                public Profesor fromString(String string) { return null; }
+            });
+        }
+
+        // Configurar ComboBox de aulas
+        if (cbAulaClase != null) {
+            cbAulaClase.setConverter(new StringConverter<Aula>() {
+                @Override
+                public String toString(Aula aula) {
+                    if (aula == null) return "";
+                    return aula.getNombre() + " - Capacidad: " + aula.getCapacidad();
+                }
+                @Override
+                public Aula fromString(String string) { return null; }
+            });
+        }
+
+        // Configurar ComboBox de cursos
+        if (cbCursoClase != null) {
+            cbCursoClase.setConverter(new StringConverter<Curso>() {
+                @Override
+                public String toString(Curso curso) {
+                    if (curso == null) return "";
+                    return curso.getNombreCurso() + " - " + curso.getInstrumento() + " (" + curso.getNivel() + ")";
+                }
+                @Override
+                public Curso fromString(String string) { return null; }
+            });
+        }
+
+        // Configurar ComboBox de estudiantes para clase individual
+        if (cbEstudianteClaseIndividual != null) {
+            cbEstudianteClaseIndividual.setConverter(new StringConverter<Estudiante>() {
+                @Override
+                public String toString(Estudiante estudiante) {
+                    if (estudiante == null) return "";
+                    return estudiante.getNombre() + " " + estudiante.getApellido() + " - " + estudiante.getNivel();
+                }
+                @Override
+                public Estudiante fromString(String string) { return null; }
+            });
+        }
+
+        // Configurar ComboBox de estudiantes para evaluación
+        if (cbEstudianteProgreso != null) {
+            cbEstudianteProgreso.setConverter(new StringConverter<Estudiante>() {
+                @Override
+                public String toString(Estudiante estudiante) {
+                    if (estudiante == null) return "";
+                    return estudiante.getNombre() + " " + estudiante.getApellido() + " - " + estudiante.getNivel();
+                }
+                @Override
+                public Estudiante fromString(String string) { return null; }
+            });
+        }
+
+        if (cbEstudianteComentario != null) {
+            cbEstudianteComentario.setConverter(new StringConverter<Estudiante>() {
+                @Override
+                public String toString(Estudiante estudiante) {
+                    if (estudiante == null) return "";
+                    return estudiante.getNombre() + " " + estudiante.getApellido();
+                }
+                @Override
+                public Estudiante fromString(String string) { return null; }
+            });
+        }
+
+        // Configurar ComboBox de cursos para evaluación
+        if (cbCursoProgreso != null) {
+            cbCursoProgreso.setConverter(new StringConverter<Curso>() {
+                @Override
+                public String toString(Curso curso) {
+                    if (curso == null) return "";
+                    return curso.getNombreCurso() + " - " + curso.getNivel();
+                }
+                @Override
+                public Curso fromString(String string) { return null; }
+            });
+        }
+
+        if (cbCursoComentario != null) {
+            cbCursoComentario.setConverter(new StringConverter<Curso>() {
+                @Override
+                public String toString(Curso curso) {
+                    if (curso == null) return "";
+                    return curso.getNombreCurso();
+                }
+                @Override
+                public Curso fromString(String string) { return null; }
+            });
+        }
     }
 
     private void configurarPestanaDatosPersonales() {
-        // Configurar tabla profesores
         colId.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getId()));
         colNombre.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getNombre()));
         colApellido.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getApellido()));
@@ -82,15 +200,11 @@ public class ProfesorViewController {
     }
 
     private void configurarPestanaGestionClases() {
-        // Configurar combo días
         cbDiaHorario.setItems(FXCollections.observableArrayList(
                 "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"
         ));
-
-        // Configurar combo tipos de clase
         cbTipoClase.setItems(FXCollections.observableArrayList(TipoClase.values()));
 
-        // Configurar tabla clases
         colIdClase.setCellValueFactory(cell -> new SimpleStringProperty(String.valueOf(cell.getValue().getId())));
         colTipoClase.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getTipoClase().toString()));
         colCursoClase.setCellValueFactory(cell -> new SimpleStringProperty(
@@ -111,7 +225,6 @@ public class ProfesorViewController {
     }
 
     private void configurarPestanaEvaluacion() {
-        // Configurar tabla comentarios
         colEstudianteComentario.setCellValueFactory(cell -> new SimpleStringProperty(
                 Optional.ofNullable(cell.getValue().getEstudiante())
                         .map(e -> e.getNombre() + " " + e.getApellido())
@@ -124,7 +237,6 @@ public class ProfesorViewController {
         colFechaComentario.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getFecha() != null ? cell.getValue().getFecha().toString() : "N/A"));
 
-        // Configurar validación de calificación
         txtCalificacion.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {
                 txtCalificacion.setText(oldValue);
@@ -133,39 +245,47 @@ public class ProfesorViewController {
     }
 
     private void configurarListeners() {
-        cbTipoClase.valueProperty().addListener((observable, oldValue, newValue) -> {
-            onTipoClaseChanged();
-        });
+        if (cbTipoClase != null) {
+            cbTipoClase.valueProperty().addListener((observable, oldValue, newValue) -> {
+                onTipoClaseChanged();
+            });
+        }
 
-        cbProfesorClases.valueProperty().addListener((observable, oldValue, newValue) -> {
-            onProfesorClasesChanged();
-        });
+        if (cbProfesorClases != null) {
+            cbProfesorClases.valueProperty().addListener((observable, oldValue, newValue) -> {
+                onProfesorClasesChanged();
+            });
+        }
     }
 
     private void configurarValidacionesHorario() {
-        txtHoraInicio.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("([01]?[0-9]|2[0-3]):[0-5][0-9]")) {
-                if (!newValue.isEmpty()) {
-                    txtHoraInicio.setStyle("-fx-border-color: red;");
+        if (txtHoraInicio != null) {
+            txtHoraInicio.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("([01]?[0-9]|2[0-3]):[0-5][0-9]")) {
+                    if (!newValue.isEmpty()) {
+                        txtHoraInicio.setStyle("-fx-border-color: red;");
+                    } else {
+                        txtHoraInicio.setStyle("");
+                    }
                 } else {
-                    txtHoraInicio.setStyle("");
+                    txtHoraInicio.setStyle("-fx-border-color: green;");
                 }
-            } else {
-                txtHoraInicio.setStyle("-fx-border-color: green;");
-            }
-        });
+            });
+        }
 
-        txtHoraFin.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("([01]?[0-9]|2[0-3]):[0-5][0-9]")) {
-                if (!newValue.isEmpty()) {
-                    txtHoraFin.setStyle("-fx-border-color: red;");
+        if (txtHoraFin != null) {
+            txtHoraFin.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("([01]?[0-9]|2[0-3]):[0-5][0-9]")) {
+                    if (!newValue.isEmpty()) {
+                        txtHoraFin.setStyle("-fx-border-color: red;");
+                    } else {
+                        txtHoraFin.setStyle("");
+                    }
                 } else {
-                    txtHoraFin.setStyle("");
+                    txtHoraFin.setStyle("-fx-border-color: green;");
                 }
-            } else {
-                txtHoraFin.setStyle("-fx-border-color: green;");
-            }
-        });
+            });
+        }
     }
 
     private void cargarDatosIniciales() {
@@ -189,14 +309,34 @@ public class ProfesorViewController {
     private void cargarCombosGestionClases() {
         try {
             if (App.academia != null) {
-                cbProfesorClases.setItems(FXCollections.observableArrayList(App.academia.getListProfesores()));
-
-                if (App.academia.getListAulas() != null) {
-                    cbAulaClase.setItems(FXCollections.observableArrayList(App.academia.getListAulas()));
+                // Cargar profesores
+                ObservableList<Profesor> profesores = FXCollections.observableArrayList(App.academia.getListProfesores());
+                cbProfesorClases.setItems(profesores);
+                if (!profesores.isEmpty()) {
+                    cbProfesorClases.setValue(profesores.get(0));
                 }
 
-                if (App.academia.getListCursos() != null) {
-                    cbCursoClase.setItems(FXCollections.observableArrayList(App.academia.getListCursos()));
+                // Cargar aulas
+                if (App.academia.getListAulas() != null && !App.academia.getListAulas().isEmpty()) {
+                    ObservableList<Aula> aulas = FXCollections.observableArrayList(App.academia.getListAulas());
+                    cbAulaClase.setItems(aulas);
+                    cbAulaClase.setValue(aulas.get(0));
+                }
+
+                // Cargar cursos
+                if (App.academia.getListCursos() != null && !App.academia.getListCursos().isEmpty()) {
+                    ObservableList<Curso> cursos = FXCollections.observableArrayList(App.academia.getListCursos());
+                    cbCursoClase.setItems(cursos);
+                    cbCursoClase.setValue(cursos.get(0));
+                }
+
+                // Cargar estudiantes para clase individual
+                if (App.academia.getListEstudiantes() != null && !App.academia.getListEstudiantes().isEmpty()) {
+                    ObservableList<Estudiante> estudiantes = FXCollections.observableArrayList(App.academia.getListEstudiantes());
+                    cbEstudianteClaseIndividual.setItems(estudiantes);
+                    if (!estudiantes.isEmpty()) {
+                        cbEstudianteClaseIndividual.setValue(estudiantes.get(0));
+                    }
                 }
             }
         } catch (Exception e) {
@@ -207,16 +347,29 @@ public class ProfesorViewController {
     private void cargarCombosEvaluacion() {
         try {
             if (App.academia != null) {
-                cbProfesorEvaluacion.setItems(FXCollections.observableArrayList(App.academia.getListProfesores()));
-
-                if (App.academia.getListEstudiantes() != null) {
-                    cbEstudianteProgreso.setItems(FXCollections.observableArrayList(App.academia.getListEstudiantes()));
-                    cbEstudianteComentario.setItems(FXCollections.observableArrayList(App.academia.getListEstudiantes()));
+                // Cargar profesores
+                ObservableList<Profesor> profesores = FXCollections.observableArrayList(App.academia.getListProfesores());
+                cbProfesorEvaluacion.setItems(profesores);
+                if (!profesores.isEmpty()) {
+                    cbProfesorEvaluacion.setValue(profesores.get(0));
                 }
 
-                if (App.academia.getListCursos() != null) {
-                    cbCursoProgreso.setItems(FXCollections.observableArrayList(App.academia.getListCursos()));
-                    cbCursoComentario.setItems(FXCollections.observableArrayList(App.academia.getListCursos()));
+                // Cargar estudiantes
+                if (App.academia.getListEstudiantes() != null && !App.academia.getListEstudiantes().isEmpty()) {
+                    ObservableList<Estudiante> estudiantes = FXCollections.observableArrayList(App.academia.getListEstudiantes());
+                    cbEstudianteProgreso.setItems(estudiantes);
+                    cbEstudianteComentario.setItems(estudiantes);
+                    cbEstudianteProgreso.setValue(estudiantes.get(0));
+                    cbEstudianteComentario.setValue(estudiantes.get(0));
+                }
+
+                // Cargar cursos
+                if (App.academia.getListCursos() != null && !App.academia.getListCursos().isEmpty()) {
+                    ObservableList<Curso> cursos = FXCollections.observableArrayList(App.academia.getListCursos());
+                    cbCursoProgreso.setItems(cursos);
+                    cbCursoComentario.setItems(cursos);
+                    cbCursoProgreso.setValue(cursos.get(0));
+                    cbCursoComentario.setValue(cursos.get(0));
                 }
             }
         } catch (Exception e) {
@@ -224,7 +377,8 @@ public class ProfesorViewController {
         }
     }
 
-    // MÉTODOS CORREGIDOS - DATOS PERSONALES
+    // MÉTODOS FXML CORREGIDOS
+
     @FXML
     void onAgregarProfesor() {
         try {
@@ -237,15 +391,13 @@ public class ProfesorViewController {
                         txtTelefono.getText(),
                         txtEspecialidad.getText(),
                         cbInstrumento.getValue(),
-                        true
+                        true // estado activo
                 );
 
                 if (profesorController.registrarProfesor(nuevoProfesor)) {
                     listaProfesores.add(nuevoProfesor);
                     mostrarAlerta("Éxito", "Profesor agregado correctamente", Alert.AlertType.INFORMATION);
                     limpiarCamposProfesor();
-                    cargarCombosGestionClases();
-                    cargarCombosEvaluacion();
                 } else {
                     mostrarAlerta("Error", "Ya existe un profesor con ese ID", Alert.AlertType.ERROR);
                 }
@@ -261,16 +413,15 @@ public class ProfesorViewController {
         if (profesorSeleccionado != null) {
             try {
                 if (validarCamposProfesor()) {
-                    // Crear profesor actualizado
                     Profesor profesorActualizado = new Profesor(
-                            profesorSeleccionado.getId(), // Mantener mismo ID
+                            profesorSeleccionado.getId(), // mantener el mismo ID
                             txtNombre.getText(),
                             txtApellido.getText(),
                             txtEmail.getText(),
                             txtTelefono.getText(),
                             txtEspecialidad.getText(),
                             cbInstrumento.getValue(),
-                            true
+                            profesorSeleccionado.isActivo() // mantener el estado actual
                     );
 
                     if (profesorController.actualizarProfesor(profesorSeleccionado.getId(), profesorActualizado)) {
@@ -310,8 +461,6 @@ public class ProfesorViewController {
                         listaProfesores.remove(profesorSeleccionado);
                         mostrarAlerta("Éxito", "Profesor eliminado correctamente", Alert.AlertType.INFORMATION);
                         limpiarCamposProfesor();
-                        cargarCombosGestionClases();
-                        cargarCombosEvaluacion();
                     } else {
                         mostrarAlerta("Error", "No se pudo eliminar el profesor", Alert.AlertType.ERROR);
                     }
@@ -329,7 +478,6 @@ public class ProfesorViewController {
         limpiarCamposProfesor();
     }
 
-    // MÉTODOS CORREGIDOS - GESTIÓN DE CLASES
     @FXML
     void onAsignarHorario() {
         try {
@@ -348,9 +496,9 @@ public class ProfesorViewController {
                         return;
                     }
 
-                    BloqueHorario bloque = new BloqueHorario(dia, inicio, fin);
+                    BloqueHorario bloqueHorario = new BloqueHorario(dia, inicio, fin);
 
-                    if (profesorController.asignarHorarioProfesor(profesor, bloque)) {
+                    if (profesorController.asignarHorarioProfesor(profesor, bloqueHorario)) {
                         mostrarAlerta("Éxito", "Horario asignado correctamente", Alert.AlertType.INFORMATION);
                         limpiarCamposHorario();
                         onProfesorClasesChanged();
@@ -394,7 +542,6 @@ public class ProfesorViewController {
 
                     BloqueHorario horario = new BloqueHorario(dia, inicio, fin);
 
-                    // CORREGIDO: Usar ClaseGrupal específica
                     ClaseGrupal nuevaClase = new ClaseGrupal(
                             generarIdClase(),
                             aula,
@@ -405,7 +552,7 @@ public class ProfesorViewController {
                             cupo
                     );
 
-                    if (profesorController.crearClaseGrupalProfesor(profesor, nuevaClase)) {
+                    if (profesor.agregarClase(nuevaClase)) {
                         listaClasesProfesor.add(nuevaClase);
                         mostrarAlerta("Éxito", "Clase grupal creada correctamente", Alert.AlertType.INFORMATION);
                         limpiarCamposClase();
@@ -447,7 +594,6 @@ public class ProfesorViewController {
                     Clase nuevaClase;
 
                     if (tipoClase == TipoClase.GRUPAL) {
-                        // Clase grupal
                         String cupoMaximo = txtCupoMaximo.getText();
                         int cupo = cupoMaximo.isEmpty() ? 10 : Integer.parseInt(cupoMaximo);
 
@@ -461,20 +607,28 @@ public class ProfesorViewController {
                                 cupo
                         );
                     } else {
-                        // Clase individual - necesitarías una clase ClaseIndividual
-                        // Por ahora usamos ClaseGrupal con cupo 1 como placeholder
-                        nuevaClase = new ClaseGrupal(
+                        // CORREGIDO: Ahora incluye el estudiante del ComboBox
+                        String objetivoPersonal = txtObjetivoPersonal.getText();
+                        Estudiante estudiante = cbEstudianteClaseIndividual.getValue();
+
+                        if (estudiante == null) {
+                            mostrarAlerta("Error", "Seleccione un estudiante para la clase individual", Alert.AlertType.WARNING);
+                            return;
+                        }
+
+                        nuevaClase = new ClaseIndividual(
                                 generarIdClase(),
                                 aula,
                                 tipoClase,
                                 profesor,
                                 horario,
                                 curso,
-                                1
+                                objetivoPersonal,
+                                estudiante  // 8vo parámetro - CORREGIDO
                         );
                     }
 
-                    if (profesorController.agregarClaseAProfesor(profesor, nuevaClase)) {
+                    if (profesor.agregarClase(nuevaClase)) {
                         listaClasesProfesor.add(nuevaClase);
                         mostrarAlerta("Éxito", "Clase agregada correctamente", Alert.AlertType.INFORMATION);
                         limpiarCamposClase();
@@ -492,7 +646,6 @@ public class ProfesorViewController {
         }
     }
 
-    // MÉTODOS CORREGIDOS - EVALUACIÓN
     @FXML
     void onValorarProgreso() {
         try {
@@ -513,7 +666,6 @@ public class ProfesorViewController {
 
                     boolean aprobado = calificacion >= 3.0f;
 
-                    // CORREGIDO: Usar constructor correcto de ReporteProgreso
                     ReporteProgreso reporte = new ReporteProgreso(
                             generarIdReporte(),
                             estudiante,
@@ -525,10 +677,12 @@ public class ProfesorViewController {
                             aprobado
                     );
 
-                    // Necesitarías un método en el controller para esto
-                    // Por ahora mostramos mensaje de éxito
-                    mostrarAlerta("Éxito", "Progreso del estudiante valorado correctamente", Alert.AlertType.INFORMATION);
-                    limpiarCamposEvaluacion();
+                    if (profesor.valorarProgreso(estudiante, curso, calificacion, observaciones) != null) {
+                        mostrarAlerta("Éxito", "Progreso del estudiante valorado correctamente", Alert.AlertType.INFORMATION);
+                        limpiarCamposEvaluacion();
+                    } else {
+                        mostrarAlerta("Error", "Error al valorar el progreso", Alert.AlertType.ERROR);
+                    }
 
                 } catch (NumberFormatException e) {
                     mostrarAlerta("Error", "La calificación debe ser un número válido", Alert.AlertType.ERROR);
@@ -546,10 +700,10 @@ public class ProfesorViewController {
         try {
             Estudiante estudiante = cbEstudianteComentario.getValue();
             Curso curso = cbCursoComentario.getValue();
+            Profesor profesor = cbProfesorEvaluacion.getValue();
             String contenido = txtContenidoComentario.getText();
 
-            if (estudiante != null && curso != null && !contenido.trim().isEmpty()) {
-                // CORREGIDO: Usar constructor correcto de ComentarioFormativo
+            if (estudiante != null && curso != null && profesor != null && !contenido.trim().isEmpty()) {
                 ComentarioFormativo comentario = new ComentarioFormativo(
                         generarIdComentario(),
                         contenido,
@@ -558,11 +712,13 @@ public class ProfesorViewController {
                         curso
                 );
 
-                // Necesitarías un método en el controller para esto
-                // Por ahora mostramos mensaje de éxito
-                listaComentarios.add(comentario);
-                mostrarAlerta("Éxito", "Comentario formativo generado correctamente", Alert.AlertType.INFORMATION);
-                limpiarCamposComentario();
+                if (profesor.generarComentario(estudiante, curso, contenido) != null) {
+                    listaComentarios.add(comentario);
+                    mostrarAlerta("Éxito", "Comentario formativo generado correctamente", Alert.AlertType.INFORMATION);
+                    limpiarCamposComentario();
+                } else {
+                    mostrarAlerta("Error", "Error al generar el comentario", Alert.AlertType.ERROR);
+                }
 
             } else {
                 mostrarAlerta("Error", "Seleccione estudiante, curso y escriba un comentario", Alert.AlertType.WARNING);
@@ -574,7 +730,9 @@ public class ProfesorViewController {
 
     @FXML
     void onVolver() {
-        app.mostrarMainView();
+        if (app != null) {
+            app.mostrarMainView();
+        }
     }
 
     // MÉTODOS AUXILIARES
@@ -617,6 +775,7 @@ public class ProfesorViewController {
         cbCursoClase.setValue(null);
         cbAulaClase.setValue(null);
         cbTipoClase.setValue(null);
+        cbEstudianteClaseIndividual.setValue(null);
         txtCupoMaximo.clear();
         txtObjetivoPersonal.clear();
         limpiarCamposHorario();
@@ -650,6 +809,9 @@ public class ProfesorViewController {
                 txtCupoMaximo.setDisable(true);
                 txtCupoMaximo.clear();
             }
+            if (cbEstudianteClaseIndividual != null) {
+                cbEstudianteClaseIndividual.setDisable(false);
+            }
         } else if (cbTipoClase.getValue() == TipoClase.GRUPAL) {
             if (txtObjetivoPersonal != null) {
                 txtObjetivoPersonal.setDisable(true);
@@ -658,12 +820,19 @@ public class ProfesorViewController {
             if (txtCupoMaximo != null) {
                 txtCupoMaximo.setDisable(false);
             }
+            if (cbEstudianteClaseIndividual != null) {
+                cbEstudianteClaseIndividual.setDisable(true);
+                cbEstudianteClaseIndividual.setValue(null);
+            }
         } else {
             if (txtObjetivoPersonal != null) {
                 txtObjetivoPersonal.setDisable(true);
             }
             if (txtCupoMaximo != null) {
                 txtCupoMaximo.setDisable(true);
+            }
+            if (cbEstudianteClaseIndividual != null) {
+                cbEstudianteClaseIndividual.setDisable(true);
             }
         }
     }

@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -64,6 +65,130 @@ public class EstudianteViewController {
         configurarPestanaDatosPersonales();
         configurarPestanaGestionAcademica();
         configurarPestanaProgreso();
+        configurarStringConverters(); // NUEVO: Configurar cómo se muestran los objetos
+    }
+
+    // NUEVO MÉTODO: Configurar cómo se muestran los objetos en los ComboBox
+    private void configurarStringConverters() {
+        // Configurar ComboBox de estudiantes para gestión académica
+        if (cbEstudianteAcademico != null) {
+            cbEstudianteAcademico.setConverter(new StringConverter<Estudiante>() {
+                @Override
+                public String toString(Estudiante estudiante) {
+                    if (estudiante == null) return "";
+                    return estudiante.getNombre() + " " + estudiante.getApellido() + " - " + estudiante.getNivel();
+                }
+
+                @Override
+                public Estudiante fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de estudiantes para clases
+        if (cbEstudianteClases != null) {
+            cbEstudianteClases.setConverter(new StringConverter<Estudiante>() {
+                @Override
+                public String toString(Estudiante estudiante) {
+                    if (estudiante == null) return "";
+                    return estudiante.getNombre() + " " + estudiante.getApellido();
+                }
+
+                @Override
+                public Estudiante fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de estudiantes para horario
+        if (cbEstudianteHorario != null) {
+            cbEstudianteHorario.setConverter(new StringConverter<Estudiante>() {
+                @Override
+                public String toString(Estudiante estudiante) {
+                    if (estudiante == null) return "";
+                    return estudiante.getNombre() + " " + estudiante.getApellido();
+                }
+
+                @Override
+                public Estudiante fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de estudiantes para reportes
+        if (cbEstudianteReporte != null) {
+            cbEstudianteReporte.setConverter(new StringConverter<Estudiante>() {
+                @Override
+                public String toString(Estudiante estudiante) {
+                    if (estudiante == null) return "";
+                    return estudiante.getNombre() + " " + estudiante.getApellido() + " - " + estudiante.getNivel();
+                }
+
+                @Override
+                public Estudiante fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de cursos
+        if (cbCursosInscribir != null) {
+            cbCursosInscribir.setConverter(new StringConverter<Curso>() {
+                @Override
+                public String toString(Curso curso) {
+                    if (curso == null) return "";
+                    return curso.getNombreCurso() + " - " + curso.getInstrumento() + " (" + curso.getNivel() + ")";
+                }
+
+                @Override
+                public Curso fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de clases grupales
+        if (cbClasesGrupales != null) {
+            cbClasesGrupales.setConverter(new StringConverter<ClaseGrupal>() {
+                @Override
+                public String toString(ClaseGrupal clase) {
+                    if (clase == null) return "";
+                    String horario = clase.getHorario() != null ?
+                            clase.getHorario().getDia() + " " + clase.getHorario().getHoraInicio() + "-" + clase.getHorario().getHoraFin() : "N/A";
+                    String profesor = clase.getProfesor() != null ?
+                            clase.getProfesor().getNombre() + " " + clase.getProfesor().getApellido() : "N/A";
+                    return "Grupal - " + horario + " - " + profesor;
+                }
+
+                @Override
+                public ClaseGrupal fromString(String string) {
+                    return null;
+                }
+            });
+        }
+
+        // Configurar ComboBox de clases individuales
+        if (cbClasesIndividuales != null) {
+            cbClasesIndividuales.setConverter(new StringConverter<ClaseIndividual>() {
+                @Override
+                public String toString(ClaseIndividual clase) {
+                    if (clase == null) return "";
+                    String horario = clase.getHorario() != null ?
+                            clase.getHorario().getDia() + " " + clase.getHorario().getHoraInicio() + "-" + clase.getHorario().getHoraFin() : "N/A";
+                    String profesor = clase.getProfesor() != null ?
+                            clase.getProfesor().getNombre() + " " + clase.getProfesor().getApellido() : "N/A";
+                    return "Individual - " + horario + " - " + profesor;
+                }
+
+                @Override
+                public ClaseIndividual fromString(String string) {
+                    return null;
+                }
+            });
+        }
     }
 
     // Datos Personales
@@ -102,20 +227,23 @@ public class EstudianteViewController {
         colCursoReporte.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getCurso() != null ? cell.getValue().getCurso().getNombreCurso() : "N/A"));
         colProfesorReporte.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getProfesor() != null ? cell.getValue().getProfesor().getNombre() : "N/A"));
+                cell.getValue().getProfesor() != null ?
+                        cell.getValue().getProfesor().getNombre() + " " + cell.getValue().getProfesor().getApellido() : "N/A"));
         colObservaciones.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getObservaciones()));
         colCalificacion.setCellValueFactory(cell -> new SimpleStringProperty(
-                String.valueOf(cell.getValue().getCalificacion())));
+                String.format("%.1f", cell.getValue().getCalificacion())));
         colAprobado.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().isAprobado() ? "SÍ" : "NO"));
+                cell.getValue().isAprobado() ? "✅ SÍ" : "❌ NO"));
 
         // Configurar tabla asistencias
         colClaseAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getClase() != null ? "Clase " + cell.getValue().getClase().getId() : "N/A"));
+                cell.getValue().getClase() != null ?
+                        "Clase " + cell.getValue().getClase().getId() + " - " +
+                                (cell.getValue().getClase().getTipoClase() != null ? cell.getValue().getClase().getTipoClase().toString() : "N/A") : "N/A"));
         colFechaAsistencia.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getFecha().toString()));
         colPresente.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getPresente() ? "PRESENTE" : "AUSENTE"));
+                cell.getValue().getPresente() ? "✅ PRESENTE" : "❌ AUSENTE"));
 
         // Configurar combo estudiante para reportes
         cbEstudianteReporte.setItems(listaEstudiantes);
@@ -135,17 +263,24 @@ public class EstudianteViewController {
     private void cargarCombosGestionAcademica() {
         // Cargar cursos disponibles
         listaCursos.clear();
-        listaCursos.addAll(App.academia.getListCursos());
-        cbCursosInscribir.setItems(listaCursos);
+        if (App.academia != null && App.academia.getListCursos() != null) {
+            listaCursos.addAll(App.academia.getListCursos());
+            cbCursosInscribir.setItems(listaCursos);
+            if (!listaCursos.isEmpty()) {
+                cbCursosInscribir.setValue(listaCursos.get(0));
+            }
+        }
 
         // Cargar clases grupales disponibles
         listaClasesGrupales.clear();
         // Esto se implementará cuando tengamos la gestión de clases
+        // Por ahora, cargar algunas clases de ejemplo si es necesario
         cbClasesGrupales.setItems(listaClasesGrupales);
 
         // Cargar clases individuales disponibles
         listaClasesIndividuales.clear();
         // Esto se implementará cuando tengamos la gestión de clases
+        // Por ahora, cargar algunas clases de ejemplo si es necesario
         cbClasesIndividuales.setItems(listaClasesIndividuales);
     }
 
@@ -323,7 +458,6 @@ public class EstudianteViewController {
             mostrarAlerta("Error", "Seleccione un estudiante para cargar asistencias", Alert.AlertType.WARNING);
         }
     }
-
 
     @FXML
     void onVolver() {
