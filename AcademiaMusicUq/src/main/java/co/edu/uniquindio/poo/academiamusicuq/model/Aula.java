@@ -78,7 +78,7 @@ public class Aula {
 
 
 
-    // Metodo para saber si esta disponible el aula
+    // metodo para saber si esta disponible el aula
 
     public boolean estaDisponible(BloqueHorario nuevoBloque) {
         for (BloqueHorario existente : listHorarios) {

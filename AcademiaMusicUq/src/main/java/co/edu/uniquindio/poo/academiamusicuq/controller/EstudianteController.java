@@ -5,6 +5,9 @@ import co.edu.uniquindio.poo.academiamusicuq.model.Estudiante;
 import co.edu.uniquindio.poo.academiamusicuq.model.Curso;
 import co.edu.uniquindio.poo.academiamusicuq.model.ClaseGrupal;
 import co.edu.uniquindio.poo.academiamusicuq.model.ClaseIndividual;
+import co.edu.uniquindio.poo.academiamusicuq.model.Matricula;
+import co.edu.uniquindio.poo.academiamusicuq.model.EstadoMatricula;
+import co.edu.uniquindio.poo.academiamusicuq.model.ReporteProgreso;
 
 import java.util.List;
 
@@ -37,22 +40,38 @@ public class EstudianteController {
     public boolean inscribirEstudianteEnCurso(Estudiante estudiante, Curso curso) {
         // Verificar que el estudiante tenga el nivel requerido
         if (curso.verificarNivelEstudiante(estudiante)) {
-            // Lógica para inscribir estudiante en curso
-            // Esto se implementará cuando tengamos el sistema de matrículas
-            return true;
+            // Crear matrícula con los 6 parámetros requeridos
+            Matricula matricula = new Matricula(
+                    estudiante.getListMatriculas().size() + 1, // idMatricula
+                    estudiante, // estudiante
+                    curso, // curso
+                    java.time.LocalDate.now(), // fechaInscripcion
+                    EstadoMatricula.ACTIVA, // estadoMatricula - por defecto ACTIVA
+                    false // certificadoEmitido - por defecto false
+            );
+            return estudiante.inscribirMatricula(matricula);
         }
         return false;
     }
 
     public boolean inscribirEnClaseGrupal(Estudiante estudiante, ClaseGrupal clase) {
-        if (clase.verificarCupo()) {
-            return estudiante.inscribirClaseGrupal(clase) && clase.agregarEstudiante(estudiante);
+        if (clase.verificarCupo() && !clase.getListEstudiantes().contains(estudiante)) {
+            boolean resultadoClase = clase.agregarEstudiante(estudiante);
+            boolean resultadoEstudiante = estudiante.inscribirClaseGrupal(clase);
+            return resultadoClase && resultadoEstudiante;
         }
         return false;
     }
 
     public boolean agregarClaseIndividual(Estudiante estudiante, ClaseIndividual clase) {
-        return estudiante.agregarClaseIndividual(clase);
+        // Para clases individuales, asignar el estudiante a la clase
+        if (clase.getEstudiante() == null) {
+            clase.setEstudiante(estudiante);
+            boolean resultadoEstudiante = estudiante.agregarClaseIndividual(clase);
+            boolean resultadoProfesor = clase.getProfesor().getListClasesIndividuales().add(clase);
+            return resultadoEstudiante && resultadoProfesor;
+        }
+        return false;
     }
 
     // Metodos de Consulta
@@ -61,7 +80,7 @@ public class EstudianteController {
     }
 
     // Metodos del Reporte
-    public void generarReporteProgreso(Estudiante estudiante) {
-        estudiante.generarReporteProgreso();
+    public ReporteProgreso generarReporteProgreso(Estudiante estudiante) {
+        return estudiante.generarReporteProgreso();
     }
 }

@@ -5,22 +5,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" styleClass="dashboard-container"
+<AnchorPane prefHeight="650.0" prefWidth="900.0" styleClass="dashboard-container"
             xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="co.edu.uniquindio.poo.academiamusicuq.viewController.ProfesorViewController">
 
     <children>
-        <VBox prefHeight="600.0" prefWidth="850.0" spacing="5.0">
-            <!-- Header compacto -->
+        <VBox prefHeight="650.0" prefWidth="900.0" spacing="0">
+            <!-- Header ultra compacto -->
             <HBox alignment="CENTER_LEFT" style="-fx-background-color: #2c3e50; -fx-padding: 8;">
                 <children>
-                    <Button mnemonicParsing="false" onAction="#onVolver" text="⬅ Volver" styleClass="secondary-button" prefWidth="100.0" prefHeight="30.0">
+                    <Button mnemonicParsing="false" onAction="#onVolver" text="⬅ Volver"
+                            styleClass="secondary-button" prefWidth="80.0" prefHeight="28.0">
                         <HBox.margin>
-                            <Insets right="15.0" />
+                            <Insets right="12.0" />
                         </HBox.margin>
                     </Button>
-                    <Label text="🎓 Gestión de Profesores" style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;"/>
+                    <Label text="🎓 Gestión de Profesores"
+                           style="-fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;"/>
                 </children>
                 <padding>
                     <Insets left="12.0" right="12.0" />
@@ -30,353 +32,352 @@
             <!-- Contenido principal con pestañas -->
             <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
                 <tabs>
-                    <!-- PESTAÑA 1: DATOS PERSONALES -->
+                    <!-- PESTAÑA 1: DATOS PERSONALES - SUPER COMPACTA -->
                     <Tab text="👤 Datos">
                         <content>
-                            <VBox styleClass="content-area" spacing="10.0">
+                            <VBox styleClass="content-area" spacing="8.0">
                                 <padding>
-                                    <Insets top="10.0" bottom="10.0" />
+                                    <Insets top="10.0" bottom="10.0" left="8.0" right="8.0" />
                                 </padding>
 
-                                <!-- Formulario Datos Personales compacto -->
-                                <VBox styleClass="form-container" spacing="8.0">
+                                <!-- Formulario ultra compacto -->
+                                <VBox styleClass="form-container" spacing="6.0">
                                     <padding>
-                                        <Insets left="15.0" right="15.0" top="12.0" bottom="12.0" />
+                                        <Insets left="10.0" right="10.0" top="8.0" bottom="8.0" />
                                     </padding>
 
-                                    <Label text="Registrar/Editar Profesor" styleClass="section-title"/>
+                                    <Label text="Registrar/Editar Profesor"
+                                           style="-fx-font-weight: bold; -fx-font-size: 13; -fx-text-fill: #2c3e50;"/>
 
-                                    <GridPane hgap="10.0" vgap="8.0">
+                                    <GridPane hgap="8.0" vgap="6.0">
                                         <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="90.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="90.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
-                                        </columnConstraints>
-                                        <rowConstraints>
-                                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        </rowConstraints>
-                                        <children>
-                                            <Label text="ID:*" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                            <TextField fx:id="txtId" promptText="PROF001" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
-                                            <Label text="Nombre:*" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                            <TextField fx:id="txtNombre" promptText="Ana" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-
-                                            <Label text="Apellido:*" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                            <TextField fx:id="txtApellido" promptText="García" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                                            <Label text="Email:*" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                            <TextField fx:id="txtEmail" promptText="ana@academia.edu" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-
-                                            <Label text="Teléfono:*" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                            <TextField fx:id="txtTelefono" promptText="3001234567" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-                                            <Label text="Especialidad:*" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                            <TextField fx:id="txtEspecialidad" promptText="Piano Clásico" styleClass="form-field" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-
-                                            <Label text="Instrumento:*" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                            <ComboBox fx:id="cbInstrumento" styleClass="form-field" prefHeight="28.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                        </children>
-                                    </GridPane>
-
-                                    <HBox alignment="CENTER" spacing="10.0" style="-fx-padding: 8 0 0 0;">
-                                        <children>
-                                            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#onAgregarProfesor" text="➕ Agregar" styleClass="primary-button" prefWidth="90.0" prefHeight="30.0"/>
-                                            <Button fx:id="btnActualizar" mnemonicParsing="false" onAction="#onActualizarProfesor" text="✏️ Actualizar" styleClass="primary-button" prefWidth="90.0" prefHeight="30.0"/>
-                                            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#onEliminarProfesor" text="🗑️ Eliminar" styleClass="warning-button" prefWidth="90.0" prefHeight="30.0"/>
-                                            <Button fx:id="btnLimpiar" mnemonicParsing="false" onAction="#onLimpiarCampos" text="🧹 Limpiar" styleClass="secondary-button" prefWidth="90.0" prefHeight="30.0"/>
-                                        </children>
-                                    </HBox>
-
-                                    <Label text="* Campos obligatorios" style="-fx-text-fill: #7f8c8d; -fx-font-size: 10; -fx-padding: 5 0 0 0;"/>
-                                </VBox>
-
-                                <!-- Tabla Profesores compacta -->
-                                <Label text="Profesores Registrados" styleClass="section-subtitle">
-                                    <padding>
-                                        <Insets left="15.0" bottom="5.0" />
-                                    </padding>
-                                </Label>
-
-                                <TableView fx:id="tblProfesores" styleClass="table-view" VBox.vgrow="ALWAYS" prefHeight="180.0">
-                                    <padding>
-                                        <Insets bottom="10.0" left="15.0" right="15.0" top="5.0" />
-                                    </padding>
-                                    <columns>
-                                        <TableColumn fx:id="colId" prefWidth="60.0" text="ID" />
-                                        <TableColumn fx:id="colNombre" prefWidth="100.0" text="Nombre" />
-                                        <TableColumn fx:id="colApellido" prefWidth="100.0" text="Apellido" />
-                                        <TableColumn fx:id="colEmail" prefWidth="140.0" text="Email" />
-                                        <TableColumn fx:id="colTelefono" prefWidth="90.0" text="Teléfono" />
-                                        <TableColumn fx:id="colEspecialidad" prefWidth="120.0" text="Especialidad" />
-                                        <TableColumn fx:id="colInstrumento" prefWidth="80.0" text="Instrumento" />
-                                    </columns>
-                                </TableView>
-                            </VBox>
-                        </content>
-                    </Tab>
-
-                    <!-- PESTAÑA 2: GESTIÓN DE CLASES compacta -->
-                    <Tab text="🎼 Clases">
-                        <content>
-                            <VBox styleClass="content-area" spacing="10.0">
-                                <padding>
-                                    <Insets top="10.0" bottom="10.0" />
-                                </padding>
-
-                                <Label text="Gestión de Clases" styleClass="section-title">
-                                    <padding>
-                                        <Insets left="15.0" bottom="8.0" />
-                                    </padding>
-                                </Label>
-
-                                <!-- Sección Selección de Profesor compacta -->
-                                <VBox styleClass="form-container" spacing="8.0">
-                                    <padding>
-                                        <Insets left="15.0" right="15.0" top="12.0" bottom="12.0" />
-                                    </padding>
-
-                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                        <children>
-                                            <Label text="Profesor:" styleClass="form-label" prefWidth="80.0"/>
-                                            <ComboBox fx:id="cbProfesorClases" styleClass="form-field" prefWidth="200.0" prefHeight="28.0"/>
-                                        </children>
-                                    </HBox>
-                                </VBox>
-
-                                <!-- Sección Asignación de Horarios compacta -->
-                                <VBox styleClass="form-container" spacing="8.0">
-                                    <padding>
-                                        <Insets left="15.0" right="15.0" top="12.0" bottom="12.0" />
-                                    </padding>
-
-                                    <Label text="⏰ Horarios" style="-fx-font-weight: bold; -fx-font-size: 13; -fx-padding: 0 0 8 0;"/>
-
-                                    <GridPane hgap="8.0" vgap="8.0">
-                                        <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="60.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="80.0" prefWidth="100.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="80.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="80.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="80.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="80.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="120.0" />
-                                        </columnConstraints>
-                                        <rowConstraints>
-                                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        </rowConstraints>
-                                        <children>
-                                            <Label text="Día:" styleClass="form-label" GridPane.columnIndex="0"/>
-                                            <ComboBox fx:id="cbDiaHorario" styleClass="form-field" prefHeight="28.0" GridPane.columnIndex="1"/>
-
-                                            <Label text="H. Inicio:" styleClass="form-label" GridPane.columnIndex="2"/>
-                                            <TextField fx:id="txtHoraInicio" promptText="HH:mm" styleClass="form-field" GridPane.columnIndex="3"/>
-
-                                            <Label text="H. Fin:" styleClass="form-label" GridPane.columnIndex="4"/>
-                                            <TextField fx:id="txtHoraFin" promptText="HH:mm" styleClass="form-field" GridPane.columnIndex="5"/>
-
-                                            <Button fx:id="btnAsignarHorario" mnemonicParsing="false" onAction="#onAsignarHorario" text="⏰ Asignar" styleClass="primary-button" prefWidth="120.0" prefHeight="30.0" GridPane.columnIndex="6"/>
-                                        </children>
-                                    </GridPane>
-                                </VBox>
-
-                                <!-- Sección Creación de Clases compacta -->
-                                <VBox styleClass="form-container" spacing="8.0">
-                                    <padding>
-                                        <Insets left="15.0" right="15.0" top="12.0" bottom="12.0" />
-                                    </padding>
-
-                                    <Label text="🎓 Crear Clases" style="-fx-font-weight: bold; -fx-font-size: 13; -fx-padding: 0 0 8 0;"/>
-
-                                    <GridPane hgap="8.0" vgap="8.0">
-                                        <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="80.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="80.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="80.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
-                                        </columnConstraints>
-                                        <rowConstraints>
-                                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                                        </rowConstraints>
-                                        <children>
-                                            <!-- Fila 1 -->
-                                            <Label text="Aula:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                                            <ComboBox fx:id="cbAulaClase" styleClass="form-field" prefHeight="28.0" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-                                            <Label text="Curso:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                                            <ComboBox fx:id="cbCursoClase" styleClass="form-field" prefHeight="28.0" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-
-                                            <Label text="Tipo:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
-                                            <ComboBox fx:id="cbTipoClase" styleClass="form-field" prefHeight="28.0" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
-
-                                            <!-- Fila 2 -->
-                                            <Label text="Cupo:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                                            <TextField fx:id="txtCupoMaximo" promptText="10" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                                            <Label text="Objetivo:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-                                            <TextField fx:id="txtObjetivoPersonal" promptText="Individual" styleClass="form-field" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
-
-                                            <!-- Fila 3 - Estudiante para clase individual -->
-                                            <Label text="Estudiante:" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                                            <ComboBox fx:id="cbEstudianteClaseIndividual" promptText="Seleccionar" styleClass="form-field" prefHeight="28.0" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-                                            <!-- Fila 4 - Botones -->
-                                            <Button fx:id="btnCrearClaseGrupal" mnemonicParsing="false" onAction="#onCrearClaseGrupal" text="👥 Grupal" styleClass="primary-button" prefWidth="120.0" prefHeight="30.0" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="3"/>
-                                            <Button fx:id="btnAgregarClase" mnemonicParsing="false" onAction="#onAgregarClase" text="➕ Agregar" styleClass="primary-button" prefWidth="120.0" prefHeight="30.0" GridPane.rowIndex="3" GridPane.columnIndex="3" GridPane.columnSpan="3"/>
-                                        </children>
-                                    </GridPane>
-                                </VBox>
-
-                                <!-- Tabla Clases compacta -->
-                                <Label text="Clases del Profesor" styleClass="section-subtitle">
-                                    <padding>
-                                        <Insets left="15.0" bottom="5.0" top="8.0" />
-                                    </padding>
-                                </Label>
-
-                                <TableView fx:id="tblClasesProfesor" styleClass="table-view" VBox.vgrow="ALWAYS" prefHeight="150.0">
-                                    <padding>
-                                        <Insets bottom="10.0" left="15.0" right="15.0" top="5.0" />
-                                    </padding>
-                                    <columns>
-                                        <TableColumn fx:id="colIdClase" prefWidth="60.0" text="ID" />
-                                        <TableColumn fx:id="colTipoClase" prefWidth="80.0" text="Tipo" />
-                                        <TableColumn fx:id="colCursoClase" prefWidth="150.0" text="Curso" />
-                                        <TableColumn fx:id="colAulaClase" prefWidth="100.0" text="Aula" />
-                                        <TableColumn fx:id="colHorarioClase" prefWidth="120.0" text="Horario" />
-                                    </columns>
-                                </TableView>
-                            </VBox>
-                        </content>
-                    </Tab>
-
-                    <!-- PESTAÑA 3: EVALUACIÓN compacta -->
-                    <Tab text="📈 Evaluar">
-                        <content>
-                            <VBox styleClass="content-area" spacing="10.0">
-                                <padding>
-                                    <Insets top="10.0" bottom="10.0" />
-                                </padding>
-
-                                <Label text="Evaluación" styleClass="section-title">
-                                    <padding>
-                                        <Insets left="15.0" bottom="8.0" />
-                                    </padding>
-                                </Label>
-
-                                <!-- Sección Selección de Profesor compacta -->
-                                <VBox styleClass="form-container" spacing="8.0">
-                                    <padding>
-                                        <Insets left="15.0" right="15.0" top="12.0" bottom="12.0" />
-                                    </padding>
-
-                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                        <children>
-                                            <Label text="Profesor:" styleClass="form-label" prefWidth="80.0"/>
-                                            <ComboBox fx:id="cbProfesorEvaluacion" styleClass="form-field" prefWidth="200.0" prefHeight="28.0"/>
-                                        </children>
-                                    </HBox>
-                                </VBox>
-
-                                <!-- Sección Valoración de Progreso compacta -->
-                                <VBox styleClass="form-container" spacing="8.0">
-                                    <padding>
-                                        <Insets left="15.0" right="15.0" top="12.0" bottom="12.0" />
-                                    </padding>
-
-                                    <Label text="📊 Progreso" style="-fx-font-weight: bold; -fx-font-size: 13; -fx-padding: 0 0 8 0;"/>
-
-                                    <GridPane hgap="8.0" vgap="8.0">
-                                        <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="90.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="90.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="90.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
-                                        </columnConstraints>
-                                        <rowConstraints>
-                                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                                        </rowConstraints>
-                                        <children>
-                                            <Label text="Estudiante:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                                            <ComboBox fx:id="cbEstudianteProgreso" styleClass="form-field" prefHeight="28.0" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-                                            <Label text="Curso:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                                            <ComboBox fx:id="cbCursoProgreso" styleClass="form-field" prefHeight="28.0" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-
-                                            <Label text="Nota:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
-                                            <TextField fx:id="txtCalificacion" promptText="0.0-5.0" styleClass="form-field" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
-
-                                            <Label text="Observaciones:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                                            <TextArea fx:id="txtObservacionesEvaluacion" promptText="Observaciones..." styleClass="form-field" prefHeight="50.0" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
-
-                                            <Button fx:id="btnValorarProgreso" mnemonicParsing="false" onAction="#onValorarProgreso" text="⭐ Valorar" styleClass="primary-button" prefWidth="120.0" prefHeight="30.0" GridPane.rowIndex="1" GridPane.columnIndex="4" GridPane.columnSpan="2"/>
-                                        </children>
-                                    </GridPane>
-                                </VBox>
-
-                                <!-- Sección Comentarios Formativos compacta -->
-                                <VBox styleClass="form-container" spacing="8.0">
-                                    <padding>
-                                        <Insets left="15.0" right="15.0" top="12.0" bottom="12.0" />
-                                    </padding>
-
-                                    <Label text="💬 Comentarios" style="-fx-font-weight: bold; -fx-font-size: 13; -fx-padding: 0 0 8 0;"/>
-
-                                    <GridPane hgap="8.0" vgap="8.0">
-                                        <columnConstraints>
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="90.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="70.0" prefWidth="90.0" />
-                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="70.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="140.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="70.0" />
                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="140.0" />
                                         </columnConstraints>
                                         <rowConstraints>
-                                            <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="28.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="28.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="28.0" prefHeight="28.0" vgrow="SOMETIMES" />
                                         </rowConstraints>
                                         <children>
-                                            <Label text="Estudiante:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                                            <ComboBox fx:id="cbEstudianteComentario" styleClass="form-field" prefHeight="28.0" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                            <Label text="ID:*" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                            <TextField fx:id="txtId" promptText="PROF001" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                                            <Label text="Curso:" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                                            <ComboBox fx:id="cbCursoComentario" styleClass="form-field" prefHeight="28.0" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                                            <Label text="Nombre:*" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                            <TextField fx:id="txtNombre" promptText="Ana" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-                                            <Button fx:id="btnGenerarComentario" mnemonicParsing="false" onAction="#onGenerarComentario" text="💬 Comentar" styleClass="primary-button" prefWidth="140.0" prefHeight="30.0" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+                                            <Label text="Apellido:*" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <TextField fx:id="txtApellido" promptText="García" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                                            <Label text="Contenido:" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                                            <TextArea fx:id="txtContenidoComentario" promptText="Comentario..." styleClass="form-field" prefHeight="40.0" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
+                                            <Label text="Email:*" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                            <TextField fx:id="txtEmail" promptText="ana@academia.edu" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                                            <Label text="Teléfono:*" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <TextField fx:id="txtTelefono" promptText="3001234567" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                            <Label text="Especialidad:*" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                            <TextField fx:id="txtEspecialidad" promptText="Piano Clásico" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+
+                                            <Label text="Instrumento:*" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                            <ComboBox fx:id="cbInstrumento" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        </children>
+                                    </GridPane>
+
+                                    <HBox alignment="CENTER" spacing="8.0" style="-fx-padding: 6 0 0 0;">
+                                        <children>
+                                            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#onAgregarProfesor"
+                                                    text="➕ Agregar" style="-fx-pref-width: 85; -fx-pref-height: 26; -fx-font-size: 11; -fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                                            <Button fx:id="btnActualizar" mnemonicParsing="false" onAction="#onActualizarProfesor"
+                                                    text="✏️ Actualizar" style="-fx-pref-width: 85; -fx-pref-height: 26; -fx-font-size: 11; -fx-background-color: #3498db; -fx-text-fill: white;"/>
+                                            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#onEliminarProfesor"
+                                                    text="🗑️ Eliminar" style="-fx-pref-width: 85; -fx-pref-height: 26; -fx-font-size: 11; -fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+                                            <Button fx:id="btnLimpiar" mnemonicParsing="false" onAction="#onLimpiarCampos"
+                                                    text="🧹 Limpiar" style="-fx-pref-width: 85; -fx-pref-height: 26; -fx-font-size: 11; -fx-background-color: #95a5a6; -fx-text-fill: white;"/>
+                                        </children>
+                                    </HBox>
+
+                                    <Label text="* Campos obligatorios" style="-fx-text-fill: #7f8c8d; -fx-font-size: 9; -fx-padding: 4 0 0 0;"/>
+                                </VBox>
+
+                                <!-- Tabla Profesores compacta -->
+                                <Label text="Profesores Registrados"
+                                       style="-fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #2c3e50; -fx-padding: 5 0 3 10;">
+                                </Label>
+
+                                <TableView fx:id="tblProfesores" style="-fx-font-size: 11;" VBox.vgrow="ALWAYS" prefHeight="200.0">
+                                    <padding>
+                                        <Insets bottom="8.0" left="10.0" right="10.0" top="3.0" />
+                                    </padding>
+                                    <columns>
+                                        <TableColumn fx:id="colId" prefWidth="50.0" text="ID" />
+                                        <TableColumn fx:id="colNombre" prefWidth="80.0" text="Nombre" />
+                                        <TableColumn fx:id="colApellido" prefWidth="80.0" text="Apellido" />
+                                        <TableColumn fx:id="colEmail" prefWidth="120.0" text="Email" />
+                                        <TableColumn fx:id="colTelefono" prefWidth="70.0" text="Teléfono" />
+                                        <TableColumn fx:id="colEspecialidad" prefWidth="100.0" text="Especialidad" />
+                                        <TableColumn fx:id="colInstrumento" prefWidth="70.0" text="Instrumento" />
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </content>
+                    </Tab>
+
+                    <!-- PESTAÑA 2: GESTIÓN DE CLASES - SUPER COMPACTA -->
+                    <Tab text="🎼 Clases">
+                        <content>
+                            <VBox styleClass="content-area" spacing="8.0">
+                                <padding>
+                                    <Insets top="10.0" bottom="10.0" left="8.0" right="8.0" />
+                                </padding>
+
+                                <Label text="Gestión de Clases"
+                                       style="-fx-font-weight: bold; -fx-font-size: 13; -fx-text-fill: #2c3e50; -fx-padding: 0 0 5 10;">
+                                </Label>
+
+                                <!-- Selección de Profesor compacta -->
+                                <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 5; -fx-padding: 8;" spacing="6.0">
+                                    <padding>
+                                        <Insets left="10.0" right="10.0" />
+                                    </padding>
+
+                                    <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                        <children>
+                                            <Label text="Profesor:" style="-fx-font-size: 11; -fx-font-weight: bold;" prefWidth="60.0"/>
+                                            <ComboBox fx:id="cbProfesorClases" style="-fx-pref-height: 26; -fx-font-size: 11;" prefWidth="180.0"/>
+                                        </children>
+                                    </HBox>
+                                </VBox>
+
+                                <!-- Asignación de Horarios compacta -->
+                                <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 5; -fx-padding: 8;" spacing="6.0">
+                                    <padding>
+                                        <Insets left="10.0" right="10.0" top="8.0" />
+                                    </padding>
+
+                                    <Label text="⏰ Horarios" style="-fx-font-weight: bold; -fx-font-size: 12; -fx-padding: 0 0 5 0;"/>
+
+                                    <GridPane hgap="6.0" vgap="6.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="50.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="80.0" prefWidth="90.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="60.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="70.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="40.0" prefWidth="50.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="70.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="80.0" prefWidth="90.0" />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="26.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                                        </rowConstraints>
+                                        <children>
+                                            <Label text="Día:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.columnIndex="0"/>
+                                            <ComboBox fx:id="cbDiaHorario" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.columnIndex="1"/>
+
+                                            <Label text="Inicio:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.columnIndex="2"/>
+                                            <TextField fx:id="txtHoraInicio" promptText="HH:mm" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.columnIndex="3"/>
+
+                                            <Label text="Fin:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.columnIndex="4"/>
+                                            <TextField fx:id="txtHoraFin" promptText="HH:mm" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.columnIndex="5"/>
+
+                                            <Button fx:id="btnAsignarHorario" mnemonicParsing="false" onAction="#onAsignarHorario"
+                                                    text="⏰ Asignar" style="-fx-pref-width: 90; -fx-pref-height: 26; -fx-font-size: 11; -fx-background-color: #3498db; -fx-text-fill: white;" GridPane.columnIndex="6"/>
+                                        </children>
+                                    </GridPane>
+                                </VBox>
+
+                                <!-- Creación de Clases compacta -->
+                                <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 5; -fx-padding: 8;" spacing="6.0">
+                                    <padding>
+                                        <Insets left="10.0" right="10.0" top="8.0" />
+                                    </padding>
+
+                                    <Label text="🎓 Crear Clases" style="-fx-font-weight: bold; -fx-font-size: 12; -fx-padding: 0 0 5 0;"/>
+
+                                    <GridPane hgap="6.0" vgap="6.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="60.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="110.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="60.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="110.0" />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="26.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="26.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="26.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                                        </rowConstraints>
+                                        <children>
+                                            <!-- Fila 1 -->
+                                            <Label text="Aula:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                            <ComboBox fx:id="cbAulaClase" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                            <Label text="Curso:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                                            <ComboBox fx:id="cbCursoClase" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                                            <!-- Fila 2 -->
+                                            <Label text="Tipo:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                            <ComboBox fx:id="cbTipoClase" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                                            <Label text="Cupo:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                                            <TextField fx:id="txtCupoMaximo" promptText="10" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                                            <!-- Fila 3 -->
+                                            <Label text="Estudiante:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                                            <ComboBox fx:id="cbEstudianteClaseIndividual" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                                            <Label text="Objetivo:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                                            <TextField fx:id="txtObjetivoPersonal" promptText="Individual" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                                        </children>
+                                    </GridPane>
+
+                                    <HBox alignment="CENTER" spacing="8.0" style="-fx-padding: 6 0 0 0;">
+                                        <children>
+                                            <Button fx:id="btnCrearClaseGrupal" mnemonicParsing="false" onAction="#onCrearClaseGrupal"
+                                                    text="👥 Crear Grupal" style="-fx-pref-width: 110; -fx-pref-height: 26; -fx-font-size: 11; -fx-background-color: #9b59b6; -fx-text-fill: white;"/>
+                                            <Button fx:id="btnAgregarClase" mnemonicParsing="false" onAction="#onAgregarClase"
+                                                    text="➕ Agregar Clase" style="-fx-pref-width: 110; -fx-pref-height: 26; -fx-font-size: 11; -fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                                        </children>
+                                    </HBox>
+                                </VBox>
+
+                                <!-- Tabla Clases compacta -->
+                                <Label text="Clases del Profesor"
+                                       style="-fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #2c3e50; -fx-padding: 8 0 3 10;">
+                                </Label>
+
+                                <TableView fx:id="tblClasesProfesor" style="-fx-font-size: 11;" VBox.vgrow="ALWAYS" prefHeight="150.0">
+                                    <padding>
+                                        <Insets bottom="8.0" left="10.0" right="10.0" top="3.0" />
+                                    </padding>
+                                    <columns>
+                                        <TableColumn fx:id="colIdClase" prefWidth="40.0" text="ID" />
+                                        <TableColumn fx:id="colTipoClase" prefWidth="60.0" text="Tipo" />
+                                        <TableColumn fx:id="colCursoClase" prefWidth="120.0" text="Curso" />
+                                        <TableColumn fx:id="colAulaClase" prefWidth="80.0" text="Aula" />
+                                        <TableColumn fx:id="colHorarioClase" prefWidth="100.0" text="Horario" />
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </content>
+                    </Tab>
+
+                    <!-- PESTAÑA 3: EVALUACIÓN - SUPER COMPACTA -->
+                    <Tab text="📈 Evaluar">
+                        <content>
+                            <VBox styleClass="content-area" spacing="8.0">
+                                <padding>
+                                    <Insets top="10.0" bottom="10.0" left="8.0" right="8.0" />
+                                </padding>
+
+                                <Label text="Evaluación"
+                                       style="-fx-font-weight: bold; -fx-font-size: 13; -fx-text-fill: #2c3e50; -fx-padding: 0 0 5 10;">
+                                </Label>
+
+                                <!-- Selección de Profesor compacta -->
+                                <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 5; -fx-padding: 8;" spacing="6.0">
+                                    <padding>
+                                        <Insets left="10.0" right="10.0" />
+                                    </padding>
+
+                                    <HBox alignment="CENTER_LEFT" spacing="8.0">
+                                        <children>
+                                            <Label text="Profesor:" style="-fx-font-size: 11; -fx-font-weight: bold;" prefWidth="60.0"/>
+                                            <ComboBox fx:id="cbProfesorEvaluacion" style="-fx-pref-height: 26; -fx-font-size: 11;" prefWidth="180.0"/>
+                                        </children>
+                                    </HBox>
+                                </VBox>
+
+                                <!-- Valoración de Progreso compacta -->
+                                <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 5; -fx-padding: 8;" spacing="6.0">
+                                    <padding>
+                                        <Insets left="10.0" right="10.0" top="8.0" />
+                                    </padding>
+
+                                    <Label text="📊 Valorar Progreso" style="-fx-font-weight: bold; -fx-font-size: 12; -fx-padding: 0 0 5 0;"/>
+
+                                    <GridPane hgap="6.0" vgap="6.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="70.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="110.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="60.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="110.0" />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="26.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                                        </rowConstraints>
+                                        <children>
+                                            <Label text="Estudiante:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                            <ComboBox fx:id="cbEstudianteProgreso" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                            <Label text="Curso:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                                            <ComboBox fx:id="cbCursoProgreso" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                                            <Label text="Nota:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+                                            <TextField fx:id="txtCalificacion" promptText="0.0-5.0" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+
+                                            <Label text="Observaciones:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                            <TextArea fx:id="txtObservacionesEvaluacion" promptText="Observaciones..."
+                                                      style="-fx-pref-height: 35; -fx-font-size: 11;" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
+
+                                            <Button fx:id="btnValorarProgreso" mnemonicParsing="false" onAction="#onValorarProgreso"
+                                                    text="⭐ Valorar" style="-fx-pref-width: 90; -fx-pref-height: 26; -fx-font-size: 11; -fx-background-color: #f39c12; -fx-text-fill: white;"
+                                                    GridPane.rowIndex="1" GridPane.columnIndex="4" GridPane.columnSpan="2"/>
+                                        </children>
+                                    </GridPane>
+                                </VBox>
+
+                                <!-- Comentarios Formativos compacta -->
+                                <VBox style="-fx-background-color: #f8f9fa; -fx-background-radius: 5; -fx-padding: 8;" spacing="6.0">
+                                    <padding>
+                                        <Insets left="10.0" right="10.0" top="8.0" />
+                                    </padding>
+
+                                    <Label text="💬 Comentarios Formativos" style="-fx-font-weight: bold; -fx-font-size: 12; -fx-padding: 0 0 5 0;"/>
+
+                                    <GridPane hgap="6.0" vgap="6.0">
+                                        <columnConstraints>
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="60.0" prefWidth="70.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="110.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="60.0" />
+                                            <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="110.0" />
+                                        </columnConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints minHeight="26.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                                            <RowConstraints minHeight="35.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                        </rowConstraints>
+                                        <children>
+                                            <Label text="Estudiante:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                                            <ComboBox fx:id="cbEstudianteComentario" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                                            <Label text="Curso:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                                            <ComboBox fx:id="cbCursoComentario" style="-fx-pref-height: 26; -fx-font-size: 11;" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                                            <Button fx:id="btnGenerarComentario" mnemonicParsing="false" onAction="#onGenerarComentario"
+                                                    text="💬 Generar" style="-fx-pref-width: 90; -fx-pref-height: 26; -fx-font-size: 11; -fx-background-color: #3498db; -fx-text-fill: white;" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+
+                                            <Label text="Contenido:" style="-fx-font-size: 11; -fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                                            <TextArea fx:id="txtContenidoComentario" promptText="Comentario..."
+                                                      style="-fx-pref-height: 30; -fx-font-size: 11;" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.columnSpan="3"/>
                                         </children>
                                     </GridPane>
                                 </VBox>
 
                                 <!-- Tabla Comentarios compacta -->
-                                <Label text="Comentarios" styleClass="section-subtitle">
-                                    <padding>
-                                        <Insets left="15.0" bottom="5.0" top="8.0" />
-                                    </padding>
+                                <Label text="Comentarios Registrados"
+                                       style="-fx-font-weight: bold; -fx-font-size: 12; -fx-text-fill: #2c3e50; -fx-padding: 8 0 3 10;">
                                 </Label>
 
-                                <TableView fx:id="tblComentarios" styleClass="table-view" VBox.vgrow="ALWAYS" prefHeight="150.0">
+                                <TableView fx:id="tblComentarios" style="-fx-font-size: 11;" VBox.vgrow="ALWAYS" prefHeight="120.0">
                                     <padding>
-                                        <Insets bottom="10.0" left="15.0" right="15.0" top="5.0" />
+                                        <Insets bottom="8.0" left="10.0" right="10.0" top="3.0" />
                                     </padding>
                                     <columns>
-                                        <TableColumn fx:id="colEstudianteComentario" prefWidth="120.0" text="Estudiante" />
-                                        <TableColumn fx:id="colCursoComentario" prefWidth="120.0" text="Curso" />
-                                        <TableColumn fx:id="colContenidoComentario" prefWidth="200.0" text="Contenido" />
-                                        <TableColumn fx:id="colFechaComentario" prefWidth="80.0" text="Fecha" />
+                                        <TableColumn fx:id="colEstudianteComentario" prefWidth="100.0" text="Estudiante" />
+                                        <TableColumn fx:id="colCursoComentario" prefWidth="100.0" text="Curso" />
+                                        <TableColumn fx:id="colContenidoComentario" prefWidth="150.0" text="Contenido" />
+                                        <TableColumn fx:id="colFechaComentario" prefWidth="70.0" text="Fecha" />
                                     </columns>
                                 </TableView>
                             </VBox>
@@ -386,9 +387,4 @@
             </TabPane>
         </VBox>
     </children>
-
-    <!-- SOLUCIÓN: Remover temporalmente la referencia al CSS para evitar errores -->
-    <!-- <stylesheets> -->
-    <!--     <fx:include source="styles.css" /> -->
-    <!-- </stylesheets> -->
 </AnchorPane>

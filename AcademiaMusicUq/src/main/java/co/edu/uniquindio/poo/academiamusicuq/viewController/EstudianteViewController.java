@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.academiamusicuq.viewController;
 
 import co.edu.uniquindio.poo.academiamusicuq.App;
 import co.edu.uniquindio.poo.academiamusicuq.controller.EstudianteController;
+import co.edu.uniquindio.poo.academiamusicuq.controller.ClaseController;
 import co.edu.uniquindio.poo.academiamusicuq.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -52,23 +53,32 @@ public class EstudianteViewController {
 
     private Estudiante estudianteSeleccionado;
     private EstudianteController estudianteController;
+    private ClaseController claseController;
     private App app;
 
     @FXML
     void initialize() {
         this.estudianteController = new EstudianteController(App.academia);
+        this.claseController = new ClaseController(App.academia);
         configurarInterfaz();
         cargarDatosIniciales();
+
+        // Listener para actualizar datos al cambiar de pestaña
+        tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
+            if (newTab.getText().contains("Gestión Académica")) {
+                cargarCombosGestionAcademica();
+            }
+        });
     }
 
     private void configurarInterfaz() {
         configurarPestanaDatosPersonales();
         configurarPestanaGestionAcademica();
         configurarPestanaProgreso();
-        configurarStringConverters(); // NUEVO: Configurar cómo se muestran los objetos
+        configurarStringConverters();
     }
 
-    // NUEVO MÉTODO: Configurar cómo se muestran los objetos en los ComboBox
+    // Configurar cómo se muestran los objetos en los ComboBox
     private void configurarStringConverters() {
         // Configurar ComboBox de estudiantes para gestión académica
         if (cbEstudianteAcademico != null) {
@@ -271,16 +281,24 @@ public class EstudianteViewController {
             }
         }
 
-        // Cargar clases grupales disponibles
+        // Cargar clases grupales disponibles desde el controlador
         listaClasesGrupales.clear();
-        // Esto se implementará cuando tengamos la gestión de clases
-        // Por ahora, cargar algunas clases de ejemplo si es necesario
+        if (claseController != null) {
+            List<ClaseGrupal> clasesGrupales = claseController.obtenerClasesGrupales();
+            if (clasesGrupales != null) {
+                listaClasesGrupales.addAll(clasesGrupales);
+            }
+        }
         cbClasesGrupales.setItems(listaClasesGrupales);
 
-        // Cargar clases individuales disponibles
+        // Cargar clases individuales disponibles desde el controlador
         listaClasesIndividuales.clear();
-        // Esto se implementará cuando tengamos la gestión de clases
-        // Por ahora, cargar algunas clases de ejemplo si es necesario
+        if (claseController != null) {
+            List<ClaseIndividual> clasesIndividuales = claseController.obtenerClasesIndividuales();
+            if (clasesIndividuales != null) {
+                listaClasesIndividuales.addAll(clasesIndividuales);
+            }
+        }
         cbClasesIndividuales.setItems(listaClasesIndividuales);
     }
 

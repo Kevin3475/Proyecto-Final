@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.academiamusicuq.viewController;
 
 import co.edu.uniquindio.poo.academiamusicuq.App;
 import co.edu.uniquindio.poo.academiamusicuq.controller.CursoController;
+import co.edu.uniquindio.poo.academiamusicuq.controller.ClaseController;
 import co.edu.uniquindio.poo.academiamusicuq.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -50,23 +51,34 @@ public class CursoViewController {
 
     private Curso cursoSeleccionado;
     private CursoController cursoController;
+    private ClaseController claseController; // NUEVO: Controlador de clases
     private App app;
 
     @FXML
     void initialize() {
         this.cursoController = new CursoController(App.academia);
+        this.claseController = new ClaseController(App.academia); // NUEVO: Inicializar controlador de clases
         configurarInterfaz();
         cargarDatosIniciales();
+
+        // NUEVO: Listener para actualizar datos al cambiar de pestaña
+        tabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
+            if (newTab.getText().contains("Configuración")) {
+                cargarCombosConfiguracion();
+            } else if (newTab.getText().contains("Estudiantes")) {
+                cargarCombosEstudiantes();
+            }
+        });
     }
 
     private void configurarInterfaz() {
         configurarPestanaDatosCurso();
         configurarPestanaConfiguracion();
         configurarPestanaEstudiantes();
-        configurarStringConverters(); // NUEVO: Configurar cómo se muestran los objetos
+        configurarStringConverters();
     }
 
-    // NUEVO MÉTODO: Configurar cómo se muestran los objetos en los ComboBox
+    // Configurar cómo se muestran los objetos en los ComboBox
     private void configurarStringConverters() {
         // Configurar ComboBox de profesores
         if (cbProfesor != null) {
@@ -230,11 +242,13 @@ public class CursoViewController {
             }
         }
 
-        // Cargar clases disponibles
+        // NUEVO: Cargar clases disponibles desde el controlador
         listaClases.clear();
-        if (App.academia != null) {
-            // Aquí deberías cargar las clases disponibles de la academia
-            // Por ejemplo: listaClases.addAll(App.academia.getListClases());
+        if (claseController != null) {
+            List<Clase> clases = claseController.obtenerTodasLasClases();
+            if (clases != null) {
+                listaClases.addAll(clases);
+            }
         }
         cbClaseAgregar.setItems(listaClases);
     }
@@ -345,7 +359,7 @@ public class CursoViewController {
             Curso curso = cbCursoConfiguracion.getValue();
             Clase clase = cbClaseAgregar.getValue();
 
-            if (curso.agregarClase(clase)) {
+            if (cursoController.agregarClaseACurso(curso, clase)) {
                 actualizarTablaClasesCurso(curso);
                 mostrarAlerta("Éxito", "Clase agregada al curso correctamente", Alert.AlertType.INFORMATION);
             } else {
@@ -362,7 +376,7 @@ public class CursoViewController {
         Curso curso = cbCursoConfiguracion.getValue();
 
         if (curso != null && claseSeleccionada != null) {
-            if (curso.getListClases().remove(claseSeleccionada)) {
+            if (cursoController.removerClaseDeCurso(curso, claseSeleccionada)) {
                 actualizarTablaClasesCurso(curso);
                 mostrarAlerta("Éxito", "Clase removida del curso correctamente", Alert.AlertType.INFORMATION);
             } else {
@@ -380,7 +394,7 @@ public class CursoViewController {
             Curso curso = cbCursoEstudiantes.getValue();
             Estudiante estudiante = cbEstudianteVerificar.getValue();
 
-            boolean nivelAdecuado = curso.verificarNivelEstudiante(estudiante);
+            boolean nivelAdecuado = cursoController.verificarNivelEstudiante(curso, estudiante);
 
             if (nivelAdecuado) {
                 lblResultadoVerificacion.setText("✅ El estudiante tiene el nivel adecuado para el curso");
@@ -400,21 +414,11 @@ public class CursoViewController {
             Curso curso = cbCursoEstudiantes.getValue();
             Estudiante estudiante = cbEstudianteVerificar.getValue();
 
-            if (!curso.verificarNivelEstudiante(estudiante)) {
-                mostrarAlerta("Error", "El estudiante no tiene el nivel adecuado para este curso", Alert.AlertType.ERROR);
-                return;
-            }
-
-            if (curso.getListEstudiantes().size() >= curso.getCapacidad()) {
-                mostrarAlerta("Error", "El curso ha alcanzado su capacidad máxima", Alert.AlertType.ERROR);
-                return;
-            }
-
-            if (curso.getListEstudiantes().add(estudiante)) {
+            if (cursoController.agregarEstudianteACurso(curso, estudiante)) {
                 actualizarTablaEstudiantesCurso(curso);
                 mostrarAlerta("Éxito", "Estudiante agregado al curso correctamente", Alert.AlertType.INFORMATION);
             } else {
-                mostrarAlerta("Error", "El estudiante ya está en el curso", Alert.AlertType.ERROR);
+                mostrarAlerta("Error", "No se pudo agregar el estudiante. Verifique el nivel o la capacidad del curso.", Alert.AlertType.ERROR);
             }
         } else {
             mostrarAlerta("Error", "Seleccione un curso y un estudiante", Alert.AlertType.WARNING);
@@ -427,7 +431,7 @@ public class CursoViewController {
         Curso curso = cbCursoEstudiantes.getValue();
 
         if (curso != null && estudianteSeleccionado != null) {
-            if (curso.getListEstudiantes().remove(estudianteSeleccionado)) {
+            if (cursoController.removerEstudianteDeCurso(curso, estudianteSeleccionado)) {
                 actualizarTablaEstudiantesCurso(curso);
                 mostrarAlerta("Éxito", "Estudiante removido del curso correctamente", Alert.AlertType.INFORMATION);
             } else {

@@ -106,7 +106,6 @@ public class AdministradorAcademico extends Persona{
     }
 
 
-    // meetodo generarReporte
 
     public List<ReporteProgreso> generarReporte(List<Estudiante> listaEstudiantes) {
         List<ReporteProgreso> reportes = new ArrayList<>();

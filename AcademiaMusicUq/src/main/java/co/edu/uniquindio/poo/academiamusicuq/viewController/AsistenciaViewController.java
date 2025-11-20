@@ -2,6 +2,7 @@ package co.edu.uniquindio.poo.academiamusicuq.viewController;
 
 import co.edu.uniquindio.poo.academiamusicuq.App;
 import co.edu.uniquindio.poo.academiamusicuq.controller.AsistenciaController;
+import co.edu.uniquindio.poo.academiamusicuq.controller.ClaseController; // NUEVO IMPORT
 import co.edu.uniquindio.poo.academiamusicuq.model.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -43,8 +44,10 @@ public class AsistenciaViewController {
     private ObservableList<Profesor> listaProfesores = FXCollections.observableArrayList();
     private ObservableList<Estudiante> listaEstudiantes = FXCollections.observableArrayList();
     private ObservableList<Curso> listaCursos = FXCollections.observableArrayList();
+    private ObservableList<Clase> listaClases = FXCollections.observableArrayList();
 
     private AsistenciaController asistenciasController;
+    private ClaseController claseController; // NUEVO: Controlador de clases
     private App app;
 
     // Clase auxiliar para manejar estudiantes en la tabla de asistencia
@@ -69,6 +72,7 @@ public class AsistenciaViewController {
     @FXML
     void initialize() {
         this.asistenciasController = new AsistenciaController(App.academia);
+        this.claseController = new ClaseController(App.academia); // NUEVO: Inicializar controlador de clases
         configurarCombos();
         configurarInterfaz();
         cargarDatosIniciales();
@@ -294,6 +298,16 @@ public class AsistenciaViewController {
         listaProfesores.clear();
         listaProfesores.addAll(App.academia.getListProfesores());
         cbProfesorAsistencia.setItems(listaProfesores);
+
+        // NUEVO: Cargar clases disponibles
+        listaClases.clear();
+        if (claseController != null) {
+            List<Clase> clases = claseController.obtenerTodasLasClases();
+            if (clases != null) {
+                listaClases.addAll(clases);
+            }
+        }
+        cbClaseAsistencia.setItems(listaClases);
     }
 
     private void cargarCombosConsulta() {
@@ -442,16 +456,17 @@ public class AsistenciaViewController {
             // Limpiar la selección actual de clase
             cbClaseAsistencia.setValue(null);
 
-            // Cargar las clases del profesor
-            ObservableList<Clase> clasesProfesor = FXCollections.observableArrayList(profesor.getListClases());
-            cbClaseAsistencia.setItems(clasesProfesor);
+            // Cargar las clases del profesor desde el controlador
+            List<Clase> clasesProfesor = claseController.obtenerClasesPorProfesor(profesor.getId());
+            ObservableList<Clase> clasesObservable = FXCollections.observableArrayList(clasesProfesor);
+            cbClaseAsistencia.setItems(clasesObservable);
 
             // Si el profesor solo tiene una clase, seleccionarla automáticamente
-            if (clasesProfesor.size() == 1) {
-                cbClaseAsistencia.setValue(clasesProfesor.get(0));
+            if (clasesObservable.size() == 1) {
+                cbClaseAsistencia.setValue(clasesObservable.get(0));
             }
 
-            mostrarAlerta("Info", "Clases del profesor cargadas: " + clasesProfesor.size(), Alert.AlertType.INFORMATION);
+            mostrarAlerta("Info", "Clases del profesor cargadas: " + clasesObservable.size(), Alert.AlertType.INFORMATION);
         } else {
             // Limpiar las clases si no hay profesor seleccionado
             cbClaseAsistencia.setItems(FXCollections.emptyObservableList());

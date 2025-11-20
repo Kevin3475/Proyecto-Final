@@ -12,6 +12,7 @@ public class Academia {
     private List<Curso> listCursos;
     private List<Aula> listAulas;
     private List<Profesor> listProfesores;
+    private List<Clase> listClases;
     private AdministradorAcademico administrador;
 
     public Academia (String nombre,String direccion,String telefono,AdministradorAcademico administrador){
@@ -23,8 +24,8 @@ public class Academia {
         this.listCursos = new ArrayList<>();
         this.listAulas = new ArrayList<>();
         this.listProfesores = new ArrayList<>();
+        this.listClases = new ArrayList<>();
         this.administrador = administrador;
-
 
     }
 
@@ -53,25 +54,33 @@ public class Academia {
         return listEstudiantes;
     }
     public void setListEstudiantes(List<Estudiante> listEstudiantes){
-        this.listEstudiantes = new ArrayList<>();
+        this.listEstudiantes = listEstudiantes;
     }
     public List<Profesor> getListProfesores(){
         return listProfesores;
     }
     public void setListProfesores(List<Profesor> listProfesores){
-        this.listProfesores = new ArrayList<>();
+        this.listProfesores = listProfesores;
     }
     public List<Aula> getListAulas(){
         return listAulas;
     }
     public void setListAulas(List<Aula> listAulas){
-        this.listAulas = new ArrayList<>();
+        this.listAulas = listAulas;
     }
     public List<Curso> getListCursos(){
         return listCursos;
     }
     public void setListCursos(List<Curso> listCursos){
         this.listCursos = listCursos;
+    }
+
+    public List<Clase> getListClases() {
+        return listClases;
+    }
+
+    public void setListClases(List<Clase> listClases) {
+        this.listClases = listClases;
     }
 
     public AdministradorAcademico getAdministrador() {
@@ -81,7 +90,6 @@ public class Academia {
     public void setAdministrador(AdministradorAcademico administrador) {
         this.administrador = administrador;
     }
-
 
     //Crud del Estudiante
 
@@ -95,11 +103,9 @@ public class Academia {
         return true;
     }
 
-
     public List<Estudiante> listarEstudiantes(){
         return listEstudiantes;
     }
-
 
     public boolean actualizarEstudiante(String id,Estudiante estudianteActualizado){
 
@@ -117,24 +123,18 @@ public class Academia {
         return false;
     }
 
-
     public boolean eliminarEstudiante(String id){
 
         for(Estudiante estudiante: listEstudiantes){
             if(estudiante.getId().equals(id)){
                 listEstudiantes.remove(estudiante);
-
                 return true;
-
             }
         }
         return false;
     }
 
-
-
     // Crud del Profesor
-
 
     public boolean registrarProfesor(Profesor profesorNuevo){
 
@@ -147,11 +147,9 @@ public class Academia {
         return true;
     }
 
-
     public List<Profesor> listarProfesores(){
         return listProfesores;
     }
-
 
     public boolean actualizarProfesor(String id, Profesor profesorActualizado){
 
@@ -168,7 +166,6 @@ public class Academia {
         return false;
     }
 
-
     public boolean eliminarProfesor(String id){
 
         for(Profesor profesor: listProfesores){
@@ -181,10 +178,7 @@ public class Academia {
         return false;
     }
 
-
-
     // Crud del Curso
-
 
     public boolean registrarCurso(Curso cursoNuevo){
 
@@ -197,16 +191,14 @@ public class Academia {
         return true;
     }
 
-
     public List<Curso> listarCursos(){
         return listCursos;
     }
 
-
     public boolean actualizarCurso(String idCurso, Curso cursoActualizado){
         for(Curso curso: listCursos){
             if(curso.getIdCurso().equals(idCurso)){
-                curso.setNombreCurso(cursoActualizado.getNombreCurso()); // <- agregar esto
+                curso.setNombreCurso(cursoActualizado.getNombreCurso());
                 curso.setInstrumento(cursoActualizado.getInstrumento());
                 curso.setNivel(cursoActualizado.getNivel());
                 curso.setCapacidad(cursoActualizado.getCapacidad());
@@ -216,8 +208,6 @@ public class Academia {
         }
         return false;
     }
-
-
 
     public boolean eliminarCurso(String idCurso){
 
@@ -242,11 +232,9 @@ public class Academia {
         return true;
     }
 
-
     public List<Aula> listarAulas(){
         return listAulas;
     }
-
 
     public boolean actualizarAula(String idAula,Aula aulaActualizada){
 
@@ -261,7 +249,6 @@ public class Academia {
         return false;
     }
 
-
     public boolean eliminarAula(String idAula){
 
         for(Aula aula: listAulas){
@@ -274,11 +261,37 @@ public class Academia {
         return false;
     }
 
+    // Crud de Clases
+    public boolean registrarClase(Clase clase) {
+        for (Clase c : listClases) {
+            if (c.getId() == clase.getId()) {
+                return false;
+            }
+        }
+        return listClases.add(clase);
+    }
+
+    public List<Clase> listarClases() {
+        return listClases;
+    }
+
+    public boolean actualizarClase(int id, Clase claseActualizada) {
+        for (int i = 0; i < listClases.size(); i++) {
+            if (listClases.get(i).getId() == id) {
+                listClases.set(i, claseActualizada);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean eliminarClase(int id) {
+        return listClases.removeIf(clase -> clase.getId() == id);
+    }
 
     // Metodo crear y agregar curso
 
     public boolean crearCurso(String idCurso, String nombreCurso, Instrumento instrumento, Nivel nivel, int capacidad, Profesor profesor) {
-
 
         if (idCurso == null || idCurso.trim().isEmpty() ||
                 nombreCurso == null || nombreCurso.trim().isEmpty() ||
@@ -301,8 +314,6 @@ public class Academia {
         return true;
     }
 
-
-
     // Metodo asignar clase a el profesor
 
     public boolean asignarClaseAProfesor(String id, Clase clase) {
@@ -310,7 +321,6 @@ public class Academia {
         if (id == null || id.trim().isEmpty() || clase == null) {
             return false;
         }
-
 
         for (Profesor profesor : listProfesores) {
             if (profesor.getId().equals(id)) {
@@ -322,28 +332,4 @@ public class Academia {
 
         return false;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-

@@ -48,7 +48,6 @@ public class App extends Application {
             loader.setLocation(App.class.getResource("/co/edu/uniquindio/poo/academiamusicuq/main.fxml"));
             AnchorPane rootLayout = loader.load();
 
-
             MainViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -67,7 +66,6 @@ public class App extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/estudiante.fxml"));
             AnchorPane rootLayout = loader.load();
-
 
             EstudianteViewController controller = loader.getController();
             controller.setApp(this);
@@ -105,7 +103,6 @@ public class App extends Application {
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/curso.fxml"));
             AnchorPane rootLayout = loader.load();
 
-            // Aqui se conecta con el viewController y obtiene los metodos y cosas de Controller
             CursoViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -196,7 +193,6 @@ public class App extends Application {
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/asistencia.fxml"));
             AnchorPane rootLayout = loader.load();
 
-
             AsistenciaViewController controller = loader.getController();
             controller.setApp(this);
 
@@ -214,7 +210,6 @@ public class App extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/co/edu/uniquindio/poo/academiamusicuq/reportes.fxml"));
             AnchorPane rootLayout = loader.load();
-
 
             ReportesViewController controller = loader.getController();
             controller.setApp(this);
@@ -277,14 +272,11 @@ public class App extends Application {
         ClaseIndividual clase2 = new ClaseIndividual(2, aula2, TipoClase.INDIVIDUAL, profesor2, horario2, curso2,
                 "Mejorar técnica de digitación", estudiante1);
 
-
         // Registros De las Clases En la Academia
-
         academia.registrarProfesor(profesor1);
         academia.registrarProfesor(profesor2);
         academia.registrarProfesor(profesor3);
         academia.registrarProfesor(profesor4);
-
 
         academia.registrarEstudiante(estudiante1);
         academia.registrarEstudiante(estudiante2);
@@ -303,6 +295,10 @@ public class App extends Application {
         academia.registrarAula(aula2);
         academia.registrarAula(aula3);
         academia.registrarAula(aula4);
+
+        // Registrar clases en la academia
+        academia.registrarClase(clase1);
+        academia.registrarClase(clase2);
 
         // Agregar clases a cursos
         curso1.agregarClase(clase1);
